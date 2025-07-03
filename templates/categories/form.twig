@@ -28,7 +28,7 @@
                         <label for="name" class="form-label mt-2">Judul</label>
                     </div>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control {{ errors.name is defined ? 'is-invalid' }}" id="name" name="name" value="{{ action == 'Ubah' ? old.name|default(category.name) : old.name|default('') }}" placeholder="Masukkan Judul" autofocus>
+                        <input type="text" class="form-control {{ errors.name is defined ? 'is-invalid' }}" id="name" name="name" value="{{ action == 'Ubah' ? old.name|default(category.name) : old.name|default('') }}" placeholder="Masukkan Judul" autofocus required>
                         {% if errors.name is defined %}
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ errors.name }}</strong>
