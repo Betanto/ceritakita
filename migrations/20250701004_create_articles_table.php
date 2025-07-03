@@ -21,7 +21,7 @@ class CreateArticlesTable
                 created_by INT DEFAULT NULL,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 updated_by INT DEFAULT NULL,
-                deleted_at TIMESTAMP DEFAULT NULL,
+                deleted_at TIMESTAMP NULL DEFAULT NULL,
                 deleted_by INT DEFAULT NULL,
                 CONSTRAINT fk_users FOREIGN KEY (id_user) REFERENCES tbl_users(id)
                     ON UPDATE CASCADE
