@@ -20,6 +20,8 @@ use Slim\Psr7\Response;
 
 
 require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../src/helpers.php'; // adjust path if needed
+
 
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();

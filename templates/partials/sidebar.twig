@@ -1,16 +1,22 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3">
-        <ul class="nav flex-column">
-            <li class="nav-item border">
-                <a class="nav-link active" href="/dashboard">
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item border">
-                <a class="nav-link" href="/book">
-                    Buku
-                </a>
-            </li>
-        </ul>
+<nav id="sidebar" class="">
+    <div class="sidebar-header d-none d-lg-block">
+        <h5 class="text-center">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img src="/img/logo.webp" class="img-fluid">
+                </div>
+            </div>
+        </h5>
+        <strong>
+            <img src="/img/logo-small.webp" class="img-fluid">
+        </strong>
     </div>
+    <ul class="list-unstyled">
+        <li class="{{ routename == 'dashboard' ? 'active' }}">
+            <a href="/dashboard"><h5 class="d-inline-block mb-0"><i class="bi bi-house"></i></h5> <span class="sidebar-nav-text ms-2">Dashboard</span></a>
+        </li>
+        <li class="{{ routename == 'categories' ? 'active' }}">
+            <a href="/categories"><h5 class="d-inline-block mb-0"><i class="bi bi-columns-gap"></i></h5> <span class="sidebar-nav-text ms-2">Kategori</span></a>
+        </li>
+    </ul>
 </nav>

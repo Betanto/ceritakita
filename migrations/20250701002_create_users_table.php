@@ -16,7 +16,7 @@ class CreateUsersTable
                 created_by INT DEFAULT NULL,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 updated_by INT DEFAULT NULL,
-                deleted_at TIMESTAMP DEFAULT NULL,
+                deleted_at TIMESTAMP  NULL DEFAULT NULL,
                 deleted_by INT DEFAULT NULL,
                 INDEX idx_role (id_role),
                 CONSTRAINT fk_users_roles FOREIGN KEY (id_role) REFERENCES tbl_roles(id)

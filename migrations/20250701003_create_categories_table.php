@@ -15,7 +15,7 @@ class CreateCategoriesTable
                 created_by INT DEFAULT NULL,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 updated_by INT DEFAULT NULL,
-                deleted_at TIMESTAMP DEFAULT NULL,
+                deleted_at TIMESTAMP NULL DEFAULT NULL,
                 deleted_by INT DEFAULT NULL
             )
         ");
