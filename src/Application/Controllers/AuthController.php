@@ -41,4 +41,39 @@ class AuthController
         session_destroy();
         return $response->withHeader('Location', '/login')->withStatus(302);
     }
+
+    //REGISTER PAGE
+    public function registerPage(Request $request, Response $response)
+    {
+        return $this->view->render($response, 'auth/register.twig');
+    }
+
+    //HANDLE FORM REGISTER
+    public function register(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+        $username = trim($data['username'] ?? '');
+        $password = trim($data['password'] ?? '');
+
+        if (!$username || !$password) {
+            $_SESSION['flash_error'] = 'Username dan password wajib diisi.';
+            return $response->withHeader('Location', '/register')->withStatus(302);
+        }
+
+        // Cek apakah username sudah ada
+        $existing = $this->db->get('tbl_users', '*', ['username' => $username]);
+        if ($existing) {
+            $_SESSION['flash_error'] = 'Username sudah digunakan.';
+            return $response->withHeader('Location', '/register')->withStatus(302);
+        }
+
+        // Simpan user baru
+        $this->db->insert('tbl_users', [
+            'username' => $username,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+        ]);
+
+        $_SESSION['flash_success'] = 'Akun berhasil dibuat. Silakan login.';
+        return $response->withHeader('Location', '/login')->withStatus(302);
+    }
 }
