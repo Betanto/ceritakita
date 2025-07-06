@@ -1,9 +1,395 @@
 {% extends "frontend/master.twig" %}
 
-{% block title %}Beranda{% endblock %}
+{% block title %}Daftar Artikel - Cerita Kita{% endblock %}
 
 {% block content %}
-<div class="p-4">
-    <h4>Stories</h4>
-</div>
+<!-- Hero Section -->
+<section class="hero-gradient py-5">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <h1 class="display-5 fw-bold text-dark mb-3">
+                    Jelajahi <span style="color: var(--primary-color);">Cerita</span> Inspiratif
+                </h1>
+                <p class="lead text-muted mb-4">
+                    Temukan ribuan artikel berkualitas dari penulis terbaik Indonesia
+                </p>
+            </div>
+            <div class="col-lg-4" data-aos="fade-left">
+                <div class="search-box">
+                    <form class="d-flex">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-lg" placeholder="Cari artikel..." style="border-radius: 25px 0 0 25px;">
+                            <button class="btn btn-primary" type="submit" style="border-radius: 0 25px 25px 0;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filter & Categories -->
+<section class="py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="d-flex flex-wrap gap-2 category-filters" data-aos="fade-up">
+                    <button class="btn btn-outline-primary btn-sm category-btn active" data-category="all">
+                        <i class="fas fa-th-large me-1"></i>Semua
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm category-btn" data-category="teknologi">
+                        <i class="fas fa-laptop-code me-1"></i>Teknologi
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm category-btn" data-category="bisnis">
+                        <i class="fas fa-briefcase me-1"></i>Bisnis
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm category-btn" data-category="lifestyle">
+                        <i class="fas fa-heart me-1"></i>Lifestyle
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm category-btn" data-category="pendidikan">
+                        <i class="fas fa-graduation-cap me-1"></i>Pendidikan
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm category-btn" data-category="kesehatan">
+                        <i class="fas fa-medkit me-1"></i>Kesehatan
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                <div class="d-flex align-items-center justify-content-lg-end gap-3">
+                    <span class="text-muted small">Urutkan:</span>
+                    <select class="form-select form-select-sm" style="width: auto;">
+                        <option value="latest">Terbaru</option>
+                        <option value="popular">Terpopuler</option>
+                        <option value="trending">Trending</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Articles Grid -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row" id="articlesGrid">
+            <!-- Article 1 -->
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="article-card h-100">
+                    <div class="position-relative">
+                        <img src="/img/article-tech-1.jpg" class="card-img-top article-image" alt="AI Revolution">
+                        <div class="article-badge">
+                            <span class="badge-category">Teknologi</span>
+                            <span class="badge-time">
+                                <i class="far fa-clock me-1"></i>8 Min
+                            </span>
+                        </div>
+                        <div class="article-overlay">
+                            <a href="/article-detail/1" class="btn btn-light btn-sm">
+                                <i class="fas fa-eye me-1"></i>Baca
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-primary-soft text-primary me-2">Featured</span>
+                            <small class="text-muted">
+                                <i class="far fa-calendar-alt me-1"></i>15 Des 2024
+                            </small>
+                        </div>
+                        <h5 class="article-title">
+                            <a href="/article-detail/1" class="text-decoration-none">
+                                Revolusi AI: Bagaimana Kecerdasan Buatan Mengubah Dunia Kerja
+                            </a>
+                        </h5>
+                        <p class="article-excerpt">
+                            Eksplorasi mendalam tentang dampak AI terhadap berbagai industri dan bagaimana kita dapat beradaptasi dengan perubahan ini.
+                        </p>
+                        <div class="article-stats mb-3">
+                            <div class="d-flex gap-3 text-muted small">
+                                <span><i class="far fa-eye me-1"></i>2.5K views</span>
+                                <span><i class="far fa-heart me-1"></i>156 likes</span>
+                                <span><i class="far fa-comment me-1"></i>23 comments</span>
+                            </div>
+                        </div>
+                        <div class="article-meta">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/author-1.jpg" alt="Author" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <div>
+                                    <div class="fw-medium text-dark small">Dr. Ahmad Rizki</div>
+                                    <div class="text-muted" style="font-size: 0.75rem;">Tech Expert</div>
+                                </div>
+                            </div>
+                            <a href="/article-detail/1" class="article-link">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="article-card h-100">
+                    <div class="position-relative">
+                        <img src="/img/article-business-1.jpg" class="card-img-top article-image" alt="Digital Marketing">
+                        <div class="article-badge">
+                            <span class="badge-category">Bisnis</span>
+                            <span class="badge-time">
+                                <i class="far fa-clock me-1"></i>6 Min
+                            </span>
+                        </div>
+                        <div class="article-overlay">
+                            <a href="/article-detail/2" class="btn btn-light btn-sm">
+                                <i class="fas fa-eye me-1"></i>Baca
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-success-soft text-success me-2">Trending</span>
+                            <small class="text-muted">
+                                <i class="far fa-calendar-alt me-1"></i>14 Des 2024
+                            </small>
+                        </div>
+                        <h5 class="article-title">
+                            <a href="/article-detail/2" class="text-decoration-none">
+                                Strategi Digital Marketing untuk UMKM di Era Post-Pandemic
+                            </a>
+                        </h5>
+                        <p class="article-excerpt">
+                            Panduan lengkap untuk mengembangkan bisnis UMKM melalui strategi digital marketing yang efektif dan terjangkau.
+                        </p>
+                        <div class="article-stats mb-3">
+                            <div class="d-flex gap-3 text-muted small">
+                                <span><i class="far fa-eye me-1"></i>1.8K views</span>
+                                <span><i class="far fa-heart me-1"></i>89 likes</span>
+                                <span><i class="far fa-comment me-1"></i>15 comments</span>
+                            </div>
+                        </div>
+                        <div class="article-meta">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/author-2.jpg" alt="Author" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <div>
+                                    <div class="fw-medium text-dark small">Sarah Wijaya</div>
+                                    <div class="text-muted" style="font-size: 0.75rem;">Marketing Strategist</div>
+                                </div>
+                            </div>
+                            <a href="/article-detail/2" class="article-link">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="article-card h-100">
+                    <div class="position-relative">
+                        <img src="/img/article-lifestyle-1.jpg" class="card-img-top article-image" alt="Work Life Balance">
+                        <div class="article-badge">
+                            <span class="badge-category">Lifestyle</span>
+                            <span class="badge-time">
+                                <i class="far fa-clock me-1"></i>5 Min
+                            </span>
+                        </div>
+                        <div class="article-overlay">
+                            <a href="/article-detail/3" class="btn btn-light btn-sm">
+                                <i class="fas fa-eye me-1"></i>Baca
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <small class="text-muted">
+                                <i class="far fa-calendar-alt me-1"></i>13 Des 2024
+                            </small>
+                        </div>
+                        <h5 class="article-title">
+                            <a href="/article-detail/3" class="text-decoration-none">
+                                Work-Life Balance: Kunci Produktivitas di Era Remote Working
+                            </a>
+                        </h5>
+                        <p class="article-excerpt">
+                            Tips praktis untuk menjaga keseimbangan hidup dan meningkatkan produktivitas saat bekerja dari rumah.
+                        </p>
+                        <div class="article-stats mb-3">
+                            <div class="d-flex gap-3 text-muted small">
+                                <span><i class="far fa-eye me-1"></i>3.2K views</span>
+                                <span><i class="far fa-heart me-1"></i>245 likes</span>
+                                <span><i class="far fa-comment me-1"></i>34 comments</span>
+                            </div>
+                        </div>
+                        <div class="article-meta">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/author-3.jpg" alt="Author" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <div>
+                                    <div class="fw-medium text-dark small">Maya Sari</div>
+                                    <div class="text-muted" style="font-size: 0.75rem;">Life Coach</div>
+                                </div>
+                            </div>
+                            <a href="/article-detail/3" class="article-link">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repeat similar structure for more articles -->
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="article-card h-100">
+                    <div class="position-relative">
+                        <img src="/img/article-education-1.jpg" class="card-img-top article-image" alt="Online Learning">
+                        <div class="article-badge">
+                            <span class="badge-category">Pendidikan</span>
+                            <span class="badge-time">
+                                <i class="far fa-clock me-1"></i>7 Min
+                            </span>
+                        </div>
+                        <div class="article-overlay">
+                            <a href="/article-detail/4" class="btn btn-light btn-sm">
+                                <i class="fas fa-eye me-1"></i>Baca
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-2">
+                            <small class="text-muted">
+                                <i class="far fa-calendar-alt me-1"></i>12 Des 2024
+                            </small>
+                        </div>
+                        <h5 class="article-title">
+                            <a href="/article-detail/4" class="text-decoration-none">
+                                Masa Depan Pendidikan: E-Learning dan Teknologi Immersive
+                            </a>
+                        </h5>
+                        <p class="article-excerpt">
+                            Bagaimana teknologi VR dan AR mengubah cara kita belajar dan mengajar di era digital.
+                        </p>
+                        <div class="article-stats mb-3">
+                            <div class="d-flex gap-3 text-muted small">
+                                <span><i class="far fa-eye me-1"></i>1.5K views</span>
+                                <span><i class="far fa-heart me-1"></i>67 likes</span>
+                                <span><i class="far fa-comment me-1"></i>12 comments</span>
+                            </div>
+                        </div>
+                        <div class="article-meta">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/author-4.jpg" alt="Author" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <div>
+                                    <div class="fw-medium text-dark small">Prof. Budi Santoso</div>
+                                    <div class="text-muted" style="font-size: 0.75rem;">Education Expert</div>
+                                </div>
+                            </div>
+                            <a href="/article-detail/4" class="article-link">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add more articles as needed -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <nav aria-label="Articles pagination" data-aos="fade-up">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <span class="page-link">...</span>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">10</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .article-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .article-card:hover .article-overlay {
+        opacity: 1;
+    }
+
+    .category-btn {
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .category-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    .bg-primary-soft {
+        background-color: rgba(59, 130, 246, 0.1);
+    }
+
+    .bg-success-soft {
+        background-color: rgba(16, 185, 129, 0.1);
+    }
+
+    .article-stats {
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 1rem;
+    }
+</style>
+
+<script>
+    // Category Filter
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Filter logic would go here
+            const category = this.getAttribute('data-category');
+            console.log('Filter by category:', category);
+        });
+    });
+</script>
 {% endblock %}

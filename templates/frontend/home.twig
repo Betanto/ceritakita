@@ -1,9 +1,360 @@
 {% extends "frontend/master.twig" %}
 
-{% block title %}Beranda{% endblock %}
+{% block title %}Beranda - Cerita Kita | Platform Berbagi Cerita Terbaik{% endblock %}
 
 {% block content %}
-<div class="p-4">
-    <h4>Beranda</h4>
-</div>
+<!-- Hero Section -->
+<section class="hero-gradient py-5" id="hero">
+    <div class="container py-5">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6 hero-content" data-aos="fade-right">
+                <h1 class="hero-title">
+                    Berbagi Cerita,<br>
+                    <span style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Menginspirasi Dunia</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Bergabunglah dengan komunitas penulis dan pembaca terbesar di Indonesia. 
+                    Temukan cerita inspiratif dan bagikan pengalaman Anda.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="/stories" class="btn-hero">
+                        <i class="fas fa-search"></i>
+                        Jelajahi Cerita
+                    </a>
+                    <a href="/register" class="btn btn-outline-primary btn-lg px-4 py-3" style="border-radius: 50px; font-weight: 600;">
+                        <i class="fas fa-pen"></i>
+                        Mulai Menulis
+                    </a>
+                </div>
+                
+                <!-- Hero Stats -->
+                <div class="row mt-5">
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h4 class="fw-bold text-primary mb-0">500K+</h4>
+                            <small class="text-muted">Pembaca</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h4 class="fw-bold text-primary mb-0">25K+</h4>
+                            <small class="text-muted">Cerita</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">
+                            <h4 class="fw-bold text-primary mb-0">1K+</h4>
+                            <small class="text-muted">Penulis</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center" data-aos="fade-left">
+                <div class="hero-image">
+                    <img src="/img/orang.png" alt="Hero Illustration" class="img-fluid" style="max-height: 500px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="stats-section py-5" id="stats">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="stat-number" data-count="500">0</div>
+                    <div class="stat-label">Artikel Tersimpan</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number" data-count="150">0</div>
+                    <div class="stat-label">Kontributor Aktif</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-number" data-count="10000">0</div>
+                    <div class="stat-label">Pembaca Bulanan</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div class="stat-number" data-count="25">0</div>
+                    <div class="stat-label">Kategori Topik</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Articles Section -->
+<section class="py-5 hero-gradient" id="articles">
+    <div class="container py-5">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-5 fw-bold text-dark mb-3">
+                Artikel <span style="color: var(--primary-color);">Pilihan</span>
+            </h2>
+            <p class="lead text-muted">Temukan artikel-artikel terbaik dari penulis berbakat</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="article-card">
+                    <div class="position-relative">
+                        <img src="/img/artikel1.jpeg" class="card-img-top article-image" alt="Marketing Article">
+                        <div class="article-badge">
+                            <span class="badge-category">Marketing</span>
+                            <span class="badge-time">
+                                <i class="far fa-clock me-1"></i>5 Min
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="article-title">Strategi Digital Marketing untuk UMKM</h5>
+                        <p class="article-excerpt">
+                            Pelajari strategi digital marketing yang efektif untuk mengembangkan bisnis UMKM di era digital.
+                        </p>
+                        <div class="article-meta">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/orang1.jpeg" alt="Author" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <span class="article-author">Sarah Wijaya</span>
+                            </div>
+                            <a href="/article/1" class="article-link">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="article-card">
+                    <div class="position-relative">
+                        <img src="/img/artikel2.jpg" class="card-img-top article-image" alt="Technology Article">
+                        <div class="article-badge">
+                            <span class="badge-category">Teknologi</span>
+                            <span class="badge-time">
+                                <i class="far fa-clock me-1"></i>8 Min
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="article-title">AI dan Masa Depan Pekerjaan</h5>
+                        <p class="article-excerpt">
+                            Bagaimana artificial intelligence akan mengubah lanskap pekerjaan dan cara kita beradaptasi.
+                        </p>
+                        <div class="article-meta">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/orang2.jpeg" alt="Author" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <span class="article-author">Ahmad Rizki</span>
+                            </div>
+                            <a href="/article/2" class="article-link">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="article-card">
+                    <div class="position-relative">
+                        <img src="/img/artikel3.jpeg" class="card-img-top article-image" alt="Lifestyle Article">
+                        <div class="article-badge">
+                            <span class="badge-category">Lifestyle</span>
+                            <span class="badge-time">
+                                <i class="far fa-clock me-1"></i>6 Min
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="article-title">Work-Life Balance di Era Remote</h5>
+                        <p class="article-excerpt">
+                            Tips praktis untuk menjaga keseimbangan hidup saat bekerja dari rumah secara optimal.
+                        </p>
+                        <div class="article-meta">
+                            <div class="d-flex align-items-center">
+                                <img src="/img/orang3.jpeg" alt="Author" class="rounded-circle me-2" style="width: 32px; height: 32px;">
+                                <span class="article-author">Maya Sari</span>
+                            </div>
+                            <a href="/article/3" class="article-link">
+                                Baca Selengkapnya <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="/stories" class="btn btn-primary btn-lg px-5 py-3" style="border-radius: 50px; font-weight: 600;">
+                <i class="fas fa-th-large me-2"></i>
+                Lihat Semua Artikel
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-white" id="features">
+    <div class="container py-5">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-5 fw-bold text-dark mb-3">
+                Mengapa Memilih <span style="color: var(--primary-color);">Cerita Kita?</span>
+            </h2>
+            <p class="lead text-muted">Platform terlengkap untuk berbagi dan menemukan cerita inspiratif</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-center p-4">
+                    <div class="feature-icon mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center" 
+                             style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white; font-size: 2rem;">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                    </div>
+                    <h4 class="fw-bold mb-3">Editor Canggih</h4>
+                    <p class="text-muted">
+                        Editor yang mudah digunakan dengan fitur lengkap untuk menulis artikel yang menarik dan profesional.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-center p-4">
+                    <div class="feature-icon mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center" 
+                             style="width: 80px; height: 80px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 20px; color: white; font-size: 2rem;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <h4 class="fw-bold mb-3">Komunitas Aktif</h4>
+                    <p class="text-muted">
+                        Bergabung dengan komunitas penulis dan pembaca yang saling mendukung dan memberikan feedback konstruktif.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-center p-4">
+                    <div class="feature-icon mb-4">
+                        <div class="d-inline-flex align-items-center justify-content-center" 
+                             style="width: 80px; height: 80px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 20px; color: #333; font-size: 2rem;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <h4 class="fw-bold mb-3">Analytics Detail</h4>
+                    <p class="text-muted">
+                        Pantau performa artikel Anda dengan analytics yang detail dan insight yang membantu meningkatkan engagement.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5" id="cta">
+    <div class="container py-5">
+        <div class="cta-content text-center" data-aos="zoom-in">
+            <h2 class="cta-title">
+                Siap Berbagi Cerita Anda?
+            </h2>
+            <p class="cta-subtitle mx-auto" style="max-width: 600px;">
+                Bergabunglah dengan ribuan penulis lainnya dan mulai berbagi cerita inspiratif Anda. 
+                Dapatkan penghasilan dari setiap artikel berkualitas yang Anda tulis.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a href="/register" class="btn-cta">
+                    <i class="fas fa-rocket"></i>
+                    Daftar Sekarang
+                </a>
+                <a href="/about" class="btn btn-outline-light btn-lg px-4 py-3" style="border-radius: 50px; font-weight: 600;">
+                    <i class="fas fa-info-circle"></i>
+                    Pelajari Lebih Lanjut
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-5 bg-light" id="newsletter">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center" data-aos="fade-up">
+                <h3 class="fw-bold mb-3">Dapatkan Update Terbaru</h3>
+                <p class="text-muted mb-4">
+                    Berlangganan newsletter kami dan dapatkan artikel terbaru, tips menulis, dan update platform langsung di inbox Anda.
+                </p>
+                <form class="row g-3 justify-content-center">
+                    <div class="col-md-6">
+                        <input type="email" class="form-control form-control-lg" placeholder="Masukkan email Anda" style="border-radius: 50px;">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary btn-lg px-4" style="border-radius: 50px; font-weight: 600;">
+                            <i class="fas fa-paper-plane me-2"></i>
+                            Berlangganan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Counter Animation
+    function animateCounters() {
+        const counters = document.querySelectorAll('[data-count]');
+        
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    counter.textContent = target.toLocaleString() + '+';
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current).toLocaleString();
+                }
+            }, 16);
+        });
+    }
+
+    // Trigger counter animation when stats section is visible
+    const statsSection = document.getElementById('stats');
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    });
+
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
+</script>
 {% endblock %}
