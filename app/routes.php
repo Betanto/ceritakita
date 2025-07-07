@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
+use App\Application\Controllers\ArticleController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -19,7 +20,7 @@ use Twig\Extension\DebugExtension;
 return function (App $app) {
     $container = $app->getContainer();
     $container->set('view', function () {
-        $twig = \Slim\Views\Twig::create(__DIR__ . '/../templates', ['cache' => false,'debug' => true]);
+        $twig = \Slim\Views\Twig::create(__DIR__ . '/../templates', ['cache' => false, 'debug' => true]);
 
         session_start();
 
@@ -27,9 +28,9 @@ return function (App $app) {
             'success' => $_SESSION['flash_success'] ?? null,
             'error' => $_SESSION['flash_error'] ?? null,
         ]);
-        
+
         unset($_SESSION['flash_success'], $_SESSION['flash_error']);
-        
+
         $twig->getEnvironment()->addExtension(new DebugExtension());
         return $twig;
     });
@@ -43,7 +44,7 @@ return function (App $app) {
     $app->get('/login', [new AuthController($container), 'loginPage']);
     $app->post('/login', [new AuthController($container), 'login']);
     $app->get('/logout', [new AuthController($container), 'logout']);
-    
+
     $app->get('/dashboard', [new DashboardController($container), 'index'])->add(new AuthMiddleware());
 
     $app->group('/categories', function ($group) use ($container) {
@@ -53,6 +54,15 @@ return function (App $app) {
         $group->get('/edit/{id}', [new CategoryController($container), 'edit']);
         $group->post('/edit/{id}', [new CategoryController($container), 'update']);
         $group->get('/delete/{id}', [new CategoryController($container), 'delete']);
+    })->add(new AuthMiddleware());
+
+    $app->group('/articles', function ($group) use ($container) {
+        $group->get('', [new ArticleController($container), 'index']);
+        $group->get('/create', [new ArticleController($container), 'create']);
+        $group->post('/create', [new ArticleController($container), 'store']);
+        $group->get('/edit/{id}', [new ArticleController($container), 'edit']);
+        $group->post('/edit/{id}', [new ArticleController($container), 'update']);
+        $group->get('/delete/{id}', [new ArticleController($container), 'delete']);
     })->add(new AuthMiddleware());
 
 
