@@ -56,6 +56,23 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-2">
+                        <label for="type" class="form-label mt-2">Tipe</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <select name="type" id="type" class="form-control">
+                            <option value="">-- Pilih Tipe --</option>
+                            <option value="0" {% if category and category.type == '0' %}selected{% endif %}>Post</option>
+                            <option value="1" {% if category and category.type == '1' %}selected{% endif %}>Cerita</option>
+                        </select>
+                        {% if errors.type is defined %}
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ errors.type }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-2">
                     </div>
                     <div class="col-lg-10">
                         <div class="form-check form-switch py-2">
