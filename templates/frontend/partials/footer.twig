@@ -1,5 +1,91 @@
-<footer class="footer mt-auto py-3 bg-light text-center fixed-bottom">
-    <div class="container">
-        <span class="text-muted">&copy; {{ "now"|date("Y") }} Cerita Kita</span>
+<footer class="footer-modern mt-auto">
+    <div class="footer-content">
+        <div class="container py-5">
+            <div class="row">
+                <!-- Company Info -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="footer-brand mb-4">
+                        <a href="/" class="d-block mb-3">
+                            <img src="/img/logo.png" alt="Cerita Kita" class="footer-logo">
+                        </a>
+                    </div>
+                    <p class="text-light opacity-75 mb-4 footer-desc">
+                        Platform berbagi cerita dan artikel berkualitas. Bergabunglah dengan komunitas penulis dan pembaca yang inspiratif.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="text-white fw-bold mb-3 footer-title">NAVIGASI</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="/">Beranda</a></li>
+                        <li><a href="/stories">Artikel</a></li>
+                        <li><a href="/login">Pendaftaran</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="text-white fw-bold mb-3 footer-title">LAYANAN</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="/register">Daftar Penulis</a></li>
+                        <li><a href="/premium">Premium</a></li>
+                        <li><a href="/workshop">Workshop</a></li>
+                        <li><a href="/mentoring">Mentoring</a></li>
+                        <li><a href="/publishing">Publishing</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Latest Articles -->
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="text-white fw-bold mb-3 footer-title">ARTIKEL TERBARU</h6>
+                    <div class="latest-articles">
+                        <div class="article-item">
+                            <div class="article-thumb">
+                                <img src="/img/artikel4.jpeg" alt="Article">
+                            </div>
+                            <div class="article-info">
+                                <h6>Tips Menulis Artikel yang Menarik</h6>
+                                <span class="article-date">
+                                    <i class="far fa-calendar-alt me-1"></i>15 Des 2024
+                                </span>
+                            </div>
+                        </div>
+                        <div class="article-item">
+                            <div class="article-thumb">
+                                <img src="/img/artikel5.jpeg" alt="Article">
+                            </div>
+                            <div class="article-info">
+                                <h6>Strategi Content Marketing 2025</h6>
+                                <span class="article-date">
+                                    <i class="far fa-calendar-alt me-1"></i>12 Des 2024
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center py-3">
+                    <div class="col-md-6">
+                        <p class="mb-0 text-light opacity-75">
+                            © {{ "now"|date("Y") }} CeritaKita. All Rights Reserved.
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </footer>

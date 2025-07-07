@@ -1,19 +1,42 @@
-<nav class="navbar navbar-expand-lg sticky-top bg-white shadow">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Cerita Kita</a>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link py-1 px-3 border rounded-sm me-2" aria-current="page" href="/">Beranda</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link py-1 px-3 border rounded-sm me-2" aria-current="page" href="/stories">Daftar Cerita</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link py-1 px-3 border rounded-sm me-2" aria-current="page" href="/login">Login/ Register</a>
-            </li>
-        </ul>
-        <!-- <div class="navbar-nav">
-            <a class="nav-link px-3 border" href="/logout">Logout</a>
-        </div> -->
+<nav class="navbar navbar-expand-lg sticky-top bg-white shadow-sm navbar-modern">
+    <div class="container">
+        <div class="d-flex align-items-center" style="height: 64px; min-height: 64px;">
+            <a class="navbar-brand d-flex align-items-center logo-brand" href="/" style="height: 100%;">
+                <img src="/img/logo.png" alt="Cerita Kita Logo" class="logo-img" style="max-height: 100%; height: 56px; width: auto; object-fit: contain;">
+            </a>
+        </div>
+        
+        <button class="navbar-toggler border-0 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-2">
+                    <a class="nav-link nav-link-modern fw-medium" href="/">
+                        <i class="fas fa-home me-1"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link nav-link-modern fw-medium" href="/stories">
+                        <i class="fas fa-newspaper me-1"></i>Daftar Artikel
+                    </a>
+                </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link nav-link-modern fw-medium" href="/register">
+                        <i class="fas fa-user-plus me-1"></i>Pendaftaran
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern nav-link-login fw-medium" href="/login">
+                        <i class="fas fa-sign-in-alt me-1"></i>Login
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
