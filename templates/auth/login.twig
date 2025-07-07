@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Login</title>
+    <title>Masuk - Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -241,7 +243,7 @@
             transform: translateY(0);
         }
 
-        .register-link {
+        .register-link, .forgot-password-link {
             color: var(--accent-orange);
             text-decoration: none;
             font-weight: 600;
@@ -251,9 +253,18 @@
             gap: 0.5rem;
         }
 
-        .register-link:hover {
+        .register-link:hover, .forgot-password-link:hover {
             color: var(--accent-orange);
             transform: translateX(5px);
+        }
+
+        .forgot-password-link {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+        }
+
+        .forgot-password-link:hover {
+            color: var(--primary-blue);
         }
 
         .alert {
@@ -264,6 +275,12 @@
             background: linear-gradient(135deg, #fef2f2, #fee2e2);
             color: #dc2626;
             border-left: 4px solid #dc2626;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            color: #16a34a;
+            border-left: 4px solid #16a34a;
         }
 
         .divider {
@@ -288,6 +305,11 @@
             padding: 0 1rem;
             position: relative;
             z-index: 1;
+        }
+
+        .forgot-password-section {
+            text-align: center;
+            margin-bottom: 1rem;
         }
 
         /* Responsive design */
@@ -353,6 +375,40 @@
             0% { filter: blur(5px); }
             100% { filter: blur(15px); }
         }
+
+        /* Modal styles */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+        }
+
+        .modal-title {
+            font-weight: 700;
+        }
+
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border: none;
+            border-radius: 12px;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body class="d-flex align-items-center justify-content-center vh-100">
@@ -373,8 +429,8 @@
                 <div class="login-icon">
                     <i class="fas fa-user"></i>
                 </div>
-                <h1>Welcome Back</h1>
-                <p>Please sign in to your account</p>
+                <h1>Selamat Datang</h1>
+                <p>Silakan masuk ke akun Anda</p>
             </div>
 
             <!-- Card body -->
@@ -387,35 +443,49 @@
                         </div>
                     {% endif %}
 
+                    {% if success %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            {{ success }}
+                        </div>
+                    {% endif %}
+
                     <div class="form-floating">
-                        <input type="text" name="username" class="form-control" id="username" placeholder="Username" required autofocus>
-                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Nama Pengguna" required autofocus>
+                        <label for="username">Nama Pengguna</label>
                         <div class="input-icon">
                             <i class="fas fa-user"></i>
                         </div>
                     </div>
 
                     <div class="form-floating">
-                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-                        <label for="password">Password</label>
-                        <div class="input-icon" id="lockIcon">
-                            <i class="fas fa-lock"></i>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Kata Sandi" required>
+                        <label for="password">Kata Sandi</label>
+                        <div class="password-toggle" id="passwordToggle">
+                            <i class="fas fa-eye"></i>
                         </div>
+                    </div>
+
+                    <div class="forgot-password-section">
+                        <a href="#" class="forgot-password-link" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+                            <i class="fas fa-key"></i>
+                            Lupa Kata Sandi?
+                        </a>
                     </div>
 
                     <button class="btn-login" type="submit" id="loginBtn">
                         <i class="fas fa-sign-in-alt me-2"></i>
-                        Sign In
+                        Masuk
                     </button>
 
                     <div class="divider">
-                        <span>or</span>
+                        <span>atau</span>
                     </div>
 
                     <div class="text-center">
                         <a href="/register" class="register-link">
                             <i class="fas fa-user-plus"></i>
-                            Don't have an account? Register
+                            Belum punya akun? Daftar
                         </a>
                     </div>
                 </form>
@@ -423,29 +493,56 @@
         </div>
     </div>
 
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">
+                        <i class="fas fa-key me-2"></i>
+                        Lupa Kata Sandi
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="forgotEmail" class="form-label">Alamat Email</label>
+                            <input type="email" class="form-control" id="forgotEmail" placeholder="Masukkan email Anda" required>
+                            <div class="form-text">Kami akan mengirimkan tautan reset kata sandi ke email Anda.</div>
+                        </div>
+                        <div class="alert alert-info d-none" id="forgotPasswordAlert">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <span id="forgotPasswordMessage"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="sendResetBtn">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Kirim Tautan Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Handle password input events - hide lock icon when typing
-        document.getElementById('password').addEventListener('input', function() {
-            const lockIcon = document.getElementById('lockIcon');
+        // Password toggle functionality
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = this.querySelector('i');
             
-            if (this.value.length > 0) {
-                lockIcon.style.display = 'none';
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
             } else {
-                lockIcon.style.display = 'block';
-            }
-        });
-
-        // Handle password focus/blur for icon switching
-        document.getElementById('password').addEventListener('focus', function() {
-            if (this.value.length > 0) {
-                document.getElementById('lockIcon').style.display = 'none';
-            }
-        });
-
-        document.getElementById('password').addEventListener('blur', function() {
-            if (this.value.length === 0) {
-                document.getElementById('lockIcon').style.display = 'block';
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
             }
         });
 
@@ -453,7 +550,7 @@
         document.getElementById('loginForm').addEventListener('submit', function() {
             const btn = document.getElementById('loginBtn');
             btn.classList.add('loading');
-            btn.innerHTML = '<span>Signing in...</span>';
+            btn.innerHTML = '<span>Sedang masuk...</span>';
         });
 
         // Add focus effects
@@ -468,10 +565,6 @@
             });
         });
 
-        // Add typing animation to placeholder
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        
         // Enhanced form validation feedback
         inputs.forEach(input => {
             input.addEventListener('invalid', function() {
@@ -488,6 +581,82 @@
                     this.style.boxShadow = 'none';
                 }
             });
+        });
+
+        // Forgot password functionality
+        document.getElementById('sendResetBtn').addEventListener('click', function() {
+            const email = document.getElementById('forgotEmail').value;
+            const alertDiv = document.getElementById('forgotPasswordAlert');
+            const messageSpan = document.getElementById('forgotPasswordMessage');
+            const btn = this;
+            
+            if (!email) {
+                alertDiv.classList.remove('d-none', 'alert-info', 'alert-success');
+                alertDiv.classList.add('alert-danger');
+                messageSpan.textContent = 'Silakan masukkan alamat email Anda.';
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alertDiv.classList.remove('d-none', 'alert-info', 'alert-success');
+                alertDiv.classList.add('alert-danger');
+                messageSpan.textContent = 'Silakan masukkan alamat email yang valid.';
+                return;
+            }
+
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Mengirim...';
+
+            // Simulate API call (replace with actual API call)
+            setTimeout(() => {
+                // For demo purposes, always show success
+                alertDiv.classList.remove('d-none', 'alert-danger', 'alert-info');
+                alertDiv.classList.add('alert-success');
+                messageSpan.textContent = 'Tautan reset kata sandi telah dikirim ke email Anda. Silakan periksa kotak masuk Anda.';
+                
+                // Reset button
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Kirim Tautan Reset';
+                
+                // Here you would make an actual API call to your backend
+                // fetch('/forgot-password', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({ email: email })
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     if (data.success) {
+                //         alertDiv.classList.remove('d-none', 'alert-danger', 'alert-info');
+                //         alertDiv.classList.add('alert-success');
+                //         messageSpan.textContent = 'Tautan reset kata sandi telah dikirim ke email Anda.';
+                //     } else {
+                //         alertDiv.classList.remove('d-none', 'alert-info', 'alert-success');
+                //         alertDiv.classList.add('alert-danger');
+                //         messageSpan.textContent = data.message || 'Terjadi kesalahan. Silakan coba lagi.';
+                //     }
+                // })
+                // .catch(error => {
+                //     alertDiv.classList.remove('d-none', 'alert-info', 'alert-success');
+                //     alertDiv.classList.add('alert-danger');
+                //     messageSpan.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
+                // })
+                // .finally(() => {
+                //     btn.disabled = false;
+                //     btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Kirim Tautan Reset';
+                // });
+            }, 2000);
+        });
+
+        // Reset forgot password form when modal is closed
+        document.getElementById('forgotPasswordModal').addEventListener('hidden.bs.modal', function() {
+            document.getElementById('forgotPasswordForm').reset();
+            document.getElementById('forgotPasswordAlert').classList.add('d-none');
         });
     </script>
 </body>
