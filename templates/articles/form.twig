@@ -1,0 +1,214 @@
+{% extends "master.twig" %}
+
+{% block title %}{{ action }} Artikel{% endblock %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="px-0 py-4">
+    <div class="card mt-0 border-0 shadow-sm bg-white">
+        <div class="card-body">
+            <h6>{{ action }} Artikel</h6>
+            <form action="{{ article ? '/articles/edit/' ~ article.id : '/articles/create' }}" method="POST" enctype="multipart/form-data" class="my-lg-4">
+                
+                <!-- Judul -->
+                <div class="row mb-3">
+                    <div class="col-lg-2"><label for="title" class="form-label mt-2">Judul</label></div>
+                    <div class="col-lg-10">
+                        <input type="text" id="title" name="title" class="form-control {{ errors.title is defined ? 'is-invalid' : '' }}" value="{{ old.title is defined ? old.title : (article.title is defined ? article.title : '') }}" required>
+                        {% if errors.title is defined %}
+                            <span class="invalid-feedback"><strong>{{ errors.title }}</strong></span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Kategori -->
+                <div class="row mb-3">
+                    <div class="col-lg-2"><label for="id_category" class="form-label mt-2">Kategori</label></div>
+                    <div class="col-lg-10">
+                        <select name="id_category[]" id="id_category" class="form-select {{ errors.id_category is defined ? 'is-invalid' : '' }}" multiple required>
+                            {% for item in categories %}
+                                <option value="{{ item.id }}"
+                                    {% if (selectedCategories is defined and item.id in selectedCategories)
+                                           or (old.id_category is defined and item.id in old.id_category) %}
+                                        selected
+                                    {% endif %}
+                                >{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if errors.id_category is defined %}
+                            <span class="invalid-feedback"><strong>{{ errors.id_category }}</strong></span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Gambar -->
+                <div class="row mb-3">
+                    <div class="col-lg-2"><label for="image" class="form-label mt-2">Gambar</label></div>
+                    <div class="col-lg-10">
+                        <input type="file" name="image" id="image" class="form-control {{ errors.image is defined ? 'is-invalid' : '' }}" accept="image/*">
+                        <small class="text-muted">Maks. 2MB. Format JPG, PNG.</small>
+                        {% if article and article.image %}
+                            <p class="mt-2">Gambar saat ini: <a href="/uploads/images/{{ article.image }}" target="_blank">{{ article.image }}</a></p>
+                        {% endif %}
+                        {% if errors.image is defined %}
+                            <span class="invalid-feedback"><strong>{{ errors.image }}</strong></span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- File Lampiran -->
+                <div class="row mb-3">
+                    <div class="col-lg-2"><label for="file" class="form-label mt-2">Lampiran</label></div>
+                    <div class="col-lg-10">
+                        <input type="file" name="file" id="file" class="form-control {{ errors.file is defined ? 'is-invalid' : '' }}">
+                        <small class="text-muted">Maks. 5MB. Format PDF, DOCX, ZIP.</small>
+                        {% if article and article.file %}
+                            <p class="mt-2">File saat ini: <a href="/uploads/files/{{ article.file }}" target="_blank">{{ article.file }}</a></p>
+                        {% endif %}
+                        {% if errors.file is defined %}
+                            <span class="invalid-feedback"><strong>{{ errors.file }}</strong></span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Konten -->
+                <div class="row mb-3">
+                    <div class="col-lg-2"><label for="content" class="form-label mt-2">Konten</label></div>
+                    <div class="col-lg-10">
+                        <textarea name="content" id="content" rows="6" class="form-control">{{ old.content is defined ? old.content : (article.content is defined ? article.content : '') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Tombol Simpan -->
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary text-white"><i class="bi bi-floppy"></i> Simpan</button>
+                    <a href="/articles" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Reset dan override semua styling textarea */
+textarea#content {
+    resize: vertical !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0.375rem 0.75rem !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.375rem !important;
+    font-family: inherit !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+/* Pastikan container juga ga ada masalah */
+.col-lg-10 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+/* Override apapun yang bikin textarea beda */
+textarea#content:focus {
+    border-color: #86b7fe !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+</style>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('#id_category').select2({
+            placeholder: "Pilih kategori",
+            width: '100%'
+        });
+
+        // Handle form submission with SweetAlert
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading
+            Swal.fire({
+                title: 'Menyimpan...',
+                text: 'Sedang memproses data artikel',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+
+            // Submit form
+            this.submit();
+        });
+
+        // Show success message if there's a success parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === '1') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Artikel berhasil disimpan',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }
+
+        // Show error message if there are validation errors
+        {% if errors is defined and errors|length > 0 %}
+            let errorMessages = [];
+            {% for field, message in errors %}
+                errorMessages.push('{{ message }}');
+            {% endfor %}
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                html: errorMessages.join('<br>'),
+                confirmButtonText: 'OK'
+            });
+        {% endif %}
+
+        // File size validation
+        $('#image').on('change', function() {
+            const file = this.files[0];
+            if (file && file.size > 2 * 1024 * 1024) { // 2MB
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'File Terlalu Besar',
+                    text: 'Ukuran gambar maksimal 2MB',
+                    confirmButtonText: 'OK'
+                });
+                this.value = '';
+            }
+        });
+
+        $('#file').on('change', function() {
+            const file = this.files[0];
+            if (file && file.size > 5 * 1024 * 1024) { // 5MB
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'File Terlalu Besar',
+                    text: 'Ukuran file lampiran maksimal 5MB',
+                    confirmButtonText: 'OK'
+                });
+                this.value = '';
+            }
+        });
+    });
+</script>
+{% endblock %}
