@@ -37,6 +37,7 @@ class CategoryController
             'c.name',
             'c.id_parent',
             'c.status',
+            'c.type',
             'p.id(parent_id)',
             'p.name(parent_name)'
         ], [
@@ -134,7 +135,7 @@ class CategoryController
             'name' => $data['name'],
             'slug' => $slug,
             'id_parent' => $data['id_parent'],
-            'type' => 'Post',
+            'type' => $data['type'],
             'status' => $status
         ]);
 
@@ -252,7 +253,7 @@ class CategoryController
         $updated = $this->db->update($this->tablename, [
             'name' => $data['name'],
             'id_parent' => $data['id_parent'],
-            'type' => 'Post',
+            'type' => $data['type'],
             'status' => $status
         ], ['id' => $args['id']]);
 

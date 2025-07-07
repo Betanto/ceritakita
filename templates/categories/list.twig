@@ -36,6 +36,8 @@
                     <thead>
                         <tr>
                             <th class="mobile-p d-none no-sort"></th>
+                            <th class="desktop">Judul</th>
+                            <th class="desktop text-center">Tipe</th>
                             <th class="desktop">Juduls</th>
                             <th class="desktop">Induk</th>
                             <th class="desktop text-center no-sort">Status</th>
@@ -66,6 +68,7 @@
                                     </div>
                                 </td>
                                 <td>{{ category.name }}</td>
+                                <td>{{ category.type == 0 ? '<span class="badge text-bg-success p-2">Post</span>' : '<span class="badge text-bg-warning p-2">Cerita</span>' }}</td>
                                 <td>{{ category.parent_name }}</td>
                                 <td class="text-center">{{ category.status == 1 ? '<span class="badge text-bg-success p-2">Aktif</span>' : '<span class="badge text-bg-warning p-2">Tidak</span>' }}</td>
                                 <td>
@@ -106,8 +109,9 @@
                     orderable: false,
                 },
                 {
-                    targets  : [3,4],
+                    targets  : [2, 4, 5],
                     width: "50px",
+                    className: "text-center",
                 },
             ],
             responsive: {
