@@ -34,6 +34,10 @@ return function (App $app) {
         return $twig;
     });
 
+    $app->get('/register', [new AuthController($container), 'registerPage']);
+    $app->post('/register', [new AuthController($container), 'register']);
+
+
     $app->get('/', [new HomeController($container), 'index']);
     $app->get('/stories', [new StoryController($container), 'index']);
     $app->get('/login', [new AuthController($container), 'loginPage']);
