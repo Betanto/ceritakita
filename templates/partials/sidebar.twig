@@ -50,15 +50,15 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item">
+                <a href="/users" class="nav-link {{ routename == 'users' ? 'active' : '' }}" data-tooltip="Pengguna">
+                    <span class="nav-icon">
+                        <i class="bi bi-people"></i>
+                    </span>
+                    <span class="sidebar-nav-text">Pengguna</span>
+                </a>
+            </li>
         {% endif %}
-        <li class="nav-item">
-            <a href="/profile" class="nav-link {{ routename == 'profile' ? 'active' : '' }}" data-tooltip="Profile">
-                <span class="nav-icon">
-                    <i class="bi bi-person"></i>
-                </span>
-                <span class="sidebar-nav-text">Profile</span>
-            </a>
-        </li>
         <li class="nav-item">
             <a href="/settings" class="nav-link {{ routename == 'settings' ? 'active' : '' }}" data-tooltip="Pengaturan">
                 <span class="nav-icon">

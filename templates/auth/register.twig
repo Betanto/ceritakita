@@ -48,11 +48,11 @@
                         <div class="form-floating">
                             <input type="text" 
                                    class="form-control" 
-                                   id="nama" 
-                                   name="nama" 
+                                   id="name" 
+                                   name="name" 
                                    placeholder="Nama Lengkap"
                                    required>
-                            <label for="nama">Nama Lengkap</label>
+                            <label for="name">Nama Lengkap</label>
                             <div class="invalid-feedback"></div>
                         </div>
 
@@ -195,7 +195,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('registerForm');
-            const fields = ['nama', 'email', 'password', 'konfirmasi_password'];
+            const fields = ['name', 'email', 'password', 'konfirmasi_password'];
 
             fields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
@@ -238,7 +238,7 @@
             const value = field.value.trim();
 
             switch (fieldId) {
-                case 'nama':
+                case 'name':
                     if (value.length < 2) {
                         setFieldValidation(fieldId, false, 'Nama harus minimal 2 karakter');
                         return false;
@@ -293,13 +293,16 @@
                 submitButton.classList.remove('loading');
                 submitButton.disabled = false;
 
-                if (data.success) {
+                if (data.status=='success') {
                     showAlert('success', 'Pendaftaran berhasil! Silakan periksa email Anda untuk verifikasi.');
                     document.getElementById('emailNotice').style.display = 'block';
                     document.getElementById('registerForm').reset();
                     document.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
                         el.classList.remove('is-valid', 'is-invalid');
                     });
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
                 } else {
                     showAlert('error', data.message || 'Terjadi kesalahan saat mendaftar');
                 }
