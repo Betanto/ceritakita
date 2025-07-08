@@ -52,28 +52,67 @@ class AuthController
     public function register(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
-        $username = trim($data['username'] ?? '');
+        $username = trim($data['email'] ?? '');
+        $name = trim($data['name'] ?? '');
         $password = trim($data['password'] ?? '');
 
         if (!$username || !$password) {
-            $_SESSION['flash_error'] = 'Username dan password wajib diisi.';
-            return $response->withHeader('Location', '/register')->withStatus(302);
+            $stream = new \Slim\Psr7\Stream(fopen('php://temp', 'r+'));
+            $stream->write(json_encode(['status' => 'error', 'message' => 'Email dan password wajib diisi.']));
+            $stream->rewind();
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(400)
+                ->withBody($stream);
         }
 
         // Cek apakah username sudah ada
         $existing = $this->db->get('tbl_users', '*', ['username' => $username]);
         if ($existing) {
-            $_SESSION['flash_error'] = 'Username sudah digunakan.';
-            return $response->withHeader('Location', '/register')->withStatus(302);
+            $stream = new \Slim\Psr7\Stream(fopen('php://temp', 'r+'));
+            $stream->write(json_encode(['status' => 'error', 'message' => 'Email sudah digunakan.']));
+            $stream->rewind();
+            return $response->withHeader('Content-Type', 'application/json')
+                ->withStatus(409)
+                ->withBody($stream);
         }
 
-        // Simpan user baru
+        // Simpan user baru dengan id_role=2
         $this->db->insert('tbl_users', [
             'username' => $username,
             'password' => password_hash($password, PASSWORD_DEFAULT),
+            'id_role' => 2,
+            'status' => 1
         ]);
 
-        $_SESSION['flash_success'] = 'Akun berhasil dibuat. Silakan login.';
-        return $response->withHeader('Location', '/login')->withStatus(302);
+        $stream = new \Slim\Psr7\Stream(fopen('php://temp', 'r+'));
+        $stream->write(json_encode(['status' => 'success', 'message' => 'Akun berhasil dibuat. Silakan login.']));
+        $stream->rewind();
+        return $response->withHeader('Content-Type', 'application/json')
+            ->withStatus(201)
+            ->withBody($stream);
+        // $data = $request->getParsedBody();
+        // $username = trim($data['username'] ?? '');
+        // $password = trim($data['password'] ?? '');
+
+        // if (!$username || !$password) {
+        //     $_SESSION['flash_error'] = 'Username dan password wajib diisi.';
+        //     return $response->withHeader('Location', '/register')->withStatus(302);
+        // }
+
+        // // Cek apakah username sudah ada
+        // $existing = $this->db->get('tbl_users', '*', ['username' => $username]);
+        // if ($existing) {
+        //     $_SESSION['flash_error'] = 'Username sudah digunakan.';
+        //     return $response->withHeader('Location', '/register')->withStatus(302);
+        // }
+
+        // // Simpan user baru
+        // $this->db->insert('tbl_users', [
+        //     'username' => $username,
+        //     'password' => password_hash($password, PASSWORD_DEFAULT),
+        // ]);
+
+        // $_SESSION['flash_success'] = 'Akun berhasil dibuat. Silakan login.';
+        // return $response->withHeader('Location', '/login')->withStatus(302);
     }
 }
