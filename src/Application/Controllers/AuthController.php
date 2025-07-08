@@ -79,6 +79,7 @@ class AuthController
         // Simpan user baru dengan id_role=2
         $this->db->insert('tbl_users', [
             'username' => $username,
+            'name' => $name,
             'password' => password_hash($password, PASSWORD_DEFAULT),
             'id_role' => 2,
             'status' => 1
