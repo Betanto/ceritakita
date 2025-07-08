@@ -26,7 +26,7 @@
                         <div class="d-flex" id="length-section"></div>
                         <div class="d-flex pe-lg-2 flex-fill" id="search-section"></div>
                         <div class="d-flex">
-                            <a href="{{ routename }}/create" class="btn btn-primary text-white d-none d-lg-block"><i class="bi bi-plus"></i> <span class="d-none d-lg-inline">Tambah</span></a>
+                            <a href="/{{ routename }}/{{ type }}/create" class="btn btn-primary text-white d-none d-lg-block"><i class="bi bi-plus"></i> <span class="d-none d-lg-inline">Tambah</span></a>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,6 @@
                         <tr>
                             <th class="mobile-p d-none no-sort"></th>
                             <th class="desktop">Judul</th>
-                            <th class="desktop text-center">Tipe</th>
                             <th class="desktop">Induk</th>
                             <th class="desktop text-center no-sort">Status</th>
                             <th class="desktop text-center no-sort">Action</th>
@@ -59,7 +58,7 @@
                                             <div class="dropdown">
                                                 <button class="btn btn-sm btn-outline-secondary text-body" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="/{{ routename }}/edit/{{ category.id }}" class="dropdown-item"><i class="bi bi-pencil"></i> Ubah</a></li>
+                                                    <li><a href="/{{ routename }}/{{ type }}/edit/{{ category.id }}" class="dropdown-item"><i class="bi bi-pencil"></i> Ubah</a></li>
                                                     <li><a href="#" class="dropdown-item btn-delete" data-id="{{ category.id }}" data-name="{{ category.name }}"><i class="bi bi-trash"></i> Hapus</a></li>
                                                 </ul>
                                             </div>
@@ -67,13 +66,12 @@
                                     </div>
                                 </td>
                                 <td>{{ category.name }}</td>
-                                <td>{{ category.type == 0 ? '<span class="badge text-bg-success p-2">Post</span>' : '<span class="badge text-bg-warning p-2">Cerita</span>' }}</td>
                                 <td>{{ category.parent_name }}</td>
                                 <td class="text-center">{{ category.status == 1 ? '<span class="badge text-bg-success p-2">Aktif</span>' : '<span class="badge text-bg-warning p-2">Tidak</span>' }}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <a href="/{{ routename }}/edit/{{ category.id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
+                                            <a href="/{{ routename }}/{{ type }}/edit/{{ category.id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
                                         </div>
                                         <div class="col-6 text-center">
                                             <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ category.id }}" data-name="{{ category.name }}"><i class="bi bi-trash"></i></a>
@@ -108,7 +106,7 @@
                     orderable: false,
                 },
                 {
-                    targets  : [2, 4, 5],
+                    targets  : [3, 4],
                     width: "50px",
                     className: "text-center",
                 },
@@ -168,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Redirect ke URL hapus
-                    window.location.href = '/{{ routename }}/delete/' + dataId;
+                    window.location.href = '/{{ routename }}/{{ type }}/delete/' + dataId;
                 }
             });
         });

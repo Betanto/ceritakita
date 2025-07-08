@@ -15,6 +15,7 @@ use App\Application\Controllers\HomeController;
 use App\Application\Controllers\StoryController;
 use App\Application\Controllers\CategoryController;
 use App\Application\Middleware\AuthMiddleware;
+use App\Application\Middleware\AdminMiddleware;
 use Twig\Extension\DebugExtension;
 
 return function (App $app) {
@@ -48,13 +49,13 @@ return function (App $app) {
     $app->get('/dashboard', [new DashboardController($container), 'index'])->add(new AuthMiddleware());
 
     $app->group('/categories', function ($group) use ($container) {
-        $group->get('', [new CategoryController($container), 'index']);
-        $group->get('/create', [new CategoryController($container), 'create']);
+        $group->get('/{type}', [new CategoryController($container), 'index']);
+        $group->get('/{type}/create', [new CategoryController($container), 'create']);
         $group->post('/create', [new CategoryController($container), 'store']);
-        $group->get('/edit/{id}', [new CategoryController($container), 'edit']);
+        $group->get('/{type}/edit/{id}', [new CategoryController($container), 'edit']);
         $group->post('/edit/{id}', [new CategoryController($container), 'update']);
-        $group->get('/delete/{id}', [new CategoryController($container), 'delete']);
-    })->add(new AuthMiddleware());
+        $group->get('/{type}/delete/{id}', [new CategoryController($container), 'delete']);
+    })->add(new AuthMiddleware())->add(new AdminMiddleware());
 
     $app->group('/articles', function ($group) use ($container) {
         $group->get('', [new ArticleController($container), 'index']);
