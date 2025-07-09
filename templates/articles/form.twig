@@ -1,17 +1,33 @@
 {% extends "master.twig" %}
 
-{% block title %}{{ action }} Artikel{% endblock %}
+{% block title %}{{ action }} {{ pagetitle }}{% endblock %}
+{% block header %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
+{% endblock %}
 
 {% block content %}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="px-0 py-4">
     <div class="card mt-0 border-0 shadow-sm bg-white">
         <div class="card-body">
-            <h6>{{ action }} Artikel</h6>
+            <h6>{{ action == 'Ubah' ? 'Ubah' : 'Tambah' }} {{ pagetitle }}</h6>
+            <div class="row pb-lg-3">
+                <div class="col-lg-7">
+                    <nav class="d-none d-lg-block" style="" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 mt-1">
+                            <li class="breadcrumb-item"><a href="/dashboard" class="btn btn-sm btn-outline-secondary"><i class="bi bi-house-door"></i> Dashboard</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="/{{ routename }}/{{ type }}" class="btn btn-sm btn-outline-secondary"><i class="{{ pageicon }}"></i> {{ pagetitle }}</a></li>
+                            <li class="breadcrumb-item mt-1 active" aria-current="page">{{ action == 'Ubah' ? 'Ubah' : 'Tambah' }}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-5 mt-3 mt-lg-0">
+                </div>
+            </div>
             <form action="{{ article ? '/articles/edit/' ~ article.id : '/articles/create' }}" method="POST" enctype="multipart/form-data" class="my-lg-4">
-                
+                <input type="hidden" class="" id="type" name="type" value="{{ type }}">
                 <!-- Judul -->
                 <div class="row mb-3">
                     <div class="col-lg-2"><label for="title" class="form-label mt-2">Judul</label></div>
@@ -57,34 +73,49 @@
                         {% endif %}
                     </div>
                 </div>
-
-                <!-- File Lampiran -->
-                <div class="row mb-3">
-                    <div class="col-lg-2"><label for="file" class="form-label mt-2">Lampiran</label></div>
-                    <div class="col-lg-10">
-                        <input type="file" name="file" id="file" class="form-control {{ errors.file is defined ? 'is-invalid' : '' }}">
-                        <small class="text-muted">Maks. 5MB. Format PDF, DOCX, ZIP.</small>
-                        {% if article and article.file %}
-                            <p class="mt-2">File saat ini: <a href="/uploads/files/{{ article.file }}" target="_blank">{{ article.file }}</a></p>
-                        {% endif %}
-                        {% if errors.file is defined %}
-                            <span class="invalid-feedback"><strong>{{ errors.file }}</strong></span>
-                        {% endif %}
+                
+                {% if type == 'stories' %}
+                    <!-- File Lampiran -->
+                    <div class="row mb-3">
+                        <div class="col-lg-2"><label for="file" class="form-label mt-2">Lampiran</label></div>
+                        <div class="col-lg-10">
+                            <input type="file" name="file" id="file" class="form-control {{ errors.file is defined ? 'is-invalid' : '' }}">
+                            <small class="text-muted">Maks. 5MB. Format PDF, DOCX, ZIP.</small>
+                            {% if article and article.file %}
+                                <p class="mt-2">File saat ini: <a href="/uploads/files/{{ article.file }}" target="_blank">{{ article.file }}</a></p>
+                            {% endif %}
+                            {% if errors.file is defined %}
+                                <span class="invalid-feedback"><strong>{{ errors.file }}</strong></span>
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
 
                 <!-- Konten -->
                 <div class="row mb-3">
                     <div class="col-lg-2"><label for="content" class="form-label mt-2">Konten</label></div>
                     <div class="col-lg-10">
-                        <textarea name="content" id="content" rows="6" class="form-control">{{ old.content is defined ? old.content : (article.content is defined ? article.content : '') }}</textarea>
+                        <textarea name="content" id="content" class="form-control summernote">{{ old.content is defined ? old.content : (article.content is defined ? article.content : '') }}</textarea>
                     </div>
                 </div>
+
+                {% if type == 'posts' %}
+                    <div class="row mb-3">
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="form-check form-switch py-2">
+                                <input class="form-check-input" type="checkbox" role="switch" id="check_status" name="check_status" value="1" {{ article is defined and article.status == 1 ? 'checked' : (old.check_status is defined and old.check_status ? 'checked' : '') }}>
+                                <label class="form-check-label" for="check_status">Aktif?</label>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
 
                 <!-- Tombol Simpan -->
                 <div class="mt-4 text-end">
                     <button type="submit" class="btn btn-primary text-white"><i class="bi bi-floppy"></i> Simpan</button>
-                    <a href="/articles" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                    <a href="/{{ routename }}/{{ type }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
                 </div>
 
             </form>
@@ -94,7 +125,7 @@
 
 <style>
 /* Reset dan override semua styling textarea */
-textarea#content {
+/* textarea#content {
     resize: vertical !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -112,20 +143,20 @@ textarea#content {
     -moz-appearance: none !important;
     appearance: none !important;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
-}
+} */
 
 /* Pastikan container juga ga ada masalah */
-.col-lg-10 {
+/* .col-lg-10 {
     padding-left: 12px !important;
     padding-right: 12px !important;
-}
+} */
 
 /* Override apapun yang bikin textarea beda */
-textarea#content:focus {
+/* textarea#content:focus {
     border-color: #86b7fe !important;
     outline: 0 !important;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
-}
+} */
 </style>
 {% endblock %}
 
@@ -136,6 +167,9 @@ textarea#content:focus {
         $('#id_category').select2({
             placeholder: "Pilih kategori",
             width: '100%'
+        });
+        $('.summernote').summernote({
+            height: 200
         });
 
         // Handle form submission with SweetAlert
@@ -210,5 +244,6 @@ textarea#content:focus {
             }
         });
     });
+    
 </script>
 {% endblock %}

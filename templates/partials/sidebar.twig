@@ -22,34 +22,58 @@
                 <span class="sidebar-nav-text">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="/articles" class="nav-link {{ routename == 'articles' ? 'active' : '' }}" data-tooltip="Artikel">
-                <span class="nav-icon">
-                    <i class="bi bi-journal-text"></i>
-                </span>
-                <span class="sidebar-nav-text">Artikel</span>
-            </a>
-        </li>
         {% if user.id_role == 1 %}
             <li class="nav-item">
-                <a href="#kategoriSubmenu" class="nav-link {{ routename starts with 'categories' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false" data-tooltip="Kategori">
+                <a href="#ArticleSubmenu" class="nav-link {{ type=='posts' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false" data-tooltip="Artikel">
                     <span class="nav-icon">
-                        <i class="bi bi-collection"></i>
+                        <i class="bi bi-journal-text"></i>
                     </span>
-                    <span class="sidebar-nav-text">Kategori</span>
+                    <span class="sidebar-nav-text">Artikel</span>
                     <span class="ms-auto">
-                        <i class="bi bi-chevron-down"></i>
+                        <i class="bi bi-chevron-down float-end"></i>
                     </span>
                 </a>
-                <ul class="collapse list-unstyled {{ routename starts with 'categories' ? 'show' : '' }}" id="kategoriSubmenu">
+                <ul class="collapse list-unstyled {{ type=='posts' ? 'show' : '' }}" id="ArticleSubmenu">
                     <li>
-                        <a href="/categories/posts" class="nav-link ps-5 {{ routename starts with 'categories' and type == 'posts' ? 'active' : '' }}">Kategori Post</a>
+                        <a href="/categories/posts" class="nav-link ps-5 {{ routename starts with 'categories' and type == 'posts' ? 'active' : '' }}">Kategori</a>
                     </li>
                     <li>
-                        <a href="/categories/stories" class="nav-link ps-5 {{ routename starts with 'categories' and type == 'stories' ? 'active' : '' }}">Kategori Cerita</a>
+                        <a href="/articles/posts" class="nav-link ps-5 {{ routename starts with 'articles' and type == 'posts' ? 'active' : '' }}">Post</a>
                     </li>
                 </ul>
             </li>
+        {% endif %}
+        {% if user.id_role == 1 %}
+            <li class="nav-item">
+                <a href="#StorySubmenu" class="nav-link {{ type=='stories' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false" data-tooltip="Cerita">
+                    <span class="nav-icon">
+                        <i class="bi bi-chat-right-text"></i>
+                    </span>
+                    <span class="sidebar-nav-text">Cerita</span>
+                    <span class="ms-auto">
+                        <i class="bi bi-chevron-down  float-end"></i>
+                    </span>
+                </a>
+                <ul class="collapse list-unstyled {{ type=='stories' ? 'show' : '' }}" id="StorySubmenu">
+                    <li>
+                        <a href="/categories/stories" class="nav-link ps-5 {{ routename starts with 'categories' and type == 'stories' ? 'active' : '' }}">Kategori</a>
+                    </li>
+                    <li>
+                        <a href="/articles/stories" class="nav-link ps-5 {{ routename starts with 'articles' and type == 'stories' ? 'active' : '' }}">Post</a>
+                    </li>
+                </ul>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a href="/articles/stories" class="nav-link {{ type == 'stories' ? 'active' : '' }}" data-tooltip="Cerita">
+                    <span class="nav-icon">
+                        <i class="bi bi-chat-right-text"></i>
+                    </span>
+                    <span class="sidebar-nav-text">Cerita</span>
+                </a>
+            </li>
+        {% endif %}
+        {% if user.id_role == 1 %}
             <li class="nav-item">
                 <a href="/users" class="nav-link {{ routename == 'users' ? 'active' : '' }}" data-tooltip="Pengguna">
                     <span class="nav-icon">
