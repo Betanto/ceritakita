@@ -55,6 +55,8 @@
                                     {% elseif article.status == 1 %}
                                         <span class="badge text-bg-success">Disetujui</span>
                                     {% elseif article.status == 2 %}
+                                        <span class="badge text-bg-info">Direvisi</span>
+                                    {% elseif article.status == 3 %}
                                         <span class="badge text-bg-danger">Ditolak</span>
                                     {% endif %}
                                 </td>
@@ -74,6 +76,7 @@
                                 </td>
                                 <td>{{ article.created_at_formatted }}</td>
                                 <td class="text-center">
+                                    <a href="/articles/show/{{ article.id }}" class="btn btn-sm btn-info"><i class="bi bi-eye text-white"></i></a>
                                     <a href="/articles/edit/{{ article.id }}" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
                                     <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ article.id }}" data-name="{{ article.title }}"><i class="bi bi-trash"></i></a>
                                 </td>
