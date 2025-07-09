@@ -5,7 +5,9 @@ body {
   line-height: 1.75em;
 }
 
-
+.form-control::placeholder {
+  color: #b5b5b5;
+}
 .logo-small {
   width: 65px;
   height: 65px;
