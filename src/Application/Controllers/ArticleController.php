@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Medoo\Medoo;
 use Rakit\Validation\Validator;
+use Psr\Container\ContainerInterface;
 
 class ArticleController
 {
@@ -16,7 +17,7 @@ class ArticleController
     protected $pageicon = 'bi bi-file-earmark-text';
     protected $routename = 'articles';
 
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->view = $container->get('view');
         $this->db = $container->get('db');
@@ -83,6 +84,62 @@ class ArticleController
             'pageicon' => $this->pageicon,
             'routename' => $this->routename,
             'action' => 'Tambah'
+        ]);
+    }
+
+    public function show(Request $request, Response $response, array $args)
+    {
+        $id = $args['id'];
+
+        $article = $this->db->get('tbl_articles (a)', [
+            '[>]tbl_users (u)' => ['a.id_user' => 'id']
+        ], [
+            'a.id',
+            'a.title',
+            'a.content',
+            'a.image',
+            'a.file',
+            'a.status',
+            'a.created_at',
+            'u.name(user_name)'
+        ], [
+            'a.id' => $id,
+            'a.deleted_at' => null
+        ]);
+
+        if (!$article) {
+            $_SESSION['flash_error'] = 'Artikel tidak ditemukan.';
+            return $response->withHeader('Location', '/articles')->withStatus(302);
+        }
+
+        $categories = $this->db->select('tbl_articles_categories (ac)', [
+            '[>]tbl_categories (c)' => ['ac.id_category' => 'id']
+        ], ['c.name'], ['ac.id_article' => $id]);
+        $article['categories'] = array_column($categories, 'name');
+
+        $bulan = [1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Agu', 9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Des'];
+        $tanggal = date('j', strtotime($article['created_at']));
+        $bulanIndo = $bulan[(int)date('n', strtotime($article['created_at']))];
+        $tahun = date('Y', strtotime($article['created_at']));
+        $article['created_at_formatted'] = "$tanggal $bulanIndo $tahun";
+
+        $review = $this->db->get('tbl_reviews', '*', [
+            'id_article' => $id,
+            'deleted_at' => null,
+            'ORDER' => ['created_at' => 'DESC']
+        ]);
+
+        $review_history = $this->db->select('tbl_reviews', '*', [
+            'id_article' => $id,
+            'deleted_at' => null,
+            'ORDER' => ['created_at' => 'DESC']
+        ]);
+
+        return $this->view->render($response, 'articles/show.twig', [
+            'user' => $_SESSION['user'],
+            'article' => $article,
+            'review' => $review,
+            'review_history' => $review_history
         ]);
     }
 
@@ -230,6 +287,34 @@ class ArticleController
             ]);
         }
 
+        return $response->withHeader('Location', '/articles')->withStatus(302);
+    }
+
+    public function submitReview(Request $request, Response $response, array $args)
+    {
+        $id_article = $args['id'];
+        $data = $request->getParsedBody();
+        $notes = trim($data['notes']);
+        $status = (int)($data['status'] ?? 0);
+
+        $id_user = $_SESSION['user']['id'];
+
+        $this->db->insert('tbl_reviews', [
+            'id_user' => $id_user,
+            'id_article' => $id_article,
+            'notes' => $notes,
+            'status' => $status,
+            'created_by' => $id_user,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $this->db->update('tbl_articles', [
+            'status' => $status,
+            'updated_by' => $id_user,
+            'updated_at' => date('Y-m-d H:i:s')
+        ], ['id' => $id_article]);
+
+        $_SESSION['flash_success'] = 'Feedback berhasil ditambahkan.';
         return $response->withHeader('Location', '/articles')->withStatus(302);
     }
 

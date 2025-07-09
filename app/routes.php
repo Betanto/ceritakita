@@ -70,6 +70,8 @@ return function (App $app) {
         $group->get('', [new ArticleController($container), 'index']);
         $group->get('/create', [new ArticleController($container), 'create']);
         $group->post('/create', [new ArticleController($container), 'store']);
+        $group->get('/show/{id}', [ArticleController::class, 'show']);
+        $group->post('/{id}/review', [new ArticleController($container), 'submitReview']);
         $group->get('/edit/{id}', [new ArticleController($container), 'edit']);
         $group->post('/edit/{id}', [new ArticleController($container), 'update']);
         $group->get('/delete/{id}', [new ArticleController($container), 'delete']);
