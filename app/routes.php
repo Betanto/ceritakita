@@ -67,14 +67,14 @@ return function (App $app) {
     })->add(new AuthMiddleware())->add(new AdminMiddleware());
 
     $app->group('/articles', function ($group) use ($container) {
-        $group->get('', [new ArticleController($container), 'index']);
-        $group->get('/create', [new ArticleController($container), 'create']);
+        $group->get('/{ type }', [new ArticleController($container), 'index']);
+        $group->get('/{ type }/create', [new ArticleController($container), 'create']);
         $group->post('/create', [new ArticleController($container), 'store']);
-        $group->get('/show/{id}', [ArticleController::class, 'show']);
+        $group->get('/{ type }/show/{id}', [ArticleController::class, 'show']);
         $group->post('/{id}/review', [new ArticleController($container), 'submitReview']);
-        $group->get('/edit/{id}', [new ArticleController($container), 'edit']);
+        $group->get('/{ type }/edit/{id}', [new ArticleController($container), 'edit']);
         $group->post('/edit/{id}', [new ArticleController($container), 'update']);
-        $group->get('/delete/{id}', [new ArticleController($container), 'delete']);
+        $group->get('/{ type }/delete/{id}', [new ArticleController($container), 'delete']);
     })->add(new AuthMiddleware());
 
 

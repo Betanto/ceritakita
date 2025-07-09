@@ -1,7 +1,8 @@
 {% extends "master.twig" %}
 
-{% block title %}Daftar Kategori{% endblock %}
+{% block title %}{{ action }} {{ pagetitle }}{% endblock %}
 {% block header %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -55,24 +56,6 @@
                         {% endif %}
                     </div>
                 </div>
-                <!-- <div class="row mb-3">
-                    <div class="col-lg-2">
-                        <label for="type" class="form-label mt-2">Tipe</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <select name="type" id="type" class="form-control">
-                            <option value="">-- Pilih Tipe --</option>
-                            <option value="0" {% if category and category.type == '0' %}selected{% endif %}>Post</option>
-                            <option value="1" {% if category and category.type == '1' %}selected{% endif %}>Cerita</option>
-                        </select>
-                        {% if errors.type is defined %}
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ errors.type }}</strong>
-                            </span>
-                        {% endif %}
-                    </div>
-                </div> -->
-                <!-- <input type="text" class="form-control" id="name" name="name" value="{{ action == 'Ubah' ? old.name|default(category.name) : old.name|default('') }}" placeholder="Masukkan Judul" autofocus required> -->
                 <div class="row mb-3">
                     <div class="col-lg-2">
                     </div>
@@ -94,4 +77,11 @@
 
 {% endblock %}
 {% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $('#id_parent').select2({
+        placeholder: "Pilih kategori",
+        width: '100%'
+    });
+</script>
 {% endblock %}

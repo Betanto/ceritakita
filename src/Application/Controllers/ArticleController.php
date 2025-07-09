@@ -13,7 +13,7 @@ class ArticleController
     protected $view;
     protected $db;
     protected $tablename = 'tbl_articles';
-    protected $pagetitle = 'Artikel';
+    protected $pagetitle = 'Post';
     protected $pageicon = 'bi bi-file-earmark-text';
     protected $routename = 'articles';
 
@@ -23,10 +23,35 @@ class ArticleController
         $this->db = $container->get('db');
     }
 
-    public function index(Request $request, Response $response)
+    public function index(Request $request, Response $response, array $args)
     {
+        if($args['type']=="posts"){
+            $type=0;
+        }else{
+            $type=1;
+        }
+        $where = [
+            'a.deleted_at' => null,
+            'c.type' => $type,
+            'GROUP' => 'a.id'
+        ];
+
+        if (isset($_SESSION['user']['id_role']) && $_SESSION['user']['id_role'] == 2) {
+            $where['a.id_user'] = $_SESSION['user']['id'];
+        }
+
+        // Tambahkan order jika type=stories
+        if ($args['type'] === 'stories') {
+            $where['ORDER'] = [
+            'a.status' => 'ASC',
+            'a.updated_at' => 'DESC'
+            ];
+        }
+
         $articles = $this->db->select('tbl_articles (a)', [
-            '[>]tbl_users (u)' => ['a.id_user' => 'id']
+            '[>]tbl_users (u)' => ['a.id_user' => 'id'],
+            '[>]tbl_articles_categories (ac)' => ['a.id' => 'id_article'],
+            '[>]tbl_categories (c)' => ['ac.id_category' => 'id'],
         ], [
             'a.id',
             'a.title',
@@ -35,10 +60,9 @@ class ArticleController
             'a.file',
             'a.created_at',
             'u.name(user_name)',
-        ], [
-            'a.deleted_at' => null,
-            'a.id_user' => $_SESSION['user']['id']
-        ]);
+            'c.name (categories)',
+        ], $where);
+        // 'a.id_user' => $_SESSION['user']['id'],
 
         $bulan = [1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Agu', 9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Des'];
 
@@ -61,21 +85,27 @@ class ArticleController
             $article['created_at_formatted'] = "$tanggal $bulanIndo $tahun";
         }
 
-        return $this->view->render($response, 'articles/list.twig', [
+        return $this->view->render($response, $this->routename.'/list.twig', [
             'user' => $_SESSION['user'],
             'articles' => $articles,
             'pagetitle' => $this->pagetitle,
             'pageicon' => $this->pageicon,
-            'routename' => $this->routename
+            'routename' => $this->routename,
+            'type'=> $args['type']
         ]);
     }
 
-    public function create(Request $request, Response $response)
+    public function create(Request $request, Response $response, array $args)
     {
-        $categories = $this->db->select('tbl_categories', '*', ['deleted_at' => null]);
-        $parentArticles = $this->db->select('tbl_articles', ['id', 'title'], ['deleted_at' => null]);
+        if($args['type']=="posts"){
+            $type=0;
+        }else{
+            $type=1;
+        }
+        $categories = $this->db->select('tbl_categories', '*', ['deleted_at' => null,'status'=>1,'type' => $type]);
+        $parentArticles = $this->db->select($this->tablename, ['id', 'title'], ['deleted_at' => null]);
 
-        return $this->view->render($response, 'articles/form.twig', [
+        return $this->view->render($response, $this->routename.'/form.twig', [
             'user' => $_SESSION['user'],
             'article' => null,
             'categories' => $categories,
@@ -83,7 +113,8 @@ class ArticleController
             'pagetitle' => $this->pagetitle,
             'pageicon' => $this->pageicon,
             'routename' => $this->routename,
-            'action' => 'Tambah'
+            'action' => 'Tambah',
+            'type'=> $args['type']
         ]);
     }
 
@@ -139,7 +170,11 @@ class ArticleController
             'user' => $_SESSION['user'],
             'article' => $article,
             'review' => $review,
-            'review_history' => $review_history
+            'review_history' => $review_history,
+            'pagetitle' => $this->pagetitle,
+            'pageicon' => $this->pageicon,
+            'routename' => $this->routename,
+            'type'=> $args['type']
         ]);
     }
 
@@ -150,6 +185,11 @@ class ArticleController
 
     public function edit(Request $request, Response $response, array $args)
     {
+        if($args['type']=="posts"){
+            $type=0;
+        }else{
+            $type=1;
+        }
         $id = $args['id'];
         $article = $this->db->get($this->tablename, '*', ['id' => $id, 'deleted_at' => null]);
         if (!$article) {
@@ -158,7 +198,7 @@ class ArticleController
         }
 
         $article['categories'] = $this->db->select('tbl_articles_categories', 'id_category', ['id_article' => $id]);
-        $categories = $this->db->select('tbl_categories', '*', ['deleted_at' => null]);
+        $categories = $this->db->select('tbl_categories', '*', ['deleted_at' => null,'status'=>1,'type' => $type]);
         $parentArticles = $this->db->select('tbl_articles', ['id', 'title'], [
             'deleted_at' => null,
             'id[!]' => $id
@@ -173,7 +213,8 @@ class ArticleController
             'pageicon' => $this->pageicon,
             'routename' => $this->routename,
             'action' => 'Edit',
-            'selectedCategories' => $article['categories']
+            'selectedCategories' => $article['categories'],
+            'type'=> $args['type']
         ]);
     }
 
@@ -222,7 +263,7 @@ class ArticleController
         }
 
         if (!empty($errors)) {
-            $categories = $this->db->select('tbl_categories', '*', ['deleted_at' => null]);
+            $categories = $this->db->select('tbl_categories', '*', ['deleted_at' => null,'status'=>1,'type' => $type]);
             $parentArticles = $this->db->select('tbl_articles', ['id', 'title'], ['deleted_at' => null]);
             $article = $id ? $this->db->get($this->tablename, '*', ['id' => $id]) : null;
 
@@ -236,12 +277,21 @@ class ArticleController
                 'routename' => $this->routename,
                 'action' => $id ? 'Edit' : 'Tambah',
                 'errors' => $errors,
+                'type' => $data['type'],
                 'old' => $data
             ]);
         }
 
         $slug = slugify($data['title']);
-        $status = 0;
+        if($data['type']=='posts'){
+            if(isset($data['check_status'])){
+                $status=1;
+            }else{
+                $status=0;
+            }
+        }else{
+            $status = 0;
+        }
         $idParent = !empty($data['id_parent']) ? (int)$data['id_parent'] : 0;
 
         $imageName = null;
@@ -287,7 +337,7 @@ class ArticleController
             ]);
         }
 
-        return $response->withHeader('Location', '/articles')->withStatus(302);
+        return $response->withHeader('Location', '/'.$this->routename.'/'.$data['type'])->withStatus(302);
     }
 
     public function submitReview(Request $request, Response $response, array $args)
@@ -315,17 +365,20 @@ class ArticleController
         ], ['id' => $id_article]);
 
         $_SESSION['flash_success'] = 'Feedback berhasil ditambahkan.';
-        return $response->withHeader('Location', '/articles')->withStatus(302);
+        return $response->withHeader('Location', '/'.$this->routename.'/'.$data['type'])->withStatus(302);
     }
 
     public function delete(Request $request, Response $response, array $args)
     {
-        $this->db->update($this->tablename, [
+        $deleted = $this->db->update($this->tablename, [
             'deleted_at' => Medoo::raw('NOW()'),
             'deleted_by' => $_SESSION['user']['id']
         ], ['id' => $args['id']]);
-
-        $_SESSION['flash_success'] = 'Artikel berhasil dihapus.';
-        return $response->withHeader('Location', '/articles')->withStatus(302);
+        if ($deleted->rowCount() > 0) {
+            $_SESSION['flash_success'] = 'Data berhasil dihapus.';
+        } else {
+            $_SESSION['flash_error'] = 'Gagal menghapus data.';
+        }
+        return $response->withHeader('Location', '/'.$this->routename.'/'.$args['type'])->withStatus(302);
     }
 }

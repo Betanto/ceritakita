@@ -69,7 +69,7 @@ class CategoryController
             $type=1;
         }
         $categories = $this->db->select($this->tablename, '*', ['deleted_at'=>null,'type' => $type]);
-        return $this->view->render($response, 'categories/form.twig', [
+        return $this->view->render($response, $this->routename.'/form.twig', [
             'user' => $_SESSION['user'],
             'parent' => $categories,
             'category' => null,
