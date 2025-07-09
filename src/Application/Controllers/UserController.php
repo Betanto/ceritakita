@@ -56,7 +56,7 @@ class UserController
         return $this->view->render($response, $this->routename.'/form.twig', [
             'user' => $_SESSION['user'],
             'roles' => $roles,
-            'category' => null,
+            'data' => null,
             'pagetitle' => $this->pagetitle,
             'routename' => $this->routename,
             'pageicon' => $this->pageicon,
@@ -117,7 +117,7 @@ class UserController
             return $this->view->render($response, $this->routename.'/form.twig', [
                 'user' => $_SESSION['user'],
                 'roles' => $roles,
-                // 'category' => null,
+                'data' => null,
                 'pagetitle' => $this->pagetitle,
                 'routename' => $this->routename,
                 'pageicon' => $this->pageicon,
@@ -148,54 +148,38 @@ class UserController
             $_SESSION['flash_error'] = 'Gagal menambahkan data.';
         }
 
-        return $response->withHeader('Location', '/categories/' . $data['type'])->withStatus(302);
+        return $response->withHeader('Location', '/'.$this->routename)->withStatus(302);
     }
 
     public function edit(Request $request, Response $response, array $args)
     {
-        if($args['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
-        $category = $this->db->get($this->tablename, '*', ['id' => $args['id']]);
-        $categories = $this->db->select($this->tablename, '*', [
-            'id[!]' => $args['id'],
-            'deleted_at' => null,
-            'type' => $type
-        ]);
+        $data = $this->db->get($this->tablename, '*', ['id' => $args['id']]);
+        $roles = $this->db->select('tbl_roles', '*');
 
-        if (!$category) {
+        if (!$data) {
             // return $response->withStatus(404)->write('Buku tidak ditemukan');
-            $response->getBody()->write('Kategori tidak ditemukan');
+            $response->getBody()->write('Data tidak ditemukan');
             return $response->withStatus(404);
         }
 
-        return $this->view->render($response, 'categories/form.twig', [
+        return $this->view->render($response, $this->routename.'/form.twig', [
             'user' => $_SESSION['user'],
-            'category' => $category,
-            'parent' => $categories,
+            'data' => $data,
+            'roles' => $roles,
             'pagetitle' => $this->pagetitle,
             'routename' => $this->routename,
             'pageicon' => $this->pageicon,
-            'action' => 'Ubah',
-            'type'=> $args['type']
+            'action' => 'Ubah'
         ]);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
         $data = $request->getParsedBody();
-        if($data['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
-        
         $id = $args['id']; // ID dari URL
-        $category = $this->db->get('tbl_categories', '*', ['id' => $id]);
-        if (!$category) {
-            return $response->withStatus(404)->write("Kategori tidak ditemukan");
+        $user = $this->db->get($this->tablename, '*', ['id' => $id]);
+        if (!$user) {
+            return $response->withStatus(404)->write("Data tidak ditemukan");
         }
         $validator = new Validator;
         $validator->addValidator('unique_except', new class($this->db, $id) extends \Rakit\Validation\Rule {
@@ -211,7 +195,7 @@ class UserController
             }
 
             public function check($value): bool
-{
+            {
                 $table        = $this->parameter('table');
                 $column       = $this->parameter('column');
                 $exceptColumn = $this->parameter('except_column') ?? 'id';
@@ -227,36 +211,51 @@ class UserController
                 return $count === 0;
             }
         });
+        $validator->addValidator('match', new class extends \Rakit\Validation\Rule {
+            protected $message = ":attribute tidak sama";
+            protected $fillableParams = ['other'];
 
+            public function check($value): bool
+            {
+                $other = $this->parameter('other');
+                return isset($this->input[$other]) && $value === $this->input[$other];
+            }
+        });
+
+        // Jika password diisi, tambahkan validasi match konfirmasi_password
+        // $rules = [
+        //     'name' => 'required',
+        //     'username' => 'required|unique_except:tbl_users,username,id',
+        // ];
+
+        // if (!empty($data['password'])) {
+        //     $rules['password'] = 'match:konfirmasi_password';
+        // }
         $validation = $validator->make($data, [
-            'name' => 'required|unique_except:tbl_categories,name,id',
+            'name' => 'required',
+            'username' => 'required|unique_except:tbl_users,username,id',
         ]);
 
         // Custom label
         $validation->setAliases([
-            'name' => 'Judul',
+            'username' => 'Email',
         ]);
 
         $validation->validate();
 
         if ($validation->fails()) {
-            $categories = $this->db->select($this->tablename, '*', [
-                'id[!]' => $args['id'],
-                'deleted_at' => null
-            ]);
+            $roles = $this->db->select('tbl_roles', '*');
             $errors = $validation->errors();
-            return $this->view->render($response, 'categories/form.twig', [
+            return $this->view->render($response, $this->routename.'/form.twig', [
                 'user' => $_SESSION['user'],
-                'category' => $category,
-                'parent' => $categories,
+                'roles' => $roles,
                 'pagetitle' => $this->pagetitle,
                 'routename' => $this->routename,
                 'pageicon' => $this->pageicon,
                 'action' => 'Ubah',
                 'errors' => $errors->firstOfAll(),
                 'old'    => $data,
-                'category' => $category,
-                'type'=> $data['type']
+                'data' => $user
             ]);
         }
 
@@ -265,40 +264,41 @@ class UserController
         }else{
             $status=0;
         }
-
+        if(!empty($data['password'])){
+            $password = password_hash($data['password'], PASSWORD_DEFAULT);
+        } else {
+            $password = $user['password'];
+        }
         $updated = $this->db->update($this->tablename, [
+            // (isset($data['password']) && !empty($data['password']) ? ['password' => password_hash($data['password'], PASSWORD_DEFAULT)] : []) +
             'name' => $data['name'],
-            'id_parent' => $data['id_parent'],
+            'password' => $password,
+            'username' => $data['username'],
+            'id_role' => $data['id_role'],
             'updated_by' => $_SESSION['user']['id'],
             'status' => $status
         ], ['id' => $args['id']]);
 
         if ($updated->rowCount() > 0) {
-            $_SESSION['flash_success'] = 'Kategori berhasil diperbarui.';
+            $_SESSION['flash_success'] = 'Data berhasil diperbarui.';
         } else {
             $_SESSION['flash_error'] = 'Tidak ada data yang diubah atau gagal.';
         }
 
-        return $response->withHeader('Location', '/categories/' . $data['type'])->withStatus(302);
+        return $response->withHeader('Location', '/'.$this->routename)->withStatus(302);
     }
 
     public function delete(Request $request, Response $response, array $args)
     {
-        // $deleted = $this->db->delete($this->tablename, ['id' => $args['id']]);
-        if($args['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
         $deleted = $this->db->update($this->tablename, [
             'deleted_at' => Medoo::raw('NOW()'),
             'deleted_by' => $_SESSION['user']['id']
         ], ['id' => $args['id']]);
         if ($deleted->rowCount() > 0) {
-            $_SESSION['flash_success'] = 'Kategori berhasil dihapus.';
+            $_SESSION['flash_success'] = 'Data berhasil dihapus.';
         } else {
-            $_SESSION['flash_error'] = 'Gagal menghapus kategori.';
+            $_SESSION['flash_error'] = 'Gagal menghapus data.';
         }
-        return $response->withHeader('Location', '/categories/' . $args['type'])->withStatus(302);
+        return $response->withHeader('Location', '/'.$this->routename)->withStatus(302);
     }
 }

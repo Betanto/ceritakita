@@ -69,10 +69,10 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-2">
-                        <label for="password" class="form-label mt-2">Password <span class="text-danger">*</span></label>
+                        <label for="password" class="form-label mt-2">Password {% if data is not defined %}<span class="text-danger">*</span>{% endif %}</label>
                     </div>
                     <div class="col-lg-10">
-                        <input type="password" class="form-control {{ errors.password is defined ? 'is-invalid' }}" id="password" name="password" value="" placeholder="Masukkan Password" required>
+                        <input type="password" class="form-control {{ errors.password is defined ? 'is-invalid' }}" id="password" name="password" value="" placeholder="Masukkan Password" {% if data is not defined %}required{% endif %}>
                         {% if errors.password is defined %}
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ errors.password }}</strong>
@@ -82,10 +82,10 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-2">
-                        <label for="konfirmasi_password" class="form-label mt-2">Konfirmasi Password <span class="text-danger">*</span></label>
+                        <label for="konfirmasi_password" class="form-label mt-2">Konfirmasi Password {% if data is not defined %}<span class="text-danger">*</span>{% endif %}</label>
                     </div>
                     <div class="col-lg-10">
-                        <input type="password" class="form-control {{ errors.konfirmasi_password is defined ? 'is-invalid' }}" id="konfirmasi_password" name="konfirmasi_password" value="" placeholder="Masukkan konfirmasi password" required>
+                        <input type="password" class="form-control {{ errors.konfirmasi_password is defined ? 'is-invalid' }}" id="konfirmasi_password" name="konfirmasi_password" value="" placeholder="Masukkan konfirmasi password" {% if data is not defined %}required{% endif %}>                        
                         {% if errors.konfirmasi_password is defined %}
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ errors.konfirmasi_password }}</strong>
@@ -93,24 +93,6 @@
                         {% endif %}
                     </div>
                 </div>
-                <!-- <div class="row mb-3">
-                    <div class="col-lg-2">
-                        <label for="type" class="form-label mt-2">Tipe</label>
-                    </div>
-                    <div class="col-lg-10">
-                        <select name="type" id="type" class="form-control">
-                            <option value="">-- Pilih Tipe --</option>
-                            <option value="0" {% if category and category.type == '0' %}selected{% endif %}>Post</option>
-                            <option value="1" {% if category and category.type == '1' %}selected{% endif %}>Cerita</option>
-                        </select>
-                        {% if errors.type is defined %}
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ errors.type }}</strong>
-                            </span>
-                        {% endif %}
-                    </div>
-                </div> -->
-                <!-- <input type="text" class="form-control" id="name" name="name" value="{{ action == 'Ubah' ? old.name|default(category.name) : old.name|default('') }}" placeholder="Masukkan Judul" autofocus required> -->
                 <div class="row mb-3">
                     <div class="col-lg-2">
                     </div>
