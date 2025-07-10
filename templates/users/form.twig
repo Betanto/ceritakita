@@ -1,0 +1,117 @@
+{% extends "master.twig" %}
+
+{% block title %}Daftar Kategori{% endblock %}
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="px-0 py-4">
+    <div class="card mt-0 border-0 shadow-sm bg-white">
+        <div class="card-body">
+            <h6>{{ action == 'Ubah' ? 'Ubah' : 'Tambah' }} {{ pagetitle }}</h6>
+            <div class="row pb-lg-3">
+                <div class="col-lg-7">
+                    <nav class="d-none d-lg-block" style="" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 mt-1">
+                            <li class="breadcrumb-item"><a href="/dashboard" class="btn btn-sm btn-outline-secondary"><i class="bi bi-house-door"></i> Dashboard</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="/{{ routename }}" class="btn btn-sm btn-outline-secondary"><i class="{{ pageicon }}"></i> {{ pagetitle }}</a></li>
+                            <li class="breadcrumb-item mt-1 active" aria-current="page">{{ action == 'Ubah' ? 'Ubah' : 'Tambah' }}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-5 mt-3 mt-lg-0">
+                </div>
+            </div>
+            <form action="{{ data ? '/users/edit/' ~ data.id : '/users/create' }}" method="POST" enctype="multipart/form-data" class="my-lg-4">
+                <div class="row mb-3">
+                    <div class="col-lg-2">
+                        <label for="name" class="form-label mt-2">Nama Lengkap <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control {{ errors.name is defined ? 'is-invalid' }}" id="name" name="name" value="{{ action == 'Ubah' ? old.name|default(data.name) : old.name|default('') }}" placeholder="Masukkan Nama Lengkap" autofocus required>
+                        {% if errors.name is defined %}
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ errors.name }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-2">
+                        <label for="username" class="form-label mt-2">Email <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="email" class="form-control {{ errors.username is defined ? 'is-invalid' }}" id="username" name="username" value="{{ action == 'Ubah' ? old.username|default(data.username) : old.username|default('') }}" placeholder="Masukkan Email" required>
+                        {% if errors.username is defined %}
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ errors.username }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-2">
+                        <label for="id_role" class="form-label mt-2">Role <span class="text-danger">*</span></label>
+                    </div>
+                    <div class="col-lg-10">
+                        <select name="id_role" id="id_role" class="form-control" required>
+                            <option value="">-- Pilih Role --</option>
+                            {% for item in roles %}
+                            <option value="{{ item.id }}" {% if data and data.id_role == item.id %}selected{% endif %}>{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if errors.id_role is defined %}
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ errors.id_role }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-2">
+                        <label for="password" class="form-label mt-2">Password {% if data is not defined %}<span class="text-danger">*</span>{% endif %}</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control {{ errors.password is defined ? 'is-invalid' }}" id="password" name="password" value="" placeholder="Masukkan Password" {% if data is not defined %}required{% endif %}>
+                        {% if errors.password is defined %}
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ errors.password }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-2">
+                        <label for="konfirmasi_password" class="form-label mt-2">Konfirmasi Password {% if data is not defined %}<span class="text-danger">*</span>{% endif %}</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="password" class="form-control {{ errors.konfirmasi_password is defined ? 'is-invalid' }}" id="konfirmasi_password" name="konfirmasi_password" value="" placeholder="Masukkan konfirmasi password" {% if data is not defined %}required{% endif %}>                        
+                        {% if errors.konfirmasi_password is defined %}
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ errors.konfirmasi_password }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="form-check form-switch py-2">
+                            <input class="form-check-input" type="checkbox" role="switch" id="check_status" name="check_status" value="1" {{ category is defined and category.status == 1 ? 'checked' : (old.check_status is defined and old.check_status ? 'checked' : '') }}>
+                            <label class="form-check-label" for="check_status">Aktif?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary text-white"><i class="bi bi-floppy"></i>Simpan</button>
+                    <a href="/{{ routename }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+{% endblock %}

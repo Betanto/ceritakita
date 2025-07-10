@@ -22,12 +22,23 @@ use Slim\Psr7\Response;
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/helpers.php'; // adjust path if needed
 
+$uploadFolders = [
+    __DIR__ . '/uploads',
+    __DIR__ . '/uploads/images',
+    __DIR__ . '/uploads/files',
+];
+
+foreach ($uploadFolders as $folder) {
+    if (!is_dir($folder)) {
+        mkdir($folder, 0777, true);
+    }
+}
 
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
 
 if (false) { // Should be set to true in production
-	$containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
+    $containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
 }
 
 // Set up settings

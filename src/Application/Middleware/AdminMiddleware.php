@@ -20,8 +20,8 @@ class AdminMiddleware implements MiddlewareInterface
         //     $response->getBody()->write('Unauthorized');
         //     return $response->withStatus(401);
         // }
-        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-            $response = new Slim\Psr7\Response();
+        if (!isset($_SESSION['user']) || $_SESSION['user']['id_role'] !== 1) {
+            $response = new Response();
             $response->getBody()->write("403 - Forbidden (Admin only)");
             return $response->withStatus(403);
         }
