@@ -15,336 +15,6 @@
     <link href="/css/app.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     {% block header %}{% endblock %}
-
-    <!-- Custom Master Styles -->
-    <style>
-        /* Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #334155;
-        }
-
-        .wrapper {
-            display: flex;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* Sidebar Styles */
-        #sidebar {
-            min-width: 280px;
-            max-width: 280px;
-            background: linear-gradient(180deg, #2196F3 0%, #1976D2 100%);
-            color: white;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        #sidebar.active {
-            margin-left: -280px;
-        }
-
-        /* Sidebar Brand */
-        .sidebar-brand {
-            padding: 2rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: white;
-        }
-
-        .brand-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, #FF9800, #F57C00);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .brand-text h4 {
-            margin: 0;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .brand-text p {
-            margin: 0;
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        /* Sidebar Navigation */
-        .sidebar-nav {
-            padding: 1rem 0;
-        }
-
-        .nav-item {
-            margin: 0.25rem 1rem;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.875rem 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .nav-link.active {
-            background: linear-gradient(45deg, #FF9800, #F57C00);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
-        }
-
-        .nav-icon {
-            width: 20px;
-            display: flex;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-
-        /* Content Area */
-        #content {
-            flex: 1;
-            margin-left: 280px;
-            transition: all 0.3s ease;
-            min-height: 100vh;
-        }
-
-        #content.active {
-            margin-left: 0;
-        }
-
-        /* Top Navigation */
-        .navbar {
-            background: white !important;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .navbar-brand {
-            margin-right: 1rem;
-        }
-
-        #sidebarCollapse {
-            border: none;
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            color: white;
-            border-radius: 8px;
-            padding: 0.5rem 0.75rem;
-            transition: all 0.3s ease;
-        }
-
-        #sidebarCollapse:hover {
-            background: linear-gradient(45deg, #1976D2, #1565C0);
-            transform: scale(1.05);
-        }
-
-        .page-title {
-            font-weight: 700;
-            color: #1e293b;
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        /* User Dropdown */
-        .user-dropdown {
-            position: relative;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            color: #64748b;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .user-info:hover {
-            background: #f1f5f9;
-            color: #2196F3;
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .dropdown-menu {
-            border: none;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .dropdown-item {
-            padding: 0.75rem 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-item:hover {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-            color: white;
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem;
-            min-height: calc(100vh - 80px);
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            #sidebar {
-                margin-left: -280px;
-            }
-
-            #sidebar.active {
-                margin-left: 0;
-            }
-
-            #content {
-                margin-left: 0;
-            }
-
-            #content.active {
-                margin-left: 280px;
-            }
-
-            .sidebar-nav-text {
-                display: none;
-            }
-
-            .sidebar-nav-text.hide {
-                display: block;
-            }
-
-            main {
-                padding: 1rem;
-            }
-        }
-
-        /* Sidebar Collapse Animation */
-        .sidebar-nav-text {
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-nav-text.hide {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-
-        /* Custom Scrollbar */
-        #sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        #sidebar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        #sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 2px;
-        }
-
-        #sidebar::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Overlay for mobile */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 998;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Loading States */
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #2196F3;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Custom Alerts */
-        .swal2-popup {
-            border-radius: 15px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .swal2-confirm {
-            background: linear-gradient(45deg, #2196F3, #1976D2) !important;
-            border-radius: 8px !important;
-        }
-
-        .swal2-cancel {
-            background: linear-gradient(45deg, #6c757d, #5a6268) !important;
-            border-radius: 8px !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -354,76 +24,7 @@
             <div class="sidebar-overlay" id="sidebarOverlay"></div>
             
             <!-- Sidebar -->
-            <nav id="sidebar">
-                <!-- Brand Section -->
-                <div class="sidebar-brand">
-                    <a href="/dashboard" class="brand-logo">
-                        <div class="brand-icon">
-                            <i class="bi bi-book-half"></i>
-                        </div>
-                        <div class="brand-text sidebar-nav-text">
-                            <h4>Cerita Kita</h4>
-                            <p>Berbagi Cerita</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Navigation Menu -->
-                <ul class="sidebar-nav list-unstyled">
-                    <li class="nav-item">
-                        <a href="/dashboard" class="nav-link {{ routename == 'dashboard' ? 'active' : '' }}">
-                            <span class="nav-icon">
-                                <i class="bi bi-house"></i>
-                            </span>
-                            <span class="sidebar-nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/stories" class="nav-link {{ routename == 'stories' ? 'active' : '' }}">
-                            <span class="nav-icon">
-                                <i class="bi bi-journal-text"></i>
-                            </span>
-                            <span class="sidebar-nav-text">Cerita</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/categories" class="nav-link {{ routename == 'categories' ? 'active' : '' }}">
-                            <span class="nav-icon">
-                                <i class="bi bi-collection"></i>
-                            </span>
-                            <span class="sidebar-nav-text">Kategori</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/profile" class="nav-link {{ routename == 'profile' ? 'active' : '' }}">
-                            <span class="nav-icon">
-                                <i class="bi bi-person"></i>
-                            </span>
-                            <span class="sidebar-nav-text">Profile</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/settings" class="nav-link {{ routename == 'settings' ? 'active' : '' }}">
-                            <span class="nav-icon">
-                                <i class="bi bi-gear"></i>
-                            </span>
-                            <span class="sidebar-nav-text">Pengaturan</span>
-                        </a>
-                    </li>
-                </ul>
-
-                <!-- Logout Section -->
-                {#
-                <div class="mt-auto p-3">
-                    <a href="/logout" class="nav-link text-danger">
-                        <span class="nav-icon">
-                            <i class="bi bi-box-arrow-left"></i>
-                        </span>
-                        <span class="sidebar-nav-text">Logout</span>
-                    </a>
-                </div>
-                #}
-            </nav>
+            {% include 'partials/sidebar.twig' %}
 
             <!-- Main Content -->
             <div id="content">
@@ -491,25 +92,27 @@
     <script>
         // Sidebar Toggle
         $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-            $('#content').toggleClass('active');
-            $('.sidebar-nav-text').toggleClass('hide');
-            $('#sidebarOverlay').toggleClass('active');
+            if (window.innerWidth > 768) {
+                // Desktop behavior: collapse/expand sidebar
+                $('#sidebar').toggleClass('collapsed');
+                $('#content').toggleClass('collapsed');
+            } else {
+                // Mobile behavior: show/hide sidebar
+                $('#sidebar').toggleClass('mobile-active');
+                $('#sidebarOverlay').toggleClass('active');
+            }
         });
 
         // Close sidebar when clicking overlay (mobile)
         $('#sidebarOverlay').on('click', function () {
-            $('#sidebar').addClass('active');
-            $('#content').removeClass('active');
-            $('.sidebar-nav-text').removeClass('hide');
+            $('#sidebar').removeClass('mobile-active');
             $(this).removeClass('active');
         });
 
         // Auto-close sidebar on mobile when clicking nav links
         $('.nav-link').on('click', function () {
             if (window.innerWidth <= 768) {
-                $('#sidebar').addClass('active');
-                $('#content').removeClass('active');
+                $('#sidebar').removeClass('mobile-active');
                 $('#sidebarOverlay').removeClass('active');
             }
         });
@@ -518,6 +121,10 @@
         $(window).on('resize', function () {
             if (window.innerWidth > 768) {
                 $('#sidebarOverlay').removeClass('active');
+                $('#sidebar').removeClass('mobile-active');
+            } else {
+                $('#sidebar').removeClass('collapsed');
+                $('#content').removeClass('collapsed');
             }
         });
     </script>
