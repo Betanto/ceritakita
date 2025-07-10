@@ -1,0 +1,121 @@
+{% extends "master.twig" %}
+
+{% block title %}Detail Artikel{% endblock %}
+
+{% block content %}
+<div class="px-0 py-4">
+
+    <!-- Card 1: Detail Artikel -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <h6>Detail {{ pagetitle }}</h6>
+            <div class="row pb-lg-3">
+                <div class="col-lg-7">
+                    <nav class="d-none d-lg-block" style="" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 mt-1">
+                            <li class="breadcrumb-item"><a href="/dashboard" class="btn btn-sm btn-outline-secondary"><i class="bi bi-house-door"></i> Dashboard</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="/{{ routename }}" class="btn btn-sm btn-outline-secondary"><i class="{{ pageicon }}"></i> {{ pagetitle }}</a></li>
+                            <li class="breadcrumb-item mt-1 active" aria-current="page">Detail</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-5 mt-3 mt-lg-0">
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Kiri -->
+                <div class="col-md-4 mb-4">
+                    <div class="mb-3"><strong>Gambar:</strong><br>
+                        {% if article.image %}
+                            <img src="/uploads/images/{{ article.image }}" class="img-fluid rounded border" style="max-height: 250px; width: 100%; object-fit: cover;">
+                        {% else %}
+                            <em>- Tidak ada gambar -</em>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3"><strong>Lampiran:</strong><br>
+                        {% if article.file %}
+                            <a href="/uploads/files/{{ article.file }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-download"></i> Unduh Lampiran
+                            </a>
+                        {% else %}
+                            <em>- Tidak ada file -</em>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3"><strong>Status:</strong><br>
+                        {{ article.payment_at is not null ? '<span class="badge text-bg-success p-2">Sudah Dibayar</span>' : '<span class="badge text-bg-warning p-2">Belum Dibayar</span>' }}
+                    </div>
+                    {% if article.payment_at is null %}
+                        {% if user.id_role == 1 %}
+                            <form method="POST" action="/{{ routename }}/{{ article.id }}/payment">
+                                <div class="row">
+                                    <label for="notes" class="form-label fw-bold">Jumlah Pembayaran</label>
+                                    <div class="col-lg-8">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">Rp</span>
+                                            <input type="text" name="amount" id="amount" class="form-control text-end" placeholder="Masukkan jumlah..." inputmode="numeric" autocomplete="off" autofocus />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="bi bi-send"></i> Kirim
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <div class="mb-3"><strong>Jumlah Pembayaran:</strong><br>
+                            Rp {{ article.amount|number_format(0, ',', '.') }}
+                        </div>
+                        <div class="mb-3"><strong>Dibayar pada:</strong><br>{{ article.payment_at_formatted }}</div>
+                        <div class="mb-3"><strong>Dibayar oleh:</strong><br>{{ article.paid_by }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Kanan -->
+                <div class="col-md-8">
+                    <div class="mb-3"><strong>Judul:</strong><br>{{ article.title }}</div>
+
+                    <div class="mb-3"><strong>Penulis:</strong><br>{{ article.user_name }}</div>
+
+                    <div class="mb-3"><strong>Kategori:</strong><br>
+                        {{ article.categories|join(', ') }}
+                    </div>
+
+                    <div class="mb-3"><strong>Tanggal:</strong><br>{{ article.created_at_formatted }}</div>
+
+                    <div class="mb-3"><strong>Konten:</strong><br>
+                        <div class="border rounded p-3 bg-light">
+                            {{ article.content|raw }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tombol Kembali -->
+    <div class="text-end mt-4">
+        <a href="/{{ routename }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+    </div>
+
+</div>
+{% endblock %}
+{% block script %}
+    <script>
+        document.getElementById('amount').addEventListener('input', function (e) {
+            // Ambil hanya digit angka, hapus semua karakter selain angka
+            let value = this.value.replace(/\D/g, '');
+
+            // Format angka dengan tanda titik setiap ribuan
+            if (value) {
+                this.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            } else {
+                this.value = '';
+            }
+        });
+    </script>
+{% endblock %}

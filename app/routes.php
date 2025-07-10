@@ -15,6 +15,7 @@ use App\Application\Controllers\HomeController;
 use App\Application\Controllers\StoryController;
 use App\Application\Controllers\CategoryController;
 use App\Application\Controllers\UserController;
+use App\Application\Controllers\PaymentController;
 use App\Application\Middleware\AuthMiddleware;
 use App\Application\Middleware\AdminMiddleware;
 use Twig\Extension\DebugExtension;
@@ -75,6 +76,18 @@ return function (App $app) {
         $group->get('/{ type }/edit/{id}', [new ArticleController($container), 'edit']);
         $group->post('/edit/{id}', [new ArticleController($container), 'update']);
         $group->get('/{ type }/delete/{id}', [new ArticleController($container), 'delete']);
+    })->add(new AuthMiddleware());
+
+    $app->group('/payments', function ($group) use ($container) {
+        $group->get('', [new PaymentController($container), 'index']);
+        $group->get('/show/{id}', [PaymentController::class, 'show']);
+        $group->post('/{id}/payment', [new PaymentController($container), 'submitPayment']);
+
+        $group->get('/create', [new PaymentController($container), 'create']);
+        $group->post('/create', [new PaymentController($container), 'store']);
+        $group->get('/edit/{id}', [new PaymentController($container), 'edit']);
+        $group->post('/edit/{id}', [new PaymentController($container), 'update']);
+        $group->get('/delete/{id}', [new PaymentController($container), 'delete']);
     })->add(new AuthMiddleware());
 
 

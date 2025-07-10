@@ -73,6 +73,14 @@
                 </a>
             </li>
         {% endif %}
+        <li class="nav-item">
+            <a href="/payments" class="nav-link {{ routename == 'payments' ? 'active' : '' }}" data-tooltip="Pembayaran">
+                <span class="nav-icon">
+                    <i class="bi bi-cash"></i>
+                </span>
+                <span class="sidebar-nav-text">Pembayaran</span>
+            </a>
+        </li>
         {% if user.id_role == 1 %}
             <li class="nav-item">
                 <a href="/users" class="nav-link {{ routename == 'users' ? 'active' : '' }}" data-tooltip="Pengguna">
@@ -83,14 +91,6 @@
                 </a>
             </li>
         {% endif %}
-        <li class="nav-item">
-            <a href="/settings" class="nav-link {{ routename == 'settings' ? 'active' : '' }}" data-tooltip="Pengaturan">
-                <span class="nav-icon">
-                    <i class="bi bi-gear"></i>
-                </span>
-                <span class="sidebar-nav-text">Pengaturan</span>
-            </a>
-        </li>
     </ul>
 
     <!-- Logout Section -->

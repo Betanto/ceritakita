@@ -30,9 +30,9 @@
                 <input type="hidden" class="" id="type" name="type" value="{{ type }}">
                 <!-- Judul -->
                 <div class="row mb-3">
-                    <div class="col-lg-2"><label for="title" class="form-label mt-2">Judul</label></div>
+                    <div class="col-lg-2"><label for="title" class="form-label mt-2">Judul <span class="text-danger">*</span></label></div>
                     <div class="col-lg-10">
-                        <input type="text" id="title" name="title" class="form-control {{ errors.title is defined ? 'is-invalid' : '' }}" value="{{ old.title is defined ? old.title : (article.title is defined ? article.title : '') }}" required>
+                        <input type="text" id="title" name="title" class="form-control {{ errors.title is defined ? 'is-invalid' : '' }}" placeholder="Masukkan Judul" value="{{ old.title is defined ? old.title : (article.title is defined ? article.title : '') }}" required autofocus>
                         {% if errors.title is defined %}
                             <span class="invalid-feedback"><strong>{{ errors.title }}</strong></span>
                         {% endif %}
@@ -41,7 +41,7 @@
 
                 <!-- Kategori -->
                 <div class="row mb-3">
-                    <div class="col-lg-2"><label for="id_category" class="form-label mt-2">Kategori</label></div>
+                    <div class="col-lg-2"><label for="id_category" class="form-label mt-2">Kategori <span class="text-danger">*</span></label></div>
                     <div class="col-lg-10">
                         <select name="id_category[]" id="id_category" class="form-select {{ errors.id_category is defined ? 'is-invalid' : '' }}" multiple required>
                             {% for item in categories %}
