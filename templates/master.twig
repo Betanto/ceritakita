@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="icon" href="/favicon.ico">
     {% block header %}{% endblock %}
 </head>
 
@@ -59,13 +60,6 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="/settings">
-                                            <i class="bi bi-gear me-2"></i>
-                                            Pengaturan
-                                        </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
                                         <a class="dropdown-item text-danger" href="/logout">
                                             <i class="bi bi-box-arrow-left me-2"></i>
                                             Logout
@@ -78,7 +72,7 @@
                 </nav>
 
                 <!-- Main Content Area -->
-                <main class="container-fluid">
+                <main class="container-fluid px-0 pt-0">
                     {% block content %}{% endblock %}
                 </main>
             </div>
