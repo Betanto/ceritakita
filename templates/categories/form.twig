@@ -1,8 +1,7 @@
 {% extends "master.twig" %}
 
-{% block title %}{{ action }} {{ pagetitle }}{% endblock %}
+{% block title %}Daftar Kategori{% endblock %}
 {% block header %}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -15,7 +14,7 @@
                     <nav class="d-none d-lg-block" style="" aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0 mt-1">
                             <li class="breadcrumb-item"><a href="/dashboard" class="btn btn-sm btn-outline-secondary"><i class="bi bi-house-door"></i> Dashboard</a></li>
-                            <li class="breadcrumb-item" aria-current="page"><a href="/{{ routename }}/{{ type }}" class="btn btn-sm btn-outline-secondary"><i class="{{ pageicon }}"></i> {{ pagetitle }}</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="/{{ routename }}" class="btn btn-sm btn-outline-secondary"><i class="{{ pageicon }}"></i> {{ pagetitle }}</a></li>
                             <li class="breadcrumb-item mt-1 active" aria-current="page">{{ action == 'Ubah' ? 'Ubah' : 'Tambah' }}</li>
                         </ol>
                     </nav>
@@ -24,10 +23,9 @@
                 </div>
             </div>
             <form action="{{ category ? '/categories/edit/' ~ category.id : '/categories/create' }}" method="POST" enctype="multipart/form-data" class="my-lg-4">
-                <input type="hidden" class="" id="type" name="type" value="{{ type }}">
                 <div class="row mb-3">
                     <div class="col-lg-2">
-                        <label for="name" class="form-label mt-2">Judul <span class="text-danger">*</span></label>
+                        <label for="name" class="form-label mt-2">Judul</label>
                     </div>
                     <div class="col-lg-10">
                         <input type="text" class="form-control {{ errors.name is defined ? 'is-invalid' }}" id="name" name="name" value="{{ action == 'Ubah' ? old.name|default(category.name) : old.name|default('') }}" placeholder="Masukkan Judul" autofocus required>
@@ -58,6 +56,23 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-lg-2">
+                        <label for="type" class="form-label mt-2">Tipe</label>
+                    </div>
+                    <div class="col-lg-10">
+                        <select name="type" id="type" class="form-control">
+                            <option value="">-- Pilih Tipe --</option>
+                            <option value="0" {% if category and category.type == '0' %}selected{% endif %}>Post</option>
+                            <option value="1" {% if category and category.type == '1' %}selected{% endif %}>Cerita</option>
+                        </select>
+                        {% if errors.type is defined %}
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ errors.type }}</strong>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-lg-2">
                     </div>
                     <div class="col-lg-10">
                         <div class="form-check form-switch py-2">
@@ -68,7 +83,7 @@
                 </div>
                 <div class="mt-4 text-end">
                     <button type="submit" class="btn btn-primary text-white"><i class="bi bi-floppy"></i>Simpan</button>
-                    <a href="/{{ routename }}/{{ type }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                    <a href="/{{ routename }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
                 </div>
             </form>
         </div>
@@ -77,11 +92,4 @@
 
 {% endblock %}
 {% block script %}
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $('#id_parent').select2({
-        placeholder: "Pilih kategori",
-        width: '100%'
-    });
-</script>
 {% endblock %}

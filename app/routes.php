@@ -14,9 +14,7 @@ use App\Application\Controllers\DashboardController;
 use App\Application\Controllers\HomeController;
 use App\Application\Controllers\StoryController;
 use App\Application\Controllers\CategoryController;
-use App\Application\Controllers\UserController;
 use App\Application\Middleware\AuthMiddleware;
-use App\Application\Middleware\AdminMiddleware;
 use Twig\Extension\DebugExtension;
 
 return function (App $app) {
@@ -50,31 +48,21 @@ return function (App $app) {
     $app->get('/dashboard', [new DashboardController($container), 'index'])->add(new AuthMiddleware());
 
     $app->group('/categories', function ($group) use ($container) {
-        $group->get('/{type}', [new CategoryController($container), 'index']);
-        $group->get('/{type}/create', [new CategoryController($container), 'create']);
+        $group->get('', [new CategoryController($container), 'index']);
+        $group->get('/create', [new CategoryController($container), 'create']);
         $group->post('/create', [new CategoryController($container), 'store']);
-        $group->get('/{type}/edit/{id}', [new CategoryController($container), 'edit']);
+        $group->get('/edit/{id}', [new CategoryController($container), 'edit']);
         $group->post('/edit/{id}', [new CategoryController($container), 'update']);
-        $group->get('/{type}/delete/{id}', [new CategoryController($container), 'delete']);
-    })->add(new AuthMiddleware())->add(new AdminMiddleware());
-    $app->group('/users', function ($group) use ($container) {
-        $group->get('', [new UserController($container), 'index']);
-        $group->get('/create', [new UserController($container), 'create']);
-        $group->post('/create', [new UserController($container), 'store']);
-        $group->get('/edit/{id}', [new UserController($container), 'edit']);
-        $group->post('/edit/{id}', [new UserController($container), 'update']);
-        $group->get('/delete/{id}', [new UserController($container), 'delete']);
-    })->add(new AuthMiddleware())->add(new AdminMiddleware());
+        $group->get('/delete/{id}', [new CategoryController($container), 'delete']);
+    })->add(new AuthMiddleware());
 
     $app->group('/articles', function ($group) use ($container) {
-        $group->get('/{ type }', [new ArticleController($container), 'index']);
-        $group->get('/{ type }/create', [new ArticleController($container), 'create']);
+        $group->get('', [new ArticleController($container), 'index']);
+        $group->get('/create', [new ArticleController($container), 'create']);
         $group->post('/create', [new ArticleController($container), 'store']);
-        $group->get('/{ type }/show/{id}', [ArticleController::class, 'show']);
-        $group->post('/{id}/review', [new ArticleController($container), 'submitReview']);
-        $group->get('/{ type }/edit/{id}', [new ArticleController($container), 'edit']);
+        $group->get('/edit/{id}', [new ArticleController($container), 'edit']);
         $group->post('/edit/{id}', [new ArticleController($container), 'update']);
-        $group->get('/{ type }/delete/{id}', [new ArticleController($container), 'delete']);
+        $group->get('/delete/{id}', [new ArticleController($container), 'delete']);
     })->add(new AuthMiddleware());
 
 

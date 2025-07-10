@@ -25,19 +25,13 @@ class CategoryController
         $this->routename = 'categories';
     }
 
-    public function index(Request $request, Response $response, array $args)
+    public function index(Request $request, Response $response)
     {
         // $categories = $this->db->select($this->tablename, '*',[
         //     'deleted_at'=>null
         // ]);
-        if($args['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
         $categories = $this->db->select('tbl_categories (c)', [
-            '[>]tbl_categories (p)' => ['id_parent' => 'id'],
-            'tbl_categories (c)' => ['type'=> $type]
+            '[>]tbl_categories (p)' => ['id_parent' => 'id']
         ], [
             'c.id',
             'c.name',
@@ -47,8 +41,7 @@ class CategoryController
             'p.id(parent_id)',
             'p.name(parent_name)'
         ], [
-            'c.deleted_at' => null,
-            'c.type' => $type
+            'c.deleted_at' => null
         ]);
 
         return $this->view->render($response, 'categories/list.twig', [
@@ -56,28 +49,21 @@ class CategoryController
             'categories' => $categories,
             'pagetitle' => $this->pagetitle,
             'routename' => $this->routename,
-            'pageicon' => $this->pageicon,
-            'type'=> $args['type']
+            'pageicon' => $this->pageicon
         ]);
     }
 
-    public function create(Request $request, Response $response, array $args)
+    public function create(Request $request, Response $response)
     {
-        if($args['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
-        $categories = $this->db->select($this->tablename, '*', ['deleted_at'=>null,'type' => $type]);
-        return $this->view->render($response, $this->routename.'/form.twig', [
+        $categories = $this->db->select($this->tablename, '*', ['deleted_at'=>null]);
+        return $this->view->render($response, 'categories/form.twig', [
             'user' => $_SESSION['user'],
             'parent' => $categories,
             'category' => null,
             'pagetitle' => $this->pagetitle,
             'routename' => $this->routename,
             'pageicon' => $this->pageicon,
-            'action' => 'Tambah',
-            'type'=> $args['type']
+            'action' => 'Tambah'
         ]);
     }
 
@@ -144,18 +130,12 @@ class CategoryController
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
-        if($data['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
+
         $insertId = $this->db->insert($this->tablename, [
             'name' => $data['name'],
             'slug' => $slug,
             'id_parent' => $data['id_parent'],
-            'type' => $type,
-            'created_by' => $_SESSION['user']['id'],
-            'updated_by' => $_SESSION['user']['id'],
+            'type' => $data['type'],
             'status' => $status
         ]);
 
@@ -165,21 +145,15 @@ class CategoryController
             $_SESSION['flash_error'] = 'Gagal menambahkan kategori.';
         }
 
-        return $response->withHeader('Location', '/categories/' . $data['type'])->withStatus(302);
+        return $response->withHeader('Location', '/categories')->withStatus(302);
     }
 
     public function edit(Request $request, Response $response, array $args)
     {
-        if($args['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
         $category = $this->db->get($this->tablename, '*', ['id' => $args['id']]);
         $categories = $this->db->select($this->tablename, '*', [
             'id[!]' => $args['id'],
-            'deleted_at' => null,
-            'type' => $type
+            'deleted_at' => null
         ]);
 
         if (!$category) {
@@ -195,19 +169,13 @@ class CategoryController
             'pagetitle' => $this->pagetitle,
             'routename' => $this->routename,
             'pageicon' => $this->pageicon,
-            'action' => 'Ubah',
-            'type'=> $args['type']
+            'action' => 'Ubah'
         ]);
     }
 
     public function update(Request $request, Response $response, array $args)
     {
         $data = $request->getParsedBody();
-        if($data['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
         
         $id = $args['id']; // ID dari URL
         $category = $this->db->get('tbl_categories', '*', ['id' => $id]);
@@ -272,8 +240,7 @@ class CategoryController
                 'action' => 'Ubah',
                 'errors' => $errors->firstOfAll(),
                 'old'    => $data,
-                'category' => $category,
-                'type'=> $data['type']
+                'category' => $category
             ]);
         }
 
@@ -286,7 +253,7 @@ class CategoryController
         $updated = $this->db->update($this->tablename, [
             'name' => $data['name'],
             'id_parent' => $data['id_parent'],
-            'updated_by' => $_SESSION['user']['id'],
+            'type' => $data['type'],
             'status' => $status
         ], ['id' => $args['id']]);
 
@@ -296,17 +263,12 @@ class CategoryController
             $_SESSION['flash_error'] = 'Tidak ada data yang diubah atau gagal.';
         }
 
-        return $response->withHeader('Location', '/categories/' . $data['type'])->withStatus(302);
+        return $response->withHeader('Location', '/categories')->withStatus(302);
     }
 
     public function delete(Request $request, Response $response, array $args)
     {
         // $deleted = $this->db->delete($this->tablename, ['id' => $args['id']]);
-        if($args['type']=="posts"){
-            $type=0;
-        }else{
-            $type=1;
-        }
         $deleted = $this->db->update($this->tablename, [
             'deleted_at' => Medoo::raw('NOW()'),
             'deleted_by' => $_SESSION['user']['id']
@@ -316,6 +278,6 @@ class CategoryController
         } else {
             $_SESSION['flash_error'] = 'Gagal menghapus kategori.';
         }
-        return $response->withHeader('Location', '/categories/' . $args['type'])->withStatus(302);
+        return $response->withHeader('Location', '/categories')->withStatus(302);
     }
 }

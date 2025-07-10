@@ -1,107 +1,26 @@
-<nav id="sidebar">
-    <!-- Brand Section -->
-    <div class="sidebar-brand">
-        <a href="/dashboard" class="brand-logo">
-            <div class="brand-icon">
-                <i class="bi bi-book-half"></i>
+<nav id="sidebar" class="">
+    <div class="sidebar-header d-none d-lg-block">
+        <h5 class="text-center">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img src="/img/logo.webp" class="img-fluid">
+                </div>
             </div>
-            <div class="brand-text">
-                <h4>Cerita Kita</h4>
-                <p>Berbagi Cerita</p>
-            </div>
-        </a>
+        </h5>
+        <strong>
+            <img src="/img/logo-small.webp" class="img-fluid">
+        </strong>
     </div>
-
-    <!-- Navigation Menu -->
-    <ul class="sidebar-nav list-unstyled">
-        <li class="nav-item">
-            <a href="/dashboard" class="nav-link {{ routename == 'dashboard' ? 'active' : '' }}" data-tooltip="Dashboard">
-                <span class="nav-icon">
-                    <i class="bi bi-house"></i>
-                </span>
-                <span class="sidebar-nav-text">Dashboard</span>
-            </a>
+    <ul class="list-unstyled">
+        <li class="{{ routename == 'dashboard' ? 'active' }}">
+            <a href="/dashboard"><h5 class="d-inline-block mb-0"><i class="bi bi-house"></i></h5> <span class="sidebar-nav-text ms-2">Dashboard</span></a>
         </li>
-        {% if user.id_role == 1 %}
-            <li class="nav-item">
-                <a href="#ArticleSubmenu" class="nav-link {{ type=='posts' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false" data-tooltip="Artikel">
-                    <span class="nav-icon">
-                        <i class="bi bi-journal-text"></i>
-                    </span>
-                    <span class="sidebar-nav-text">Artikel</span>
-                    <span class="ms-auto">
-                        <i class="bi bi-chevron-down float-end"></i>
-                    </span>
-                </a>
-                <ul class="collapse list-unstyled {{ type=='posts' ? 'show' : '' }}" id="ArticleSubmenu">
-                    <li>
-                        <a href="/categories/posts" class="nav-link ps-5 {{ routename starts with 'categories' and type == 'posts' ? 'active' : '' }}">Kategori</a>
-                    </li>
-                    <li>
-                        <a href="/articles/posts" class="nav-link ps-5 {{ routename starts with 'articles' and type == 'posts' ? 'active' : '' }}">Post</a>
-                    </li>
-                </ul>
-            </li>
-        {% endif %}
-        {% if user.id_role == 1 %}
-            <li class="nav-item">
-                <a href="#StorySubmenu" class="nav-link {{ type=='stories' ? 'active' : '' }}" data-bs-toggle="collapse" aria-expanded="false" data-tooltip="Cerita">
-                    <span class="nav-icon">
-                        <i class="bi bi-chat-right-text"></i>
-                    </span>
-                    <span class="sidebar-nav-text">Cerita</span>
-                    <span class="ms-auto">
-                        <i class="bi bi-chevron-down  float-end"></i>
-                    </span>
-                </a>
-                <ul class="collapse list-unstyled {{ type=='stories' ? 'show' : '' }}" id="StorySubmenu">
-                    <li>
-                        <a href="/categories/stories" class="nav-link ps-5 {{ routename starts with 'categories' and type == 'stories' ? 'active' : '' }}">Kategori</a>
-                    </li>
-                    <li>
-                        <a href="/articles/stories" class="nav-link ps-5 {{ routename starts with 'articles' and type == 'stories' ? 'active' : '' }}">Post</a>
-                    </li>
-                </ul>
-            </li>
-        {% else %}
-            <li class="nav-item">
-                <a href="/articles/stories" class="nav-link {{ type == 'stories' ? 'active' : '' }}" data-tooltip="Cerita">
-                    <span class="nav-icon">
-                        <i class="bi bi-chat-right-text"></i>
-                    </span>
-                    <span class="sidebar-nav-text">Cerita</span>
-                </a>
-            </li>
-        {% endif %}
-        {% if user.id_role == 1 %}
-            <li class="nav-item">
-                <a href="/users" class="nav-link {{ routename == 'users' ? 'active' : '' }}" data-tooltip="Pengguna">
-                    <span class="nav-icon">
-                        <i class="bi bi-people"></i>
-                    </span>
-                    <span class="sidebar-nav-text">Pengguna</span>
-                </a>
-            </li>
-        {% endif %}
-        <li class="nav-item">
-            <a href="/settings" class="nav-link {{ routename == 'settings' ? 'active' : '' }}" data-tooltip="Pengaturan">
-                <span class="nav-icon">
-                    <i class="bi bi-gear"></i>
-                </span>
-                <span class="sidebar-nav-text">Pengaturan</span>
-            </a>
+        <li class="{{ routename == 'categories' ? 'active' }}">
+            <a href="/categories"><h5 class="d-inline-block mb-0"><i class="bi bi-columns-gap"></i></h5> <span class="sidebar-nav-text ms-2">Kategori</span></a>
         </li>
+        <li class="{{ routename == 'articles' ? 'active' }}">
+            <a href="/articles"><h5 class="d-inline-block mb-0"><i class="bi bi-file-earmark-text"></i></h5> <span class="sidebar-nav-text ms-2">Artikel</span></a>
+        </li>
+        
     </ul>
-
-    <!-- Logout Section -->
-    {#
-    <div class="mt-auto p-3">
-        <a href="/logout" class="nav-link text-danger" data-tooltip="Logout">
-            <span class="nav-icon">
-                <i class="bi bi-box-arrow-left"></i>
-            </span>
-            <span class="sidebar-nav-text">Logout</span>
-        </a>
-    </div>
-    #}
 </nav>
