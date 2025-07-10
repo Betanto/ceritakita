@@ -8,50 +8,11 @@
     <div class="container py-5">
         <div class="row align-items-center min-vh-100">
             <div class="col-lg-6 hero-content" data-aos="fade-right">
-                <h1 class="hero-title">
-                    Berbagi Cerita,<br>
-                    <span style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Menginspirasi Dunia</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Bergabunglah dengan komunitas penulis dan pembaca terbesar di Indonesia. 
-                    Temukan cerita inspiratif dan bagikan pengalaman Anda.
-                </p>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="/stories" class="btn-hero">
-                        <i class="fas fa-search"></i>
-                        Jelajahi Cerita
-                    </a>
-                    <a href="/register" class="btn btn-outline-primary btn-lg px-4 py-3" style="border-radius: 50px; font-weight: 600;">
-                        <i class="fas fa-pen"></i>
-                        Mulai Menulis
-                    </a>
-                </div>
-                
-                <!-- Hero Stats -->
-                <div class="row mt-5">
-                    <div class="col-4">
-                        <div class="text-center">
-                            <h4 class="fw-bold text-primary mb-0">500K+</h4>
-                            <small class="text-muted">Pembaca</small>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="text-center">
-                            <h4 class="fw-bold text-primary mb-0">25K+</h4>
-                            <small class="text-muted">Cerita</small>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="text-center">
-                            <h4 class="fw-bold text-primary mb-0">1K+</h4>
-                            <small class="text-muted">Penulis</small>
-                        </div>
-                    </div>
-                </div>
+                {{ data.0.content|raw }}
             </div>
             <div class="col-lg-6 text-center" data-aos="fade-left">
                 <div class="hero-image">
-                    <img src="/img/orang.png" alt="Hero Illustration" class="img-fluid" style="max-height: 500px;">
+                    <img src="/uploads/images/{{ data.0.image }}" alt="Hero Illustration" class="img-fluid" style="max-height: 500px;">
                 </div>
             </div>
         </div>

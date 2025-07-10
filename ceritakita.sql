@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 09, 2025 at 03:02 PM
+-- Generation Time: Jul 10, 2025 at 01:32 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.4.3
 
@@ -39,16 +39,17 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`, `migrated_at`) VALUES
-(1, '20250701001_create_roles_table.php', 1, '2025-07-04 09:17:44'),
-(2, '20250701002_create_users_table.php', 1, '2025-07-04 09:17:44'),
-(3, '20250701003_create_categories_table.php', 1, '2025-07-04 09:17:44'),
-(4, '20250701004_create_articles_table.php', 1, '2025-07-04 09:17:44'),
-(5, '20250701005_create_articles_categories_table.php', 1, '2025-07-04 09:17:44'),
-(6, '20250701006_create_reviews_table.php', 1, '2025-07-04 09:17:44'),
-(7, '20250701007_create_wallets_table.php', 1, '2025-07-04 09:17:44'),
-(8, '20250701008_create_transactions_table.php', 1, '2025-07-04 09:17:44'),
-(9, '20250701009_alter_categories_table_add_slug.php', 1, '2025-07-04 09:17:44'),
-(10, '20250701010_alter_transactions_table_add_article.php', 2, '2025-07-07 10:57:03');
+(1, '20250701001_create_roles_table.php', 1, '2025-07-10 12:55:25'),
+(2, '20250701002_create_users_table.php', 1, '2025-07-10 12:55:25'),
+(3, '20250701003_create_categories_table.php', 1, '2025-07-10 12:55:25'),
+(4, '20250701004_create_articles_table.php', 1, '2025-07-10 12:55:25'),
+(5, '20250701005_create_articles_categories_table.php', 1, '2025-07-10 12:55:25'),
+(6, '20250701006_create_reviews_table.php', 1, '2025-07-10 12:55:25'),
+(7, '20250701007_create_wallets_table.php', 1, '2025-07-10 12:55:25'),
+(8, '20250701008_create_transactions_table.php', 1, '2025-07-10 12:55:25'),
+(9, '20250701009_alter_categories_table_add_slug.php', 1, '2025-07-10 12:55:25'),
+(10, '20250701010_alter_transactions_table_add_article.php', 1, '2025-07-10 12:55:25'),
+(11, '20250701011_alter_articles_table_add_amount.php', 1, '2025-07-10 12:55:25');
 
 -- --------------------------------------------------------
 
@@ -68,6 +69,7 @@ CREATE TABLE `tbl_articles` (
   `status` int NOT NULL DEFAULT '0',
   `payment_at` datetime DEFAULT NULL,
   `payment_by` int DEFAULT NULL,
+  `amount` double DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` int DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -80,13 +82,8 @@ CREATE TABLE `tbl_articles` (
 -- Dumping data for table `tbl_articles`
 --
 
-INSERT INTO `tbl_articles` (`id`, `id_user`, `id_parent`, `title`, `slug`, `image`, `file`, `content`, `status`, `payment_at`, `payment_by`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(2, 1, 0, 'Hero Title', 'hero-title', NULL, NULL, '<h1 class=\"hero-title\">\r\n    Berbagi Cerita,<br>\r\n    <span style=\"background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Menginspirasi Dunia</span>\r\n</h1>', 1, NULL, NULL, '2025-07-09 09:10:51', 1, '2025-07-09 10:34:45', 1, NULL, NULL),
-(3, 1, 0, 'Hero Subtitle', 'hero-subtitle', NULL, NULL, '<p class=\"hero-subtitle\">\r\n    Bergabunglah dengan komunitas penulis dan pembaca terbesar di Indonesia. \r\n    Temukan cerita inspiratif dan bagikan pengalaman Anda.\r\n</p>', 1, NULL, NULL, '2025-07-09 09:14:04', 1, '2025-07-09 10:34:40', 1, NULL, NULL),
-(4, 1, 0, 'Hero Button', 'hero-button', NULL, NULL, '<div class=\"d-flex flex-wrap gap-3\">\r\n    <a href=\"/stories\" class=\"btn-hero\">\r\n        <i class=\"fas fa-search\"></i>\r\n        Jelajahi Cerita\r\n    </a>\r\n    <a href=\"/register\" class=\"btn btn-outline-primary btn-lg px-4 py-3\" style=\"border-radius: 50px; font-weight: 600;\">\r\n        <i class=\"fas fa-pen\"></i>\r\n        Mulai Menulis\r\n    </a>\r\n</div>', 1, NULL, NULL, '2025-07-09 10:27:07', 1, '2025-07-09 10:41:31', 1, NULL, NULL),
-(5, 10, 0, 'Test 1', 'test-1', '686e6fa7c213f_16082514904047_Image-Prosedur_Izin_Penelitian.png', '686e6fa7c2243_203. Surat Edaran Rektor Syarat UAS Genap 20242025.pdf', '<p>Test Konten</p>', 3, NULL, NULL, '2025-07-09 10:42:36', 1, '2025-07-09 14:20:55', 1, NULL, NULL),
-(6, 10, 0, 'Test lagi', 'test-lagi', NULL, NULL, '<p>sdfsdf</p>', 2, NULL, NULL, '2025-07-09 14:28:06', 10, '2025-07-09 07:30:26', 1, NULL, NULL),
-(7, 10, 0, 'Test diterima', 'test-diterima', '686e81b9d730f_wallpaperflare.com_wallpaper copy.jpg', '686e81b9d7544_203. Surat Edaran Rektor Syarat UAS Genap 20242025.pdf', '<p>Test untuk kasus diterima</p>', 0, NULL, NULL, '2025-07-09 14:50:33', 10, '2025-07-09 14:50:33', 10, NULL, NULL);
+INSERT INTO `tbl_articles` (`id`, `id_user`, `id_parent`, `title`, `slug`, `image`, `file`, `content`, `status`, `payment_at`, `payment_by`, `amount`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
+(1, 1, 0, 'Hero Title', 'hero-title', '686fbf63303b2_orang.png', NULL, '<h1 class=\"hero-title\">\r\n    Berbagi Cerita,<br>\r\n    <span style=\"background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Menginspirasi Dunia</span>\r\n</h1>\r\n<p class=\"hero-subtitle\">\r\n    Bergabunglah dengan komunitas penulis dan pembaca terbesar di Indonesia. \r\n    Temukan cerita inspiratif dan bagikan pengalaman Anda.\r\n</p>\r\n<div class=\"d-flex flex-wrap gap-3\">\r\n    <a href=\"/stories\" class=\"btn-hero\">\r\n        <i class=\"fas fa-search\"></i>\r\n        Jelajahi Cerita\r\n    </a>\r\n    <a href=\"/register\" class=\"btn btn-outline-primary btn-lg px-4 py-3\" style=\"border-radius: 50px; font-weight: 600;\">\r\n        <i class=\"fas fa-pen\"></i>\r\n        Mulai Menulis\r\n    </a>\r\n</div>\r\n\r\n<!-- Hero Stats -->\r\n<div class=\"row mt-5\">\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">500K+</h4>\r\n            <small class=\"text-muted\">Pembaca</small>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">25K+</h4>\r\n            <small class=\"text-muted\">Cerita</small>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">1K+</h4>\r\n            <small class=\"text-muted\">Penulis</small>\r\n        </div>\r\n    </div>\r\n</div>', 1, NULL, NULL, NULL, '2025-07-10 12:56:43', 1, '2025-07-10 13:25:55', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -105,16 +102,7 @@ CREATE TABLE `tbl_articles_categories` (
 --
 
 INSERT INTO `tbl_articles_categories` (`id`, `id_category`, `id_article`) VALUES
-(6, 10, 3),
-(7, 10, 2),
-(15, 10, 4),
-(16, 11, 4),
-(21, 14, 5),
-(22, 15, 5),
-(23, 13, 6),
-(24, 15, 6),
-(25, 13, 7),
-(26, 15, 7);
+(5, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -142,12 +130,7 @@ CREATE TABLE `tbl_categories` (
 --
 
 INSERT INTO `tbl_categories` (`id`, `name`, `slug`, `id_parent`, `type`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(10, 'Hero Banner', 'hero-banner', 0, 0, 1, '2025-07-09 09:04:42', 1, '2025-07-09 09:05:16', 1, NULL, NULL),
-(11, 'Statistik', 'statistik', 0, 0, 1, '2025-07-09 09:05:29', 1, '2025-07-09 09:05:29', 1, NULL, NULL),
-(12, 'Keunggulan', 'keunggulan', 0, 0, 1, '2025-07-09 09:06:28', 1, '2025-07-09 09:06:28', 1, NULL, NULL),
-(13, 'Anak-Anak', 'anak-anak', 0, 1, 1, '2025-07-09 10:31:58', 1, '2025-07-09 10:31:58', 1, NULL, NULL),
-(14, 'Pelajaran', 'pelajaran', 0, 1, 1, '2025-07-09 10:32:11', 1, '2025-07-09 10:42:07', 1, NULL, NULL),
-(15, 'Dongeng', 'dongeng', 0, 1, 1, '2025-07-09 10:42:19', 1, '2025-07-09 10:42:19', 1, NULL, NULL);
+(1, 'Hero Banner', 'hero-banner', 0, 0, 1, '2025-07-10 12:56:19', 1, '2025-07-10 12:56:19', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -168,17 +151,6 @@ CREATE TABLE `tbl_reviews` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `deleted_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `tbl_reviews`
---
-
-INSERT INTO `tbl_reviews` (`id`, `id_user`, `id_article`, `notes`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 1, 5, 'Rapikan heading', 2, '2025-07-09 07:01:10', 1, '2025-07-09 14:01:10', NULL, NULL, NULL),
-(2, 1, 5, 'Masih ada yang keliru', 2, '2025-07-09 07:16:00', 1, '2025-07-09 14:16:00', NULL, NULL, NULL),
-(3, 1, 5, 'Masih kurang benar', 2, '2025-07-09 07:18:26', 1, '2025-07-09 14:18:26', NULL, NULL, NULL),
-(4, 1, 5, 'Maaf belum bisa masuk', 3, '2025-07-09 07:19:13', 1, '2025-07-09 14:19:13', NULL, NULL, NULL),
-(5, 1, 6, 'Perlu revisi', 2, '2025-07-09 07:30:26', 1, '2025-07-09 14:30:26', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -243,9 +215,7 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`id`, `username`, `password`, `name`, `id_role`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 'admin@mail.com', '$2y$10$Sdt7nZRmFg27YlzVq7Owo.l/wUiv2QYW5GvqHH78Wok5FoS8GdTme', 'Admin', 1, 1, '2025-07-04 09:17:50', NULL, '2025-07-08 17:14:09', NULL, NULL, NULL),
-(10, 'betanto@gmail.com', '$2y$10$9Lzelk4RioCvsFEGrJIjL.WMhb2HBpq3yFyr86K3p.sJs.nInAb0.', 'Betanto', 2, 1, '2025-07-08 17:53:28', NULL, '2025-07-09 04:55:02', 1, '2025-07-09 04:55:02', 1),
-(11, 'kedua@mail.com', '$2y$10$dL1AHtEGLV9TIASAl5gJiuRilR0QutmL6RToWvUNYgEWWaMVbNqJi', 'Akun Kedua', 2, 1, '2025-07-09 15:01:18', NULL, '2025-07-09 15:01:18', NULL, NULL, NULL);
+(1, 'admin@mail.com', '$2y$10$g8O8brAT9NilFzlfX.vpzOm.PGKtt1GK.YBtg7XzkOvRJX84y7.8u', 'Admin', 1, 1, '2025-07-10 12:55:27', 1, '2025-07-10 12:55:27', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -333,31 +303,31 @@ ALTER TABLE `tbl_wallets`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_articles`
 --
 ALTER TABLE `tbl_articles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_articles_categories`
 --
 ALTER TABLE `tbl_articles_categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_reviews`
 --
 ALTER TABLE `tbl_reviews`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_roles`
@@ -375,7 +345,7 @@ ALTER TABLE `tbl_transactions`
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_wallets`
