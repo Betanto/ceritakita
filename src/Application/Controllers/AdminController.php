@@ -4,7 +4,7 @@ namespace App\Application\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class DashboardController
+class AdminController
 {
     protected $view;
     protected $tablename;
@@ -22,11 +22,12 @@ class DashboardController
 
     public function index(Request $request, Response $response)
     {
-        if ($_SESSION['user']['id_role']==1){
-            return $response->withHeader('Location', '/admin')->withStatus(302);
-        }else{
-            
-            return $response->withHeader('Location', '/contributor')->withStatus(302);;
-        }
+        // session_start();
+        return $this->view->render($response, 'dashboards/admin.twig', [
+            'user' => $_SESSION['user'],
+            'pagetitle' => $this->pagetitle,
+            'routename' => $this->routename,
+            'pageicon' => $this->pageicon
+        ]);
     }
 }

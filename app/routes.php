@@ -11,6 +11,8 @@ use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use App\Application\Controllers\AuthController;
 use App\Application\Controllers\DashboardController;
+use App\Application\Controllers\AdminController;
+use App\Application\Controllers\ContributorController;
 use App\Application\Controllers\HomeController;
 use App\Application\Controllers\StoryController;
 use App\Application\Controllers\CategoryController;
@@ -49,6 +51,8 @@ return function (App $app) {
     $app->get('/logout', [new AuthController($container), 'logout']);
 
     $app->get('/dashboard', [new DashboardController($container), 'index'])->add(new AuthMiddleware());
+    $app->get('/admin', [new AdminController($container), 'index'])->add(new AuthMiddleware())->add(new AdminMiddleware());
+    $app->get('/contributor', [new ContributorController($container), 'index'])->add(new AuthMiddleware());
 
     $app->group('/categories', function ($group) use ($container) {
         $group->get('/{type}', [new CategoryController($container), 'index']);
