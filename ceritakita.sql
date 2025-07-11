@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 10, 2025 at 01:32 PM
+-- Generation Time: Jul 11, 2025 at 09:05 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.4.3
 
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `migrations` (
   `id` int NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   `migrated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -61,11 +61,11 @@ CREATE TABLE `tbl_articles` (
   `id` int NOT NULL,
   `id_user` int NOT NULL,
   `id_parent` int DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `file` varchar(255) DEFAULT NULL,
-  `content` text,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci,
   `status` int NOT NULL DEFAULT '0',
   `payment_at` datetime DEFAULT NULL,
   `payment_by` int DEFAULT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE `tbl_articles` (
   `updated_by` int DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `deleted_by` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tbl_articles`
@@ -95,7 +95,7 @@ CREATE TABLE `tbl_articles_categories` (
   `id` int NOT NULL,
   `id_category` int NOT NULL,
   `id_article` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tbl_articles_categories`
@@ -112,8 +112,8 @@ INSERT INTO `tbl_articles_categories` (`id`, `id_category`, `id_article`) VALUES
 
 CREATE TABLE `tbl_categories` (
   `id` int NOT NULL,
-  `name` varchar(35) NOT NULL,
-  `slug` varchar(255) DEFAULT NULL,
+  `name` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_parent` int DEFAULT NULL,
   `type` int DEFAULT NULL,
   `status` int DEFAULT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE `tbl_categories` (
   `updated_by` int DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `deleted_by` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tbl_categories`
@@ -142,7 +142,7 @@ CREATE TABLE `tbl_reviews` (
   `id` int NOT NULL,
   `id_user` int NOT NULL,
   `id_article` int NOT NULL,
-  `notes` text,
+  `notes` text COLLATE utf8mb4_unicode_ci,
   `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` int DEFAULT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE `tbl_reviews` (
   `updated_by` int DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `deleted_by` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -160,8 +160,8 @@ CREATE TABLE `tbl_reviews` (
 
 CREATE TABLE `tbl_roles` (
   `id` int NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tbl_roles`
@@ -183,11 +183,11 @@ CREATE TABLE `tbl_transactions` (
   `id_article` int NOT NULL DEFAULT '0',
   `transaction_at` datetime DEFAULT NULL,
   `transaction_by` int DEFAULT NULL,
-  `notes` varchar(255) DEFAULT NULL,
+  `notes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` double NOT NULL DEFAULT '0',
   `type` int NOT NULL DEFAULT '0',
   `total` double NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -197,9 +197,9 @@ CREATE TABLE `tbl_transactions` (
 
 CREATE TABLE `tbl_users` (
   `id` int NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_role` int NOT NULL,
   `status` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -208,7 +208,7 @@ CREATE TABLE `tbl_users` (
   `updated_by` int DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `deleted_by` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `tbl_users`
@@ -227,7 +227,7 @@ CREATE TABLE `tbl_wallets` (
   `id` int NOT NULL,
   `id_user` int NOT NULL,
   `total` double NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
