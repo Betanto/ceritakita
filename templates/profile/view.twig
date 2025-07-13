@@ -1,0 +1,191 @@
+{% extends "master.twig" %}
+
+{% block title %}{{ pagetitle }}{% endblock %}
+
+{% block content %}
+<div class="px-0 py-4">
+    <div class="card mt-0 border-0 shadow-sm bg-white">
+        <div class="card-body">
+            <h6>{{ pagetitle }}</h6>
+            <div class="row pb-lg-3">
+                <div class="col-lg-7">
+                    <nav class="d-none d-lg-block" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 mt-1">
+                            <li class="breadcrumb-item">
+                                <a href="/dashboard" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-house-door"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item mt-1 active" aria-current="page">{{ pagetitle }}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-5 mt-3 mt-lg-0 text-end">
+                    <a href="/profile/edit" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i> Edit Profile
+                    </a>
+                </div>
+            </div>
+
+            <div class="row my-lg-4">
+                <div class="col-lg-8">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                {{ profile.name|first|upper }}
+                            </div>
+                            <div class="profile-info">
+                                <h4 class="profile-name">{{ profile.name }}</h4>
+                                <span class="profile-role badge bg-primary">{{ profile.role_name }}</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-details">
+                            <div class="detail-item">
+                                <label class="detail-label">
+                                    <i class="bi bi-envelope me-2"></i>Email
+                                </label>
+                                <div class="detail-value">{{ profile.username }}</div>
+                            </div>
+
+                            <div class="detail-item">
+                                <label class="detail-label">
+                                    <i class="bi bi-person me-2"></i>Nama Lengkap
+                                </label>
+                                <div class="detail-value">{{ profile.name }}</div>
+                            </div>
+
+                            <div class="detail-item">
+                                <label class="detail-label">
+                                    <i class="bi bi-shield-check me-2"></i>Role
+                                </label>
+                                <div class="detail-value">
+                                    <span class="badge bg-primary">{{ profile.role_name }}</span>
+                                </div>
+                            </div>
+
+                            <div class="detail-item">
+                                <label class="detail-label">
+                                    <i class="bi bi-toggle-on me-2"></i>Status
+                                </label>
+                                <div class="detail-value">
+                                    {% if profile.status == 1 %}
+                                        <span class="badge bg-success">Aktif</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Tidak Aktif</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="detail-item">
+                                <label class="detail-label">
+                                    <i class="bi bi-calendar-plus me-2"></i>Bergabung Sejak
+                                </label>
+                                <div class="detail-value">{{ profile.created_at|date('d F Y') }}</div>
+                            </div>
+
+                            <div class="detail-item">
+                                <label class="detail-label">
+                                    <i class="bi bi-clock-history me-2"></i>Terakhir Diperbarui
+                                </label>
+                                <div class="detail-value">{{ profile.updated_at|date('d F Y H:i') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.profile-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid #e9ecef;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #2196F3, #1976D2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.profile-name {
+    margin: 0;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.profile-role {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.profile-details {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #495057;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.detail-value {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .detail-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+</style>
+{% endblock %}

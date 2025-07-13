@@ -1,0 +1,531 @@
+{% extends "master.twig" %}
+
+{% block title %}{{ action }} {{ pagetitle }}{% endblock %}
+
+{% block content %}
+<div class="px-0 py-4">
+    <div class="card mt-0 border-0 shadow-sm bg-white">
+        <div class="card-body">
+            <h6>{{ action }} {{ pagetitle }}</h6>
+            <div class="row pb-lg-3">
+                <div class="col-lg-7">
+                    <nav class="d-none d-lg-block" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 mt-1">
+                            <li class="breadcrumb-item">
+                                <a href="/dashboard" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-house-door"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="/profile" class="btn btn-sm btn-outline-secondary">
+                                    <i class="{{ pageicon }}"></i> {{ pagetitle }}
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item mt-1 active" aria-current="page">{{ action }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <form action="/profile/edit" method="POST" class="my-lg-4" id="profileForm">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="edit-profile-card">
+                            <div class="profile-header-edit">
+                                <div class="profile-avatar-edit">
+                                    {{ profile.name|first|upper }}
+                                </div>
+                                <div class="profile-info-edit">
+                                    <h5>Edit Profile</h5>
+                                    <p class="text-muted">Perbarui informasi profile Anda</p>
+                                </div>
+                            </div>
+
+                            <div class="form-sections">
+                                <div class="form-section">
+                                    <h6 class="section-title">
+                                        <i class="bi bi-person-circle me-2"></i>Informasi Personal
+                                    </h6>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="name" class="form-label mt-2">Nama Lengkap <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" 
+                                                   class="form-control {{ errors.name is defined ? 'is-invalid' }}" 
+                                                   id="name" 
+                                                   name="name" 
+                                                   value="{{ old.name|default(profile.name) }}" 
+                                                   placeholder="Masukkan nama lengkap" 
+                                                   required>
+                                            {% if errors.name is defined %}
+                                                <div class="invalid-feedback">{{ errors.name }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="username" class="form-label mt-2">Email <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="email" 
+                                                   class="form-control {{ errors.username is defined ? 'is-invalid' }}" 
+                                                   id="username" 
+                                                   name="username" 
+                                                   value="{{ old.username|default(profile.username) }}" 
+                                                   placeholder="Masukkan email" 
+                                                   required>
+                                            {% if errors.username is defined %}
+                                                <div class="invalid-feedback">{{ errors.username }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-section">
+                                    <h6 class="section-title">
+                                        <i class="bi bi-shield-lock me-2"></i>Keamanan
+                                    </h6>
+                                    <p class="text-muted small mb-3">Kosongkan jika tidak ingin mengubah password</p>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="password" class="form-label mt-2">Password Baru</label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="password-input-wrapper">
+                                                <input type="password" 
+                                                       class="form-control {{ errors.password is defined ? 'is-invalid' }}" 
+                                                       id="password" 
+                                                       name="password" 
+                                                       placeholder="Masukkan password baru">
+                                                <span class="password-toggle" onclick="togglePassword('password')">
+                                                    <i class="bi bi-eye" id="togglePassword"></i>
+                                                </span>
+                                            </div>
+                                            <div class="form-text">Minimal 8 karakter, kombinasi huruf besar, huruf kecil, angka, dan simbol</div>
+                                            {% if errors.password is defined %}
+                                                <div class="invalid-feedback d-block">{{ errors.password }}</div>
+                                            {% endif %}
+                                            
+                                            <!-- Password Strength Indicator -->
+                                            <div class="password-strength mt-2" id="passwordStrength" style="display: none;">
+                                                <div class="strength-bar">
+                                                    <div class="strength-fill" id="strengthFill"></div>
+                                                </div>
+                                                <div class="strength-text" id="strengthText"></div>
+                                                <div class="password-requirements mt-2">
+                                                    <div class="requirement" id="req-length">
+                                                        <i class="bi bi-x-circle text-danger"></i>
+                                                        <span>Minimal 8 karakter</span>
+                                                    </div>
+                                                    <div class="requirement" id="req-uppercase">
+                                                        <i class="bi bi-x-circle text-danger"></i>
+                                                        <span>Huruf besar (A-Z)</span>
+                                                    </div>
+                                                    <div class="requirement" id="req-lowercase">
+                                                        <i class="bi bi-x-circle text-danger"></i>
+                                                        <span>Huruf kecil (a-z)</span>
+                                                    </div>
+                                                    <div class="requirement" id="req-number">
+                                                        <i class="bi bi-x-circle text-danger"></i>
+                                                        <span>Angka (0-9)</span>
+                                                    </div>
+                                                    <div class="requirement" id="req-special">
+                                                        <i class="bi bi-x-circle text-danger"></i>
+                                                        <span>Simbol (!@#$%^&*)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3" id="confirmPasswordRow" style="display: none;">
+                                        <div class="col-lg-3">
+                                            <label for="confirm_password" class="form-label mt-2">Konfirmasi Password <span class="text-danger">*</span></label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <div class="password-input-wrapper">
+                                                <input type="password" 
+                                                       class="form-control {{ errors.confirm_password is defined ? 'is-invalid' }}" 
+                                                       id="confirm_password" 
+                                                       name="confirm_password" 
+                                                       placeholder="Konfirmasi password baru">
+                                                <span class="password-toggle" onclick="togglePassword('confirm_password')">
+                                                    <i class="bi bi-eye" id="toggleConfirm"></i>
+                                                </span>
+                                            </div>
+                                            <div id="passwordMatchStatus" class="form-text"></div>
+                                            {% if errors.confirm_password is defined %}
+                                                <div class="invalid-feedback d-block">{{ errors.confirm_password }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="submitBtn">
+                                    <i class="bi bi-check-circle"></i> Simpan Perubahan
+                                </button>
+                                <a href="/profile" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Kembali
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.edit-profile-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid #e9ecef;
+}
+
+.profile-header-edit {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.profile-avatar-edit {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(45deg, #2196F3, #1976D2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
+
+.profile-info-edit h5 {
+    margin: 0;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.profile-info-edit p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.form-sections {
+    display: grid;
+    gap: 2rem;
+}
+
+.form-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.section-title {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #e9ecef;
+    display: flex;
+    gap: 1rem;
+}
+
+.form-control:focus {
+    border-color: #2196F3;
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+/* Password Input Wrapper */
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.password-toggle:hover {
+    color: #2196F3;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: 0.5rem;
+}
+
+.strength-bar {
+    height: 4px;
+    background-color: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.strength-fill {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.password-requirements {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.25rem;
+}
+
+.requirement {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.requirement i {
+    font-size: 0.75rem;
+}
+
+.requirement.valid i {
+    color: #198754 !important;
+}
+
+.requirement.valid i::before {
+    content: "\F26A"; /* bi-check-circle */
+}
+
+.requirement.invalid i::before {
+    content: "\F62A"; /* bi-x-circle */
+}
+
+/* Strength levels */
+.strength-very-weak { background-color: #dc3545; }
+.strength-weak { background-color: #fd7e14; }
+.strength-fair { background-color: #ffc107; }
+.strength-good { background-color: #20c997; }
+.strength-strong { background-color: #198754; }
+
+.password-match {
+    color: #198754;
+}
+
+.password-mismatch {
+    color: #dc3545;
+}
+
+@media (max-width: 768px) {
+    .profile-header-edit {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+    
+    .password-requirements {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+// Password toggle functionality
+function togglePassword(fieldId) {
+    const passwordField = document.getElementById(fieldId);
+    const toggleIcon = fieldId === 'password' ? 
+        document.getElementById('togglePassword') : 
+        document.getElementById('toggleConfirm');
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleIcon.classList.remove('bi-eye');
+        toggleIcon.classList.add('bi-eye-slash');
+    } else {
+        passwordField.type = 'password';
+        toggleIcon.classList.remove('bi-eye-slash');
+        toggleIcon.classList.add('bi-eye');
+    }
+}
+
+// Password validation
+function validatePassword(password) {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    
+    return {
+        isValid: password.length >= minLength && hasUpperCase && hasLowerCase && hasNumbers && hasSpecial,
+        minLength: password.length >= minLength,
+        hasUpperCase,
+        hasLowerCase,
+        hasNumbers,
+        hasSpecial,
+        score: [minLength, hasUpperCase, hasLowerCase, hasNumbers, hasSpecial].filter(Boolean).length
+    };
+}
+
+// Update password strength indicator
+function updatePasswordStrength(password) {
+    const strengthIndicator = document.getElementById('passwordStrength');
+    const strengthFill = document.getElementById('strengthFill');
+    const strengthText = document.getElementById('strengthText');
+    
+    if (password.length === 0) {
+        strengthIndicator.style.display = 'none';
+        return;
+    }
+    
+    strengthIndicator.style.display = 'block';
+    
+    const validation = validatePassword(password);
+    const score = validation.score;
+    
+    // Update strength bar
+    const percentage = (score / 5) * 100;
+    strengthFill.style.width = percentage + '%';
+    
+    // Update strength text and color
+    const strengthLevels = [
+        { text: 'Sangat Lemah', class: 'strength-very-weak' },
+        { text: 'Lemah', class: 'strength-weak' },
+        { text: 'Sedang', class: 'strength-fair' },
+        { text: 'Baik', class: 'strength-good' },
+        { text: 'Kuat', class: 'strength-strong' }
+    ];
+    
+    const level = Math.min(score - 1, 4);
+    if (level >= 0) {
+        strengthText.textContent = strengthLevels[level].text;
+        strengthFill.className = 'strength-fill ' + strengthLevels[level].class;
+    }
+    
+    // Update requirements
+    updateRequirement('req-length', validation.minLength);
+    updateRequirement('req-uppercase', validation.hasUpperCase);
+    updateRequirement('req-lowercase', validation.hasLowerCase);
+    updateRequirement('req-number', validation.hasNumbers);
+    updateRequirement('req-special', validation.hasSpecial);
+}
+
+// Update individual requirement
+function updateRequirement(reqId, isValid) {
+    const requirement = document.getElementById(reqId);
+    const icon = requirement.querySelector('i');
+    
+    if (isValid) {
+        requirement.classList.add('valid');
+        requirement.classList.remove('invalid');
+        icon.classList.remove('bi-x-circle', 'text-danger');
+        icon.classList.add('bi-check-circle', 'text-success');
+    } else {
+        requirement.classList.add('invalid');
+        requirement.classList.remove('valid');
+        icon.classList.remove('bi-check-circle', 'text-success');
+        icon.classList.add('bi-x-circle', 'text-danger');
+    }
+}
+
+// Check password match
+function checkPasswordMatch() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+    const statusElement = document.getElementById('passwordMatchStatus');
+    
+    if (confirmPassword.length === 0) {
+        statusElement.textContent = '';
+        statusElement.className = 'form-text';
+        return;
+    }
+    
+    if (password === confirmPassword) {
+        statusElement.textContent = '✓ Password cocok';
+        statusElement.className = 'form-text password-match';
+    } else {
+        statusElement.textContent = '✗ Password tidak cocok';
+        statusElement.className = 'form-text password-mismatch';
+    }
+}
+
+// Document ready
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordField = document.getElementById('password');
+    const confirmPasswordField = document.getElementById('confirm_password');
+    const confirmPasswordRow = document.getElementById('confirmPasswordRow');
+    
+    // Password input event
+    passwordField.addEventListener('input', function() {
+        const value = this.value;
+        
+        // Show/hide confirm password field
+        if (value.length > 0) {
+            confirmPasswordRow.style.display = 'flex';
+            confirmPasswordField.setAttribute('required', 'required');
+        } else {
+            confirmPasswordRow.style.display = 'none';
+            confirmPasswordField.removeAttribute('required');
+            confirmPasswordField.value = '';
+            // Reset confirm password validation
+            document.getElementById('passwordMatchStatus').textContent = '';
+        }
+        
+        // Update password strength
+        updatePasswordStrength(value);
+        
+        // Check password match if confirm password has value
+        if (confirmPasswordField.value.length > 0) {
+            checkPasswordMatch();
+        }
+    });
+    
+    // Confirm password input event
+    confirmPasswordField.addEventListener('input', function() {
+        checkPasswordMatch();
+    });
+});
+</script>
+{% endblock %}
