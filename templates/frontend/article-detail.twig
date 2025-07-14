@@ -1,6 +1,6 @@
 {% extends "frontend/master.twig" %}
 
-{% block title %}{{ article.title ?? 'Detail Artikel' }} - Cerita Kita{% endblock %}
+{% block title %}{{ article.title }} - Cerita Kita{% endblock %}
 
 {% block content %}
 <!-- Article Header -->
@@ -13,7 +13,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/" class="text-decoration-none">Beranda</a></li>
                         <li class="breadcrumb-item"><a href="/stories" class="text-decoration-none">Artikel</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ article.category ?? 'Teknologi' }}</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ article.category_name }}</li>
                     </ol>
                 </nav>
 
@@ -21,48 +21,34 @@
                 <div class="article-header" data-aos="fade-up" data-aos-delay="100">
                     <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
                         <span class="badge bg-primary px-3 py-2 rounded-pill">
-                            <i class="fas fa-tag me-1"></i>{{ article.category ?? 'Teknologi' }}
+                            <i class="fas fa-tag me-1"></i>{{ article.category_name }}
                         </span>
                         <span class="text-muted">
-                            <i class="far fa-calendar-alt me-1"></i>{{ article.created_at ?? '15 Desember 2024' }}
+                            <i class="far fa-calendar-alt me-1"></i>{{ article.created_at|date('d M Y') }}
                         </span>
                         <span class="text-muted">
-                            <i class="far fa-clock me-1"></i>{{ article.read_time ?? '8' }} menit baca
-                        </span>
-                        <span class="text-muted">
-                            <i class="far fa-eye me-1"></i>{{ article.views ?? '2,543' }} views
+                            <i class="far fa-clock me-1"></i>{{ article.read_time }} menit baca
                         </span>
                     </div>
 
                     <h1 class="display-5 fw-bold text-dark mb-4">
-                        {{ article.title ?? 'Revolusi AI: Bagaimana Kecerdasan Buatan Mengubah Dunia Kerja' }}
+                        {{ article.title }}
                     </h1>
-
-                    <p class="lead text-muted mb-4">
-                        {{ article.excerpt ?? 'Eksplorasi mendalam tentang dampak AI terhadap berbagai industri dan bagaimana kita dapat beradaptasi dengan perubahan teknologi yang pesat ini.' }}
-                    </p>
 
                     <!-- Author Info -->
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <div class="d-flex align-items-center">
-                            <img src="{{ article.author.avatar ?? '/img/author-1.jpg' }}" alt="Author" class="rounded-circle me-3" style="width: 60px; height: 60px;">
+                            <img src="/img/orang1.jpeg" alt="Author" class="rounded-circle me-3" style="width: 60px; height: 60px;">
                             <div>
-                                <h6 class="mb-0 fw-bold">{{ article.author.name ?? 'Dr. Ahmad Rizki' }}</h6>
-                                <p class="text-muted mb-0 small">{{ article.author.title ?? 'Tech Expert & AI Researcher' }}</p>
-                                <p class="text-muted mb-0 small">
-                                    <i class="fas fa-map-marker-alt me-1"></i>{{ article.author.location ?? 'Jakarta, Indonesia' }}
-                                </p>
+                                <h6 class="mb-0 fw-bold">{{ article.author_name }}</h6>
                             </div>
                         </div>
                         <div class="d-flex gap-2">
                             <button class="btn btn-outline-primary btn-sm" id="likeBtn">
-                                <i class="far fa-heart me-1"></i>{{ article.likes ?? '156' }}
+                                <i class="far fa-heart me-1"></i>0
                             </button>
                             <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#shareModal">
                                 <i class="fas fa-share-alt me-1"></i>Share
-                            </button>
-                            <button class="btn btn-outline-info btn-sm" id="bookmarkBtn">
-                                <i class="far fa-bookmark me-1"></i>Save
                             </button>
                         </div>
                     </div>
@@ -79,7 +65,7 @@
             <div class="col-lg-8">
                 <!-- Featured Image -->
                 <div class="mb-5" data-aos="fade-up">
-                    <img src="{{ article.featured_image ?? '/img/article-tech-detail.jpg' }}" 
+                    <img src="/uploads/images/{{ article.image }}" 
                          alt="{{ article.title }}" 
                          class="img-fluid rounded-3 shadow-lg w-100"
                          style="height: 400px; object-fit: cover;">
@@ -88,73 +74,7 @@
                 <!-- Article Body -->
                 <div class="article-content" data-aos="fade-up" data-aos-delay="100">
                     <div class="content-body">
-                        {{ article.content ?? '
-                        <p class="lead">Kecerdasan Buatan (AI) telah menjadi salah satu teknologi paling revolusioner di abad ke-21. Dari asisten virtual hingga sistem rekomendasi, AI telah mengubah cara kita bekerja, berkomunikasi, dan menjalani kehidupan sehari-hari.</p>
-
-                        <h3 class="mt-5 mb-3">Dampak AI Terhadap Dunia Kerja</h3>
-                        <p>Transformasi digital yang dipercepat oleh pandemi COVID-19 telah mempercepat adopsi teknologi AI di berbagai sektor. Berikut adalah beberapa area utama di mana AI memberikan dampak signifikan:</p>
-
-                        <h4 class="mt-4 mb-3">1. Otomatisasi Proses Bisnis</h4>
-                        <p>AI memungkinkan otomatisasi tugas-tugas repetitif yang sebelumnya memerlukan intervensi manusia. Hal ini tidak hanya meningkatkan efisiensi, tetapi juga memungkinkan karyawan untuk fokus pada tugas-tugas yang lebih strategis dan kreatif.</p>
-
-                        <blockquote class="blockquote border-start border-primary border-4 ps-4 my-4">
-                            <p class="mb-0 fst-italic">"AI bukan tentang menggantikan manusia, tetapi tentang memperkuat kemampuan manusia untuk mencapai hal-hal yang lebih besar."</p>
-                            <footer class="blockquote-footer mt-2">Sundar Pichai, <cite title="Source Title">CEO Google</cite></footer>
-                        </blockquote>
-
-                        <h4 class="mt-4 mb-3">2. Personalisasi Pengalaman Pelanggan</h4>
-                        <p>Dengan kemampuan untuk menganalisis data dalam jumlah besar, AI memungkinkan perusahaan untuk memberikan pengalaman yang dipersonalisasi kepada setiap pelanggan. Ini mencakup rekomendasi produk, layanan pelanggan yang responsif, dan strategi pemasaran yang lebih efektif.</p>
-
-                        <div class="alert alert-info my-4">
-                            <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Tahukah Anda?</h5>
-                            <p class="mb-0">Menurut McKinsey Global Institute, AI dapat meningkatkan produktivitas global hingga 40% pada tahun 2035.</p>
-                        </div>
-
-                        <h3 class="mt-5 mb-3">Tantangan dan Peluang</h3>
-                        <p>Meskipun AI menawarkan banyak manfaat, implementasinya juga menghadirkan tantangan yang perlu diatasi:</p>
-
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i><strong>Peluang:</strong> Peningkatan efisiensi dan inovasi</li>
-                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i><strong>Peluang:</strong> Penciptaan lapangan kerja baru</li>
-                            <li class="mb-2"><i class="fas fa-exclamation-triangle text-warning me-2"></i><strong>Tantangan:</strong> Kebutuhan reskilling karyawan</li>
-                            <li class="mb-2"><i class="fas fa-exclamation-triangle text-warning me-2"></i><strong>Tantangan:</strong> Isu privasi dan keamanan data</li>
-                        </ul>
-
-                        <h3 class="mt-5 mb-3">Kesimpulan</h3>
-                        <p>AI bukan lagi teknologi masa depan—ini adalah realitas saat ini yang terus berkembang. Organisasi yang dapat beradaptasi dan mengintegrasikan AI dengan bijak akan memiliki keunggulan kompetitif yang signifikan. Kunci sukses terletak pada pendekatan yang seimbang antara inovasi teknologi dan pengembangan sumber daya manusia.</p>
-                        ' | raw }}
-                    </div>
-
-                    <!-- Article Tags -->
-                    <div class="mt-5 pt-4 border-top">
-                        <h6 class="mb-3">Tags:</h6>
-                        <div class="d-flex flex-wrap gap-2">
-                            {% set tags = article.tags ?? ['AI', 'Teknologi', 'Masa Depan', 'Produktivitas', 'Digital Transformation'] %}
-                            {% for tag in tags %}
-                            <span class="badge bg-light text-dark border px-3 py-2">
-                                <i class="fas fa-hashtag me-1"></i>{{ tag }}
-                            </span>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <!-- Social Share -->
-                    <div class="mt-4 pt-4 border-top">
-                        <h6 class="mb-3">Bagikan artikel ini:</h6>
-                        <div class="d-flex gap-2">
-                            <a href="#" class="btn btn-outline-primary btn-sm">
-                                <i class="fab fa-facebook-f me-1"></i>Facebook
-                            </a>
-                            <a href="#" class="btn btn-outline-info btn-sm">
-                                <i class="fab fa-twitter me-1"></i>Twitter
-                            </a>
-                            <a href="#" class="btn btn-outline-success btn-sm">
-                                <i class="fab fa-whatsapp me-1"></i>WhatsApp
-                            </a>
-                            <a href="#" class="btn btn-outline-primary btn-sm">
-                                <i class="fab fa-linkedin-in me-1"></i>LinkedIn
-                            </a>
-                        </div>
+                        {{ article.content|raw }}
                     </div>
                 </div>
             </div>
@@ -162,23 +82,6 @@
             <!-- Sidebar -->
             <div class="col-lg-4">
                 <div class="sticky-top" style="top: 100px;">
-                    <!-- Author Card -->
-                    <div class="card mb-4" data-aos="fade-left">
-                        <div class="card-body text-center">
-                            <img src="{{ article.author.avatar ?? '/img/author-1.jpg' }}" alt="Author" class="rounded-circle mb-3" style="width: 80px; height: 80px;">
-                            <h6 class="fw-bold">{{ article.author.name ?? 'Dr. Ahmad Rizki' }}</h6>
-                            <p class="text-muted small mb-3">{{ article.author.bio ?? 'Tech Expert dengan 10+ tahun pengalaman di bidang AI dan Machine Learning.' }}</p>
-                            <div class="d-flex justify-content-center gap-2">
-                                <a href="#" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-user-plus me-1"></i>Follow
-                                </a>
-                                <a href="#" class="btn btn-outline-secondary btn-sm">
-                                    <i class="fas fa-envelope me-1"></i>Contact
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Related Articles -->
                     <div class="card" data-aos="fade-left" data-aos-delay="100">
                         <div class="card-header">
@@ -186,125 +89,20 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="list-group list-group-flush">
-                                <a href="/article/2" class="list-group-item list-group-item-action">
+                                {% for related in relatedArticles %}
+                                <a href="/article/{{ related.slug }}" class="list-group-item list-group-item-action">
                                     <div class="d-flex">
-                                        <img src="/img/related-1.jpg" alt="Related" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="/uploads/images/{{ related.image }}" alt="Related" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div>
-                                            <h6 class="mb-1 small">Machine Learning untuk Pemula</h6>
-                                            <small class="text-muted">5 min read</small>
+                                            <h6 class="mb-1 small">{{ related.title }}</h6>
+                                            <small class="text-muted">{{ related.created_at|date('d M Y') }}</small>
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/article/3" class="list-group-item list-group-item-action">
-                                    <div class="d-flex">
-                                        <img src="/img/related-2.jpg" alt="Related" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
-                                        <div>
-                                            <h6 class="mb-1 small">Etika dalam Pengembangan AI</h6>
-                                            <small class="text-muted">7 min read</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="/article/4" class="list-group-item list-group-item-action">
-                                    <div class="d-flex">
-                                        <img src="/img/related-3.jpg" alt="Related" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
-                                        <div>
-                                            <h6 class="mb-1 small">Tren Teknologi 2025</h6>
-                                            <small class="text-muted">6 min read</small>
-                                        </div>
-                                    </div>
-                                </a>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Comments Section -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <h4 class="mb-4" data-aos="fade-up">
-                    <i class="far fa-comments me-2"></i>Komentar ({{ article.comments_count ?? '23' }})
-                </h4>
-
-                <!-- Comment Form -->
-                <div class="card mb-4" data-aos="fade-up">
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <textarea class="form-control" rows="4" placeholder="Tulis komentar Anda..."></textarea>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">
-                                    <i class="fas fa-info-circle me-1"></i>
-                                    Harap berkomentar dengan sopan dan konstruktif
-                                </small>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-paper-plane me-1"></i>Kirim Komentar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Comments List -->
-                <div class="comments-list">
-                    <div class="card mb-3" data-aos="fade-up">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start">
-                                <img src="/img/commenter-1.jpg" alt="Commenter" class="rounded-circle me-3" style="width: 40px; height: 40px;">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <h6 class="mb-0 me-2">Andi Pratama</h6>
-                                        <small class="text-muted">2 jam yang lalu</small>
-                                    </div>
-                                    <p class="mb-2">Artikel yang sangat informatif! AI memang sudah mengubah banyak aspek dalam pekerjaan saya sebagai data analyst. Terima kasih atas insightnya.</p>
-                                    <div class="d-flex gap-3">
-                                        <button class="btn btn-link btn-sm p-0 text-muted">
-                                            <i class="far fa-thumbs-up me-1"></i>12
-                                        </button>
-                                        <button class="btn btn-link btn-sm p-0 text-muted">
-                                            <i class="far fa-reply me-1"></i>Balas
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3" data-aos="fade-up" data-aos-delay="100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-start">
-                                <img src="/img/commenter-2.jpg" alt="Commenter" class="rounded-circle me-3" style="width: 40px; height: 40px;">
-                                <div class="flex-grow-1">
-                                    <div class="d-flex align-items-center mb-2">
-                                        <h6 class="mb-0 me-2">Sari Dewi</h6>
-                                        <small class="text-muted">5 jam yang lalu</small>
-                                    </div>
-                                    <p class="mb-2">Setuju banget dengan poin tentang reskilling. Perusahaan kami sedang mengimplementasi program training AI untuk semua karyawan.</p>
-                                    <div class="d-flex gap-3">
-                                        <button class="btn btn-link btn-sm p-0 text-muted">
-                                            <i class="far fa-thumbs-up me-1"></i>8
-                                        </button>
-                                        <button class="btn btn-link btn-sm p-0 text-muted">
-                                            <i class="far fa-reply me-1"></i>Balas
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Load More Comments -->
-                <div class="text-center" data-aos="fade-up">
-                    <button class="btn btn-outline-primary">
-                        <i class="fas fa-plus me-1"></i>Muat Komentar Lainnya
-                    </button>
                 </div>
             </div>
         </div>
@@ -344,7 +142,7 @@
                 </div>
                 <hr>
                 <div class="input-group">
-                    <input type="text" class="form-control" value="{{ 'https://ceritakita.com/article/' ~ (article.slug ?? '1') }}" readonly>
+                    <input type="text" class="form-control" value="{{ 'https://ceritakita.com/article/' ~ article.slug }}" readonly>
                     <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">
                         <i class="fas fa-copy"></i>
                     </button>
@@ -354,84 +152,5 @@
     </div>
 </div>
 
-<style>
-    .content-body {
-        font-size: 1.1rem;
-        line-height: 1.8;
-    }
-
-    .content-body h3, .content-body h4 {
-        color: var(--dark-color);
-        font-weight: 700;
-    }
-
-    .content-body blockquote {
-        background: rgba(59, 130, 246, 0.05);
-        padding: 1.5rem;
-        border-radius: 8px;
-    }
-
-    .sticky-top {
-        position: sticky;
-        top: 100px;
-        z-index: 10;
-    }
-</style>
-
-<script>
-    // Like button functionality
-    document.getElementById('likeBtn').addEventListener('click', function() {
-        const icon = this.querySelector('i');
-        const count = this.querySelector('span') || this.childNodes[1];
-        
-        if (icon.classList.contains('far')) {
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-            this.classList.remove('btn-outline-primary');
-            this.classList.add('btn-primary');
-        } else {
-            icon.classList.remove('fas');
-            icon.classList.add('far');
-            this.classList.remove('btn-primary');
-            this.classList.add('btn-outline-primary');
-        }
-    });
-
-    // Bookmark button functionality
-    document.getElementById('bookmarkBtn').addEventListener('click', function() {
-        const icon = this.querySelector('i');
-        
-        if (icon.classList.contains('far')) {
-            icon.classList.remove('far');
-            icon.classList.add('fas');
-            this.classList.remove('btn-outline-info');
-            this.classList.add('btn-info');
-        } else {
-            icon.classList.remove('fas');
-            icon.classList.add('far');
-            this.classList.remove('btn-info');
-            this.classList.add('btn-outline-info');
-        }
-    });
-
-    // Copy to clipboard function
-    function copyToClipboard() {
-        const input = document.querySelector('#shareModal input');
-        input.select();
-        document.execCommand('copy');
-        
-        // Show success message
-        const btn = document.querySelector('#shareModal button[onclick="copyToClipboard()"]');
-        const originalHTML = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-check"></i>';
-        btn.classList.add('btn-success');
-        btn.classList.remove('btn-outline-secondary');
-        
-        setTimeout(() => {
-            btn.innerHTML = originalHTML;
-            btn.classList.remove('btn-success');
-            btn.classList.add('btn-outline-secondary');
-        }, 2000);
-    }
-</script>
+<!-- Include script section from original file -->
 {% endblock %}
