@@ -13,7 +13,7 @@
             </div>
             <div class="welcome-illustration">
                 <div class="floating-card">
-                    <i class="bi bi-book-half"></i>
+                 <img src="/img/logo.png" alt="Cerita Kita Logo" class="logo-dashboard">
                 </div>
             </div>
         </div>
@@ -23,41 +23,41 @@
     <div class="stats-grid">
         <div class="stat-card stat-primary">
             <div class="stat-icon">
-                <i class="bi bi-journal-text"></i>
+                <i class="bi bi-journals"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">0</h3>
+                <h3 class="stat-number">{{ totalCerita }}</h3>
                 <p class="stat-label">Total Cerita</p>
             </div>
         </div>
         
         <div class="stat-card stat-success">
             <div class="stat-icon">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-people-fill"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">0</h3>
-                <p class="stat-label">Pembaca</p>
+                <h3 class="stat-number">{{ totalKontributor }}</h3>
+                <p class="stat-label">Jumlah Kontributor</p>
             </div>
         </div>
         
         <div class="stat-card stat-info">
             <div class="stat-icon">
-                <i class="bi bi-heart"></i>
+                <i class="bi bi-check-circle-fill"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">0</h3>
-                <p class="stat-label">Likes</p>
+                <h3 class="stat-number">{{ yangDisetujui }}</h3>
+                <p class="stat-label">Yang Disetujui</p>
             </div>
         </div>
         
         <div class="stat-card stat-warning">
             <div class="stat-icon">
-                <i class="bi bi-eye"></i>
+                <i class="bi bi-cash-coin"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">0</h3>
-                <p class="stat-label">Views</p>
+                <h3 class="stat-number">{{ yangDibayar }}</h3>
+                <p class="stat-label">Yang Dibayar</p>
             </div>
         </div>
     </div>
@@ -71,19 +71,33 @@
                     <i class="bi bi-clock-history"></i>
                     Cerita Terbaru
                 </h3>
-                <a href="/stories" class="card-link">Lihat Semua</a>
+                <a href="/articles/stories" class="card-link">Lihat Semua</a>
             </div>
             <div class="card-body">
                 <div class="story-list">
-                    <div class="story-item">
-                        <div class="story-placeholder">
-                            <i class="bi bi-book"></i>
+                    {% if latestStories and latestStories|length > 0 %}
+                        {% for story in latestStories %}
+                            <div class="story-item">
+                                <div class="story-placeholder">
+                                    <i class="bi bi-book"></i>
+                                </div>
+                                <div class="story-info">
+                                    <h4>{{ story.title }}</h4>
+                                    <p>{{ story.user_name }} • {{ story.created_at_formatted }} • {{ story.status_label }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="story-item">
+                            <div class="story-placeholder">
+                                <i class="bi bi-book"></i>
+                            </div>
+                            <div class="story-info">
+                                <h4>Belum ada cerita</h4>
+                                <p>Mulai tulis cerita pertama Anda!</p>
+                            </div>
                         </div>
-                        <div class="story-info">
-                            <h4>Belum ada cerita</h4>
-                            <p>Mulai tulis cerita pertama Anda!</p>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -92,56 +106,32 @@
         <div class="dashboard-card">
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="bi bi-lightning"></i>
+                    <i class="bi bi-lightning-fill"></i>
                     Aksi Cepat
                 </h3>
             </div>
             <div class="card-body">
                 <div class="action-buttons">
-                    <a href="/stories" class="action-btn btn-primary">
-                        <i class="bi bi-plus-circle"></i>
-                        <span>Tulis Cerita</span>
+                    <a href="/categories/posts" class="action-btn btn-primary">
+                        <i class="bi bi-tags-fill"></i>
+                        <span>Kategori Artikel</span>
                     </a>
-                    <a href="/categories" class="action-btn btn-secondary">
-                        <i class="bi bi-collection"></i>
-                        <span>Kelola Kategori</span>
+                    <a href="/categories/stories" class="action-btn btn-secondary">
+                        <i class="bi bi-bookmark-fill"></i>
+                        <span>Kategori Cerita</span>
                     </a>
-                    <a href="/dashboard" class="action-btn btn-info">
-                        <i class="bi bi-graph-up"></i>
-                        <span>Lihat Statistik</span>
+                    <a href="/articles/posts" class="action-btn btn-info">
+                        <i class="bi bi-file-earmark-text-fill"></i>
+                        <span>Post Artikel</span>
                     </a>
-                    <a href="/stories" class="action-btn btn-success">
-                        <i class="bi bi-share"></i>
-                        <span>Semua Cerita</span>
+                    <a href="/articles/stories" class="action-btn btn-success">
+                        <i class="bi bi-pen-fill"></i>
+                        <span>Post Cerita</span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Activity Feed -->
-    <div class="dashboard-card full-width">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="bi bi-activity"></i>
-                Aktivitas Terbaru
-            </h3>
-        </div>
-        <div class="card-body">
-            <div class="activity-feed">
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="bi bi-person-check"></i>
-                    </div>
-                    <div class="activity-content">
-                        <p><strong>{{ user.name }}</strong> bergabung dengan Cerita Kita</p>
-                        <span class="activity-time">Baru saja</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <style>
 /* Dashboard Styling */
@@ -189,19 +179,24 @@
 }
 
 .floating-card {
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     animation: float 3s ease-in-out infinite;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.floating-card i {
-    font-size: 2.5rem;
-    color: white;
+.logo-dashboard {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
 }
 
 @keyframes float {
@@ -244,9 +239,9 @@
 }
 
 .stat-primary .stat-icon { background: linear-gradient(45deg, #2196F3, #1976D2); }
-.stat-success .stat-icon { background: linear-gradient(45deg, #FF9800, #F57C00); }
+.stat-success .stat-icon { background: linear-gradient(45deg, #4CAF50, #388E3C); }
 .stat-info .stat-icon { background: linear-gradient(45deg, #00BCD4, #0097A7); }
-.stat-warning .stat-icon { background: linear-gradient(45deg, #FF5722, #D84315); }
+.stat-warning .stat-icon { background: linear-gradient(45deg, #FF9800, #F57C00); }
 
 .stat-number {
     font-size: 2rem;
@@ -319,6 +314,11 @@
     padding: 1rem;
     border-radius: 10px;
     background: #f8f9fa;
+    margin-bottom: 1rem;
+}
+
+.story-item:last-child {
+    margin-bottom: 0;
 }
 
 .story-placeholder {
@@ -383,7 +383,7 @@
 }
 
 .btn-success {
-    background: linear-gradient(45deg, #FF9800, #F57C00);
+    background: linear-gradient(45deg, #4CAF50, #388E3C);
     color: white;
 }
 
@@ -445,6 +445,12 @@
         font-size: 2rem;
     }
     
+    .floating-card {
+        width: 100px;
+        height: 100px;
+        padding: 15px;
+    }
+    
     .stats-grid {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
@@ -455,6 +461,27 @@
     
     .action-buttons {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .welcome-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .floating-card {
+        width: 80px;
+        height: 80px;
+        padding: 10px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        grid-template-columns: 1fr;
     }
 }
 </style>
