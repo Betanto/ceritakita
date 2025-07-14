@@ -1,6 +1,6 @@
 {% extends "master.twig" %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard Kontributor{% endblock %}
 
 {% block content %}
 <div class="dashboard-container">
@@ -8,7 +8,7 @@
     <div class="welcome-section">
         <div class="welcome-content">
             <div class="welcome-text">
-                <h1 class="welcome-title">CONTRIBUTOR Selamat Datang di <span class="brand-highlight">Cerita Kita</span></h1>
+                <h1 class="welcome-title">Selamat Datang di <span class="brand-highlight">Cerita Kita</span></h1>
                 <p class="welcome-subtitle">Halo, {{ user.name }}! Mari jelajahi dunia cerita bersama.</p>
             </div>
             <div class="welcome-illustration">
@@ -21,43 +21,36 @@
 
     <!-- Statistics Cards -->
     <div class="stats-grid">
+        <!-- Total Stories -->
         <div class="stat-card stat-primary">
             <div class="stat-icon">
                 <i class="bi bi-journal-text"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">0</h3>
+                <h3 class="stat-number">{{ stats.total_stories }}</h3>
                 <p class="stat-label">Total Cerita</p>
             </div>
         </div>
-        
+
+        <!-- Approved Articles -->
         <div class="stat-card stat-success">
             <div class="stat-icon">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-check-circle"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">0</h3>
-                <p class="stat-label">Pembaca</p>
+                <h3 class="stat-number">{{ stats.approved_articles }}</h3>
+                <p class="stat-label">Artikel Disetujui</p>
             </div>
         </div>
-        
+
+        <!-- Paid Articles -->
         <div class="stat-card stat-info">
             <div class="stat-icon">
-                <i class="bi bi-heart"></i>
+                <i class="bi bi-cash-coin"></i>
             </div>
             <div class="stat-content">
-                <h3 class="stat-number">0</h3>
-                <p class="stat-label">Likes</p>
-            </div>
-        </div>
-        
-        <div class="stat-card stat-warning">
-            <div class="stat-icon">
-                <i class="bi bi-eye"></i>
-            </div>
-            <div class="stat-content">
-                <h3 class="stat-number">0</h3>
-                <p class="stat-label">Views</p>
+                <h3 class="stat-number">{{ stats.paid_articles }}</h3>
+                <p class="stat-label">Artikel Dibayar</p>
             </div>
         </div>
     </div>
@@ -71,19 +64,37 @@
                     <i class="bi bi-clock-history"></i>
                     Cerita Terbaru
                 </h3>
-                <a href="/stories" class="card-link">Lihat Semua</a>
             </div>
             <div class="card-body">
                 <div class="story-list">
-                    <div class="story-item">
-                        <div class="story-placeholder">
-                            <i class="bi bi-book"></i>
+                    {% if recent_stories %}
+                        {% for story in recent_stories %}
+                        <div class="story-item">
+                            <div class="story-placeholder">
+                                <i class="bi bi-book"></i>
+                            </div>
+                            <div class="story-info">
+                                <h4>{{ story.title }}</h4>
+                                <p>
+                                    {{ story.created_at|date('d M Y') }} | 
+                                    <span class="status-badge status-{{ story.status == 1 ? 'approved' : 'pending' }}">
+                                        {{ story.status == 1 ? 'Disetujui' : 'Menunggu' }}
+                                    </span>
+                                </p>
+                            </div>
                         </div>
-                        <div class="story-info">
-                            <h4>Belum ada cerita</h4>
-                            <p>Mulai tulis cerita pertama Anda!</p>
+                        {% endfor %}
+                    {% else %}
+                        <div class="story-item">
+                            <div class="story-placeholder">
+                                <i class="bi bi-book"></i>
+                            </div>
+                            <div class="story-info">
+                                <h4>Belum ada cerita</h4>
+                                <p>Mulai tulis cerita pertama Anda!</p>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -98,45 +109,18 @@
             </div>
             <div class="card-body">
                 <div class="action-buttons">
-                    <a href="/stories" class="action-btn btn-primary">
+                    <a href="/articles/stories/create" class="action-btn btn-primary">
                         <i class="bi bi-plus-circle"></i>
                         <span>Tulis Cerita</span>
                     </a>
-                    <a href="/categories" class="action-btn btn-secondary">
-                        <i class="bi bi-collection"></i>
-                        <span>Kelola Kategori</span>
+                    <a href="/payments" class="action-btn btn-secondary">
+                        <i class="bi bi-credit-card"></i>
+                        <span>Cek Pembayaran</span>
                     </a>
-                    <a href="/dashboard" class="action-btn btn-info">
-                        <i class="bi bi-graph-up"></i>
-                        <span>Lihat Statistik</span>
-                    </a>
-                    <a href="/stories" class="action-btn btn-success">
+                    <a href="/articles/stories" class="action-btn btn-success">
                         <i class="bi bi-share"></i>
                         <span>Semua Cerita</span>
                     </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Activity Feed -->
-    <div class="dashboard-card full-width">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="bi bi-activity"></i>
-                Aktivitas Terbaru
-            </h3>
-        </div>
-        <div class="card-body">
-            <div class="activity-feed">
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="bi bi-person-check"></i>
-                    </div>
-                    <div class="activity-content">
-                        <p><strong>{{ user.name }}</strong> bergabung dengan Cerita Kita</p>
-                        <span class="activity-time">Baru saja</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -244,9 +228,8 @@
 }
 
 .stat-primary .stat-icon { background: linear-gradient(45deg, #2196F3, #1976D2); }
-.stat-success .stat-icon { background: linear-gradient(45deg, #FF9800, #F57C00); }
-.stat-info .stat-icon { background: linear-gradient(45deg, #00BCD4, #0097A7); }
-.stat-warning .stat-icon { background: linear-gradient(45deg, #FF5722, #D84315); }
+.stat-success .stat-icon { background: linear-gradient(45deg, #28a745, #20c997); }
+.stat-info .stat-icon { background: linear-gradient(45deg, #FF9800, #F57C00); }
 
 .stat-number {
     font-size: 2rem;
@@ -273,10 +256,6 @@
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-}
-
-.full-width {
-    grid-column: 1 / -1;
 }
 
 .card-header {
@@ -319,6 +298,17 @@
     padding: 1rem;
     border-radius: 10px;
     background: #f8f9fa;
+    margin-bottom: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.story-item:last-child {
+    margin-bottom: 0;
+}
+
+.story-item:hover {
+    transform: translateX(5px);
+    background: #e9ecef;
 }
 
 .story-placeholder {
@@ -331,18 +321,47 @@
     justify-content: center;
     color: white;
     font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.story-info {
+    flex-grow: 1;
+    min-width: 0;
 }
 
 .story-info h4 {
     margin: 0 0 0.25rem 0;
     color: #2c3e50;
     font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .story-info p {
     margin: 0;
     color: #7f8c8d;
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+.status-approved {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
 }
 
 .action-buttons {
@@ -361,6 +380,7 @@
     border-radius: 10px;
     transition: all 0.3s ease;
     font-weight: 500;
+    text-align: center;
 }
 
 .action-btn i {
@@ -377,11 +397,6 @@
     color: white;
 }
 
-.btn-info {
-    background: linear-gradient(45deg, #00BCD4, #0097A7);
-    color: white;
-}
-
 .btn-success {
     background: linear-gradient(45deg, #FF9800, #F57C00);
     color: white;
@@ -390,45 +405,6 @@
 .action-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.activity-feed {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.activity-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    border-bottom: 1px solid #eee;
-}
-
-.activity-item:last-child {
-    border-bottom: none;
-}
-
-.activity-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(45deg, #FF9800, #F57C00);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1rem;
-}
-
-.activity-content p {
-    margin: 0 0 0.25rem 0;
-    color: #2c3e50;
-}
-
-.activity-time {
-    font-size: 0.8rem;
-    color: #7f8c8d;
 }
 
 /* Responsive Design */
@@ -455,6 +431,17 @@
     
     .action-buttons {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .action-buttons {
+        grid-template-columns: 1fr;
     }
 }
 </style>
