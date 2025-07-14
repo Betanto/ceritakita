@@ -18,9 +18,11 @@ use App\Application\Controllers\StoryController;
 use App\Application\Controllers\CategoryController;
 use App\Application\Controllers\UserController;
 use App\Application\Controllers\PaymentController;
+use App\Application\Controllers\ProfileController;
 use App\Application\Middleware\AuthMiddleware;
 use App\Application\Middleware\AdminMiddleware;
 use Twig\Extension\DebugExtension;
+
 
 return function (App $app) {
     $container = $app->getContainer();
@@ -98,4 +100,9 @@ return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
         return $response;
     });
+
+    // Profile routes - accessible by both admin and contributor
+$app->get('/profile', [new ProfileController($container), 'index'])->add(new AuthMiddleware());
+$app->get('/profile/edit', [new ProfileController($container), 'edit'])->add(new AuthMiddleware());
+$app->post('/profile/edit', [new ProfileController($container), 'update'])->add(new AuthMiddleware());
 };
