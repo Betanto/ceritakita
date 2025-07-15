@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 11, 2025 at 09:05 AM
+-- Generation Time: Jul 15, 2025 at 06:56 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.4.3
 
@@ -83,7 +83,21 @@ CREATE TABLE `tbl_articles` (
 --
 
 INSERT INTO `tbl_articles` (`id`, `id_user`, `id_parent`, `title`, `slug`, `image`, `file`, `content`, `status`, `payment_at`, `payment_by`, `amount`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 1, 0, 'Hero Title', 'hero-title', '686fbf63303b2_orang.png', NULL, '<h1 class=\"hero-title\">\r\n    Berbagi Cerita,<br>\r\n    <span style=\"background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Menginspirasi Dunia</span>\r\n</h1>\r\n<p class=\"hero-subtitle\">\r\n    Bergabunglah dengan komunitas penulis dan pembaca terbesar di Indonesia. \r\n    Temukan cerita inspiratif dan bagikan pengalaman Anda.\r\n</p>\r\n<div class=\"d-flex flex-wrap gap-3\">\r\n    <a href=\"/stories\" class=\"btn-hero\">\r\n        <i class=\"fas fa-search\"></i>\r\n        Jelajahi Cerita\r\n    </a>\r\n    <a href=\"/register\" class=\"btn btn-outline-primary btn-lg px-4 py-3\" style=\"border-radius: 50px; font-weight: 600;\">\r\n        <i class=\"fas fa-pen\"></i>\r\n        Mulai Menulis\r\n    </a>\r\n</div>\r\n\r\n<!-- Hero Stats -->\r\n<div class=\"row mt-5\">\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">500K+</h4>\r\n            <small class=\"text-muted\">Pembaca</small>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">25K+</h4>\r\n            <small class=\"text-muted\">Cerita</small>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">1K+</h4>\r\n            <small class=\"text-muted\">Penulis</small>\r\n        </div>\r\n    </div>\r\n</div>', 1, NULL, NULL, NULL, '2025-07-10 12:56:43', 1, '2025-07-10 13:25:55', 1, NULL, NULL);
+(1, 1, 0, 'Hero Title', 'hero-title', '686fbf63303b2_orang.png', NULL, '<h1 class=\"hero-title\">\r\n    Berbagi Cerita,<br>\r\n    <span style=\"background: linear-gradient(135deg, #dc3545 0%, #ea580c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;\">Menginspirasi Dunia</span>\r\n</h1>\r\n<p class=\"hero-subtitle\">\r\n    Bergabunglah dengan komunitas penulis dan pembaca terbesar di Indonesia. \r\n    Temukan cerita inspiratif dan bagikan pengalaman Anda.\r\n</p>\r\n<div class=\"d-flex flex-wrap gap-3\">\r\n    <a href=\"/stories\" class=\"btn-hero\">\r\n        <i class=\"fas fa-search\"></i>\r\n        Jelajahi Cerita\r\n    </a>\r\n    <a href=\"/register\" class=\"btn btn-outline-primary btn-lg px-4 py-3\" style=\"border-radius: 50px; font-weight: 600;\">\r\n        <i class=\"fas fa-pen\"></i>\r\n        Mulai Menulis\r\n    </a>\r\n</div>\r\n\r\n<!-- Hero Stats -->\r\n<div class=\"row mt-5\">\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">500K+</h4>\r\n            <small class=\"text-muted\">Pembaca</small>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">25K+</h4>\r\n            <small class=\"text-muted\">Cerita</small>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-4\">\r\n        <div class=\"text-center\">\r\n            <h4 class=\"fw-bold text-primary mb-0\">1K+</h4>\r\n            <small class=\"text-muted\">Penulis</small>\r\n        </div>\r\n    </div>\r\n</div>', 1, NULL, NULL, NULL, '2025-07-10 12:56:43', 1, '2025-07-14 17:10:17', 1, NULL, NULL),
+(3, 2, 0, 'Artikel 1 dari Betanto', 'artikel-1-dari-betanto', '6870e341683e4_16082514904047_Image-Prosedur_Izin_Penelitian.png', '6870e341687ad_203. Surat Edaran Rektor Syarat UAS Genap 20242025.pdf', '<p>Test isi dari Betanto isinya ditambah</p>', 1, '2025-07-11 10:15:02', 1, 100000, '2025-07-11 10:11:13', 2, '2025-07-11 10:15:02', 1, NULL, NULL),
+(4, 3, 0, 'Contoh Cerita 1 dari Kedua', 'contoh-cerita-1-dari-kedua', NULL, NULL, '<p>isi&nbsp;Contoh Cerita 1 dari Kedua</p>', 0, NULL, NULL, NULL, '2025-07-11 10:12:46', 3, '2025-07-11 10:12:46', 3, NULL, NULL),
+(8, 1, 0, 'Artikel Pilihan', 'artikel-pilihan', NULL, NULL, '<h2 class=\"display-5 fw-bold text-dark mb-3\">\r\n    Artikel <span style=\"color: var(--primary-dark);\">Pilihan</span>\r\n</h2>\r\n<p class=\"lead text-muted\">Temukan artikel-artikel terbaik dari penulis berbakat</p>', 1, NULL, NULL, NULL, '2025-07-14 15:40:15', 1, '2025-07-14 17:08:23', 1, NULL, NULL),
+(9, 1, 0, 'Judul Alasan', 'judul-alasan', NULL, NULL, '<h2 class=\"display-5 fw-bold text-dark mb-3\">\r\n    Mengapa Memilih <span style=\"color: var(--primary-dark);\">Cerita Kita?</span>\r\n</h2>\r\n<p class=\"lead text-muted\">Platform terlengkap untuk berbagi dan menemukan cerita inspiratif</p>', 1, NULL, NULL, NULL, '2025-07-14 16:39:29', 1, '2025-07-14 17:08:43', 1, NULL, NULL),
+(10, 1, 0, 'Editor Canggih', 'editor-canggih', '6875348168dea_Screenshot 2025-07-14 at 23.45.48.png', NULL, 'Editor yang mudah digunakan dengan fitur lengkap untuk menulis artikel yang menarik dan profesional.', 1, NULL, NULL, NULL, '2025-07-14 16:46:57', 1, '2025-07-14 16:46:57', 1, NULL, NULL),
+(11, 1, 0, 'Komunitas Aktif', 'komunitas-aktif', '687534a2a08af_Screenshot 2025-07-14 at 23.45.56.png', NULL, 'Bergabung dengan komunitas penulis dan pembaca yang saling mendukung dan memberikan feedback konstruktif.', 1, NULL, NULL, NULL, '2025-07-14 16:47:30', 1, '2025-07-14 16:47:30', 1, NULL, NULL),
+(12, 1, 0, 'Analytics Detail', 'analytics-detail', '687534b84f160_Screenshot 2025-07-14 at 23.46.01.png', NULL, 'Pantau performa artikel Anda dengan analytics yang detail dan insight yang membantu meningkatkan engagement.', 1, NULL, NULL, NULL, '2025-07-14 16:47:52', 1, '2025-07-14 16:47:52', 1, NULL, NULL),
+(13, 1, 0, 'Siap Berbagi Cerita Anda?', 'siap-berbagi-cerita-anda', NULL, NULL, 'Bergabunglah dengan ribuan penulis lainnya dan mulai berbagi cerita inspiratif Anda. Dapatkan penghasilan dari setiap artikel berkualitas yang Anda tulis.', 1, NULL, NULL, NULL, '2025-07-14 17:14:03', 1, '2025-07-14 17:18:19', 1, NULL, NULL),
+(14, 1, 0, 'Artikel Footer', 'artikel-footer', NULL, NULL, 'Platform berbagi cerita dan artikel berkualitas. Bergabunglah dengan komunitas penulis dan pembaca yang inspiratif.', 1, NULL, NULL, NULL, '2025-07-14 17:24:52', 1, '2025-07-14 17:59:23', 1, NULL, NULL),
+(15, 1, 0, 'facebook', 'facebook', NULL, NULL, 'https://www.facebook.com/itematik', 1, NULL, NULL, NULL, '2025-07-15 06:22:25', 1, '2025-07-15 06:34:45', 1, NULL, NULL),
+(16, 1, 0, 'instagram', 'instagram', NULL, NULL, 'https://www.instagram.com/itematik/', 1, NULL, NULL, NULL, '2025-07-15 06:23:07', 1, '2025-07-15 06:34:58', 1, NULL, NULL),
+(17, 1, 0, 'twitter', 'twitter', NULL, NULL, 'https://x.com/itematik1', 1, NULL, NULL, NULL, '2025-07-15 06:23:41', 1, '2025-07-15 06:35:25', 1, NULL, NULL),
+(18, 1, 0, 'linkedin', 'linkedin', NULL, NULL, 'https://www.linkedin.com/company/pt-itematik-pramitha-nusantara', 1, NULL, NULL, NULL, '2025-07-15 06:25:00', 1, '2025-07-15 06:34:32', 1, NULL, NULL),
+(19, 1, 0, 'tiktok', 'tiktok', NULL, NULL, 'https://www.tiktok.com/@itematik', 1, NULL, NULL, NULL, '2025-07-15 06:25:37', 1, '2025-07-15 06:35:12', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -102,7 +116,22 @@ CREATE TABLE `tbl_articles_categories` (
 --
 
 INSERT INTO `tbl_articles_categories` (`id`, `id_category`, `id_article`) VALUES
-(5, 1, 1);
+(9, 4, 3),
+(10, 4, 4),
+(11, 5, 3),
+(23, 8, 10),
+(24, 8, 11),
+(25, 8, 12),
+(26, 7, 8),
+(27, 7, 9),
+(29, 1, 1),
+(32, 7, 13),
+(34, 7, 14),
+(40, 9, 18),
+(41, 9, 15),
+(42, 9, 16),
+(43, 9, 19),
+(44, 9, 17);
 
 -- --------------------------------------------------------
 
@@ -130,7 +159,14 @@ CREATE TABLE `tbl_categories` (
 --
 
 INSERT INTO `tbl_categories` (`id`, `name`, `slug`, `id_parent`, `type`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 'Hero Banner', 'hero-banner', 0, 0, 1, '2025-07-10 12:56:19', 1, '2025-07-10 12:56:19', 1, NULL, NULL);
+(1, 'Hero Banner', 'hero-banner', 0, 0, 1, '2025-07-10 12:56:19', 1, '2025-07-10 12:56:19', 1, NULL, NULL),
+(2, 'Dongeng', 'dongeng', 0, 1, 1, '2025-07-11 10:10:17', 1, '2025-07-11 10:10:17', 1, NULL, NULL),
+(3, 'Pelajaran', 'pelajaran', 0, 1, 1, '2025-07-11 10:10:22', 1, '2025-07-11 10:10:22', 1, NULL, NULL),
+(4, 'Horor', 'horor', 0, 1, 1, '2025-07-11 10:10:27', 1, '2025-07-11 10:10:27', 1, NULL, NULL),
+(5, 'Misteri', 'misteri', 0, 1, 1, '2025-07-11 10:10:31', 1, '2025-07-11 10:10:31', 1, NULL, NULL),
+(7, 'Umum', 'umum', 0, 0, 1, '2025-07-14 15:39:01', 1, '2025-07-14 15:39:01', 1, NULL, NULL),
+(8, 'Alasan', 'alasan', 0, 0, 1, '2025-07-14 16:46:11', 1, '2025-07-14 16:46:11', 1, NULL, NULL),
+(9, 'Sosial Media', 'sosial-media', 0, 0, 1, '2025-07-15 06:21:40', 1, '2025-07-15 06:21:40', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -151,6 +187,15 @@ CREATE TABLE `tbl_reviews` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `deleted_by` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tbl_reviews`
+--
+
+INSERT INTO `tbl_reviews` (`id`, `id_user`, `id_article`, `notes`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
+(1, 1, 3, 'ada yang perlu direvisi', 0, '2025-07-11 03:11:39', 1, '2025-07-11 10:11:39', NULL, NULL, NULL),
+(2, 1, 3, 'Revisi bagian isi', 2, '2025-07-11 03:11:59', 1, '2025-07-11 10:11:59', NULL, NULL, NULL),
+(3, 1, 3, 'Mantab', 1, '2025-07-11 03:13:08', 1, '2025-07-11 10:13:08', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -215,7 +260,9 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`id`, `username`, `password`, `name`, `id_role`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 'admin@mail.com', '$2y$10$g8O8brAT9NilFzlfX.vpzOm.PGKtt1GK.YBtg7XzkOvRJX84y7.8u', 'Admin', 1, 1, '2025-07-10 12:55:27', 1, '2025-07-10 12:55:27', 1, NULL, NULL);
+(1, 'admin@mail.com', '$2y$10$g8O8brAT9NilFzlfX.vpzOm.PGKtt1GK.YBtg7XzkOvRJX84y7.8u', 'Admin', 1, 1, '2025-07-10 12:55:27', 1, '2025-07-10 12:55:27', 1, NULL, NULL),
+(2, 'betanto@gmail.com', '$2y$10$RObP9drWbOLgkD2bQAECueNTR2QeynTgjx5xNCpENsIT3T4025Xge', 'betanto', 2, 1, '2025-07-11 10:07:24', NULL, '2025-07-11 10:07:24', NULL, NULL, NULL),
+(3, 'kedua@mail.com', '$2y$10$oqDQe8wT.zYYAr9cI/hamelhNrijn1EjZZB4THlpeq8BEmVKzuQ9u', 'Kedua', 2, 1, '2025-07-11 10:08:12', NULL, '2025-07-14 15:35:38', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -309,25 +356,25 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `tbl_articles`
 --
 ALTER TABLE `tbl_articles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tbl_articles_categories`
 --
 ALTER TABLE `tbl_articles_categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `tbl_categories`
 --
 ALTER TABLE `tbl_categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_reviews`
 --
 ALTER TABLE `tbl_reviews`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_roles`
@@ -345,7 +392,7 @@ ALTER TABLE `tbl_transactions`
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_wallets`
