@@ -11,7 +11,7 @@
     --gradient-primary: linear-gradient(135deg, #FFE1E4 0%, #dc3545 100%);
     --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     --gradient-hero: linear-gradient(135deg, #FFE1E4 0%, #faccd1 100%);
-    --gradient-footer: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+    --gradient-footer: linear-gradient(135deg, #cb1729 0%, rgb(180, 22, 38) 100%);
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
