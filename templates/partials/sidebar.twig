@@ -15,7 +15,7 @@
     <!-- Navigation Menu -->
     <ul class="sidebar-nav list-unstyled">
         <li class="nav-item">
-            <a href="{{ user.id_role == 1 ? '/admin' : '/contributor' }}" class="nav-link {{ routename == 'dashboard' ? 'active' : '' }}" data-tooltip="Dashboard">
+            <a href="{{ user.id_role == 1 ? '/admin' : '/contributor' }}" class="nav-link {{ routename == 'admin' or routename == 'contributor' ? 'active' : '' }}" data-tooltip="Dashboard">
                 <span class="nav-icon">
                     <i class="bi bi-house"></i>
                 </span>

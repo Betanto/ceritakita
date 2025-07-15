@@ -11,6 +11,7 @@ use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
+use App\Application\Middleware\ViewGlobalMiddleware;
 
 
 use Slim\Exception\HttpNotFoundException;
@@ -72,7 +73,7 @@ $middleware($app);
 // Register routes
 $routes = require __DIR__ . '/../app/routes.php';
 $routes($app);
-
+$app->add(new ViewGlobalMiddleware($container));
 /** @var SettingsInterface $settings */
 $settings = $container->get(SettingsInterface::class);
 

@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-lg-10">
                         <div class="form-check form-switch py-2">
-                            <input class="form-check-input" type="checkbox" role="switch" id="check_status" name="check_status" value="1" {{ category is defined and category.status == 1 ? 'checked' : (old.check_status is defined and old.check_status ? 'checked' : '') }}>
+                            <input class="form-check-input" type="checkbox" role="switch" id="check_status" name="check_status" value="1" {{ data is defined and data.status == 1 ? 'checked' : (old.check_status is defined and old.check_status ? 'checked' : '') }}>
                             <label class="form-check-label" for="check_status">Aktif?</label>
                         </div>
                     </div>

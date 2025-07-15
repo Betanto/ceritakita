@@ -2,22 +2,20 @@
     <div class="footer-content">
         <div class="container py-5">
             <div class="row">
-                <!-- Company Info -->
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-4 col-md-6 mb-4 text-white">
                     <div class="footer-brand mb-4">
                         <a href="/" class="d-block mb-3">
                             <img src="/img/logo.png" alt="Cerita Kita" class="footer-logo">
                         </a>
                     </div>
                     <p class="text-light opacity-75 mb-4 footer-desc">
-                        Platform berbagi cerita dan artikel berkualitas. Bergabunglah dengan komunitas penulis dan pembaca yang inspiratif.
+                        {{ footer_articles.0.content|raw }}
+                        <!-- Platform berbagi cerita dan artikel berkualitas. Bergabunglah dengan komunitas penulis dan pembaca yang inspiratif. -->
                     </p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        {% for item in social_media %}
+                            <a href="{{ item.content|replace({'<p>': '', '</p>': ''}) }}" class="social-link" target="_blank"><i class="fab fa-{{ item.slug }}"></i></a>
+                        {% endfor %}
                     </div>
                 </div>
                 
@@ -26,20 +24,8 @@
                     <h6 class="text-white fw-bold mb-3 footer-title">NAVIGASI</h6>
                     <ul class="list-unstyled footer-links">
                         <li><a href="/">Beranda</a></li>
-                        <li><a href="/stories">Artikel</a></li>
+                        <li><a href="/stories">Daftar Cerita</a></li>
                         <li><a href="/login">Pendaftaran</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Services -->
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h6 class="text-white fw-bold mb-3 footer-title">LAYANAN</h6>
-                    <ul class="list-unstyled footer-links">
-                        <li><a href="/register">Daftar Penulis</a></li>
-                        <li><a href="/premium">Premium</a></li>
-                        <li><a href="/workshop">Workshop</a></li>
-                        <li><a href="/mentoring">Mentoring</a></li>
-                        <li><a href="/publishing">Publishing</a></li>
                     </ul>
                 </div>
                 
@@ -47,7 +33,7 @@
                 <div class="col-lg-4 col-md-6">
                     <h6 class="text-white fw-bold mb-3 footer-title">ARTIKEL TERBARU</h6>
                     <div class="latest-articles">
-                        {% for article in latestArticles %}
+                        <!-- {% for article in latestArticles %}
                         <a href="/article/{{ article.slug }}" class="article-item">
                             <div class="article-thumb">
                                 <img src="/uploads/images/{{ article.image }}" alt="{{ article.title }}" onerror="this.src='/img/default-article.jpg'">
@@ -59,13 +45,13 @@
                                 </span>
                             </div>
                         </a>
-                        {% else %}
+                        {% else %} -->
                         <div class="article-item">
                             <div class="article-info">
                                 <h6>Belum ada artikel terbaru</h6>
                             </div>
                         </div>
-                        {% endfor %}
+                        <!-- {% endfor %} -->
                     </div>
                 </div>
             </div>
@@ -90,175 +76,3 @@
         </div>
     </div>
 </footer>
-
-<style>
-    .footer-modern {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .footer-content {
-        position: relative;
-        z-index: 2;
-    }
-
-    .footer-brand a:hover .footer-logo {
-        transform: scale(1.05);
-    }
-
-    .footer-logo {
-        height: 45px;
-        width: auto;
-        filter: brightness(0) invert(1);
-        transition: all 0.3s ease;
-    }
-
-    .footer-desc {
-        line-height: 1.7;
-        font-size: 1rem;
-    }
-
-    .social-links {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .social-link {
-        width: 45px;
-        height: 45px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-    }
-
-    .social-link:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-3px);
-        color: white;
-    }
-
-    .footer-title {
-        position: relative;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .footer-title::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 30px;
-        height: 3px;
-        background: #f97316;
-        border-radius: 2px;
-    }
-
-    .footer-links {
-        list-style: none;
-        padding-left: 0;
-    }
-
-    .footer-links li {
-        margin-bottom: 0.75rem;
-    }
-
-    .footer-links a {
-        color: rgba(255, 255, 255, 0.8);
-        text-decoration: none;
-        transition: all 0.3s ease;
-        font-weight: 400;
-    }
-
-    .footer-links a:hover {
-        color: white;
-        padding-left: 5px;
-    }
-
-    .latest-articles {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .article-item {
-        display: flex;
-        gap: 1rem;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .article-item:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateX(5px);
-    }
-
-    .article-thumb {
-        flex-shrink: 0;
-    }
-
-    .article-thumb img {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-
-    .article-info h6 {
-        color: white;
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        line-height: 1.4;
-    }
-
-    .article-date {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.8rem;
-    }
-
-    .footer-bottom {
-        background: rgba(0, 0, 0, 0.2);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .footer-bottom-links {
-        display: flex;
-        gap: 1.5rem;
-    }
-
-    .footer-bottom-links a {
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: color 0.3s ease;
-    }
-
-    .footer-bottom-links a:hover {
-        color: white;
-    }
-
-    @media (max-width: 768px) {
-        .social-links {
-            justify-content: center;
-            margin-top: 1rem;
-        }
-        
-        .footer-bottom-links {
-            justify-content: center;
-            margin-top: 1rem;
-        }
-    }
-</style>
