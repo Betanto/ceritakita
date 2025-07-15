@@ -69,6 +69,7 @@ class HomeController
         ], [
             'a.id',
             'a.title',
+            'a.slug',
             'a.content',
             'a.status',
             'a.image',
@@ -104,7 +105,6 @@ class HomeController
         ];
         
         $featuredArticles = array_slice($stories, 0, 3);
-        $latestArticles = array_slice($stories, 0, 2);
 
         return $this->view->render($response, 'frontend/home.twig', [
             'hero' => $heroBanner,
@@ -113,8 +113,7 @@ class HomeController
             'featuredArticles' => $featuredArticles,
             'reasonTitle' => $reasonTitle,
             'Reasons' => $Reasons,
-            'CTATitle' => $CTATitle,
-            'latestArticles' => $latestArticles
+            'CTATitle' => $CTATitle
         ]);
     }
 }

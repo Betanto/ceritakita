@@ -1,4 +1,4 @@
-<footer class="footer-modern mt-auto">
+<footer class="footer-modern mt-auto bg-primary">
     <div class="footer-content">
         <div class="container py-5">
             <div class="row">
@@ -33,10 +33,10 @@
                 <div class="col-lg-4 col-md-6">
                     <h6 class="text-white fw-bold mb-3 footer-title">ARTIKEL TERBARU</h6>
                     <div class="latest-articles">
-                        <!-- {% for article in latestArticles %}
-                        <a href="/article/{{ article.slug }}" class="article-item">
+                        {% for article in lateststories %}
+                        <a href="/article/{{ article.slug }}" class="article-item text-decoration-none">
                             <div class="article-thumb">
-                                <img src="/uploads/images/{{ article.image }}" alt="{{ article.title }}" onerror="this.src='/img/default-article.jpg'">
+                                <img src="/uploads/images/{{ article.image }}" alt="{{ article.title }}">
                             </div>
                             <div class="article-info">
                                 <h6>{{ article.title|slice(0, 50) }}{% if article.title|length > 50 %}...{% endif %}</h6>
@@ -45,13 +45,13 @@
                                 </span>
                             </div>
                         </a>
-                        {% else %} -->
+                        {% else %}
                         <div class="article-item">
                             <div class="article-info">
                                 <h6>Belum ada artikel terbaru</h6>
                             </div>
                         </div>
-                        <!-- {% endfor %} -->
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -65,12 +65,12 @@
                             © {{ "now"|date("Y") }} CeritaKita. All Rights Reserved.
                         </p>
                     </div>
-                    <div class="col-md-6 text-md-end">
+                    <!-- <div class="col-md-6 text-md-end">
                         <div class="footer-bottom-links">
                             <a href="/privacy-policy" class="text-light opacity-75 me-3">Kebijakan Privasi</a>
                             <a href="/terms" class="text-light opacity-75">Syarat & Ketentuan</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

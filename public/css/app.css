@@ -391,41 +391,6 @@ CONTENT STYLE
   #content {
       margin-left: 0px;
   }
-  
-  /* #sidebar {
-      min-width: 80px;
-      max-width: 80px;
-      text-align: center;
-      margin-left: -80px !important;
-      z-index:999;
-      box-shadow: none !important;
-  }
-  #sidebar.active {
-      width: 100% !important;
-      max-width: 100%;
-      margin-left: 0 !important;
-      margin-top:75px;
-      text-align: center;
-      position: fixed;
-      z-index:999;
-  }
-  #content.active {
-      margin-left:0;
-  }
-  .sidebar-nav-text.hide {
-      display: inline-block;
-  }
-  #sidebar.active ul li a {
-      text-align:left;
-      padding: 10px;
-      font-size: 1em;
-  }
-  #sidebar.active .dropdown-toggle::after {
-      margin-top: 10px;
-  }
-  #sidebar.active ul li.sidebar-header {
-      display: block;
-  } */
 }
 
 /* ===========================

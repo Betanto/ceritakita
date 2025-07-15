@@ -30,6 +30,7 @@ class ArticleDetailController
             'a.slug',
             'a.content',
             'a.image',
+            'a.file',
             'a.created_at',
             'u.name(author_name)',
             'u.id(author_id)',
@@ -43,6 +44,15 @@ class ArticleDetailController
         if (!$article) {
             return $response->withHeader('Location', '/')->withStatus(302);
         }
+        $sc = $this->db->select('tbl_articles_categories (ac)', [
+            '[>]tbl_categories (c)' => ['ac.id_category' => 'id']
+        ], ['c.name'], ['ac.id_article' => $article['id']]);
+        $article['categories'] = array_column($sc, 'name');
+        $bulan = [1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Agu', 9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Des'];
+        $tanggal = date('j', strtotime($article['created_at']));
+        $bulanIndo = $bulan[(int)date('n', strtotime($article['created_at']))];
+        $tahun = date('Y', strtotime($article['created_at']));
+        $article['created_at_formatted'] = "$tanggal $bulanIndo $tahun";
 
         // Hitung waktu baca
         $wordCount = str_word_count(strip_tags($article['content']));

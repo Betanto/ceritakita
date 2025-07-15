@@ -26,8 +26,10 @@ class StoryController
         $offset = ($page - 1) * $limit;
 
         $where = [
+            'a.deleted_at' => null,
+            'c.type' => 1,
             'a.status' => 1,
-            'a.deleted_at' => null
+            'a.payment_at[!]' => null
         ];
 
         if (!empty($search)) {
@@ -66,13 +68,27 @@ class StoryController
         ], [
             'AND' => $where,
             'ORDER' => $order,
-            'LIMIT' => [$offset, $limit]
+            'LIMIT' => [$offset, $limit],
+            'GROUP' => 'a.id'
         ]);
-
-        foreach ($articles as &$article) {
-            $wordCount = str_word_count(strip_tags($article['content']));
-            $article['read_time'] = ceil($wordCount / 200);
+        $i=0;
+        foreach ($articles as $item) {
+            $sc = $this->db->select('tbl_articles_categories (ac)', [
+                '[>]tbl_categories (c)' => ['ac.id_category' => 'id']
+            ], ['c.name'], ['ac.id_article' => $item['id']]);
+            $articles[$i]['categories'] = array_column($sc, 'name');
+            $bulan = [1 => 'Jan', 2 => 'Feb', 3 => 'Mar', 4 => 'Apr', 5 => 'Mei', 6 => 'Jun', 7 => 'Jul', 8 => 'Agu', 9 => 'Sep', 10 => 'Okt', 11 => 'Nov', 12 => 'Des'];
+            $tanggal = date('j', strtotime($item['created_at']));
+            $bulanIndo = $bulan[(int)date('n', strtotime($item['created_at']))];
+            $tahun = date('Y', strtotime($item['created_at']));
+            $articles[$i]['created_at_formatted'] = "$tanggal $bulanIndo $tahun";
+            $i++;
         }
+
+        // foreach ($articles as &$article) {
+        //     $wordCount = str_word_count(strip_tags($article['content']));
+        //     $article['read_time'] = ceil($wordCount / 200);
+        // }
 
         $totalPages = ceil($total / $limit);
 
@@ -81,6 +97,8 @@ class StoryController
             'name'
         ], [
             'type' => 1,
+            'status' => 1,
+            'deleted_at' => null,
             'ORDER' => ['name' => 'ASC']
         ]);
 

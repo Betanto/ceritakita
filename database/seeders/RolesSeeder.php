@@ -8,7 +8,6 @@ return function (Medoo $db) {
     ];
 
     foreach ($roles as $role) {
-        // Hindari duplikasi
         $exists = $db->has('tbl_roles', ['id' => $role['id']]);
         if (!$exists) {
             $db->insert('tbl_roles', $role);
