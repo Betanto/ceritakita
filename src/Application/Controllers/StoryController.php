@@ -45,12 +45,15 @@ class StoryController
             default => ['a.created_at' => 'DESC']
         };
 
-        $total = $this->db->count('tbl_articles (a)', [
+        $total = $this->db->select('tbl_articles (a)', [
             '[>]tbl_articles_categories (ac)' => ['a.id' => 'id_article'],
             '[>]tbl_categories (c)' => ['ac.id_category' => 'id']
-        ], '*', [
-            'AND' => $where
+        ], 'a.id', [
+            'AND' => $where,
+            'GROUP' => 'a.id'
         ]);
+
+        $total = count($total);
 
         $articles = $this->db->select('tbl_articles (a)', [
             '[>]tbl_users (u)' => ['a.id_user' => 'id'],
@@ -85,10 +88,6 @@ class StoryController
             $i++;
         }
 
-        // foreach ($articles as &$article) {
-        //     $wordCount = str_word_count(strip_tags($article['content']));
-        //     $article['read_time'] = ceil($wordCount / 200);
-        // }
 
         $totalPages = ceil($total / $limit);
 

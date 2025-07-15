@@ -28,7 +28,7 @@
 <section class="py-4 bg-white border-bottom">
     <div class="container">
         <form method="get" action="/stories" class="row align-items-center">
-            <div class="col-lg-8 mb-3 mb-lg-0">
+            <div class="col-lg-10 mb-3 mb-lg-0">
                 <div class="d-flex flex-wrap gap-2 category-filters">
                     <a href="/stories" class="btn btn-outline-primary btn-sm {{ category == '' ? 'active' : '' }}">Semua</a>
                     {% for cat in categories %}
@@ -39,7 +39,7 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-lg-4 text-lg-end">
+            <div class="col-lg-2 text-lg-end">
                 <div class="d-flex align-items-center justify-content-lg-end gap-2">
                     <span class="text-muted small">Urutkan:</span>
                     <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()" style="width: auto;">

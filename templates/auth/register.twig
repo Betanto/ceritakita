@@ -295,7 +295,7 @@
 
                 if (data.status=='success') {
                     showAlert('success', 'Pendaftaran berhasil! Silakan periksa email Anda untuk verifikasi.');
-                    document.getElementById('emailNotice').style.display = 'block';
+                    // document.getElementById('emailNotice').style.display = 'block';
                     document.getElementById('registerForm').reset();
                     document.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
                         el.classList.remove('is-valid', 'is-invalid');

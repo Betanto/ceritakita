@@ -20,14 +20,8 @@ composer install
 cp app/config/database.example.php app/config/database.php
 ```
 * Inputkan nama database, username, dan password pada file /app/config/database.php
-* jalankan perintah migrasi
-```
-php scripts/migrate.php migrate
-```
-* jalankan perintah seeder
-```
-php scripts/seed.php
-```
+* Buat database dengan nama sesuai yang dituliskan pada file database.php (misal: ceritakita)
+* Import file ceritaku.sql ke dalam database yang dituliskan pada file database.php (misal: ceritakita)
 * jalankan perintah berikut
 ```
 composer start
