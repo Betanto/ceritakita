@@ -10,7 +10,7 @@ class ContributorController
     protected $db;
     protected $pagetitle = 'Dashboard';
     protected $pageicon = 'bi-house';
-    protected $routename = 'dashboard';
+    protected $routename = 'contributor';
 
     public function __construct($container)
     {
