@@ -418,7 +418,7 @@ body {
 #sidebar {
     min-width: 280px;
     max-width: 280px;
-    background: linear-gradient(180deg, #2196F3 0%, #1976D2 100%);
+    background: linear-gradient(180deg, #f85161 0%, #dc3545 100%);
     color: white;
     position: fixed;
     height: 100vh;
